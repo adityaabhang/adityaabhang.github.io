@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automatic Medicine Dispenser — Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --bg: #FAF9F7; --bg-alt: #F1EFEB; --text: #1A1A1A; --text-secondary: #5A5A5A; --accent: #2B5C8A; --accent-light: #3A7BBF; --border: #E0DDD8; --card-bg: #FFFFFF; --tag-bg: #EDF2F7; --tag-text: #2B5C8A; --serif: 'Source Serif 4', Georgia, serif; --sans: 'DM Sans', -apple-system, sans-serif; --max-w: 760px; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,249,247,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 960px; margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .nav-name { font-family: var(--serif); font-weight: 700; font-size: 1.15rem; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.8rem; align-items: center; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .back-btn { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.4rem 0.85rem; border: 1px solid var(--accent); border-radius: 6px; transition: all 0.2s; }
+    .back-btn:hover { background: var(--accent); color: #fff; }
+    .project-hero { max-width: var(--max-w); margin: 0 auto; padding: 7rem 1.5rem 2.5rem; }
+    .project-hero .label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.5rem; }
+    .project-hero h1 { font-family: var(--serif); font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem; }
+    .project-hero .meta { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .project-hero .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.78rem; font-weight: 500; padding: 0.25rem 0.65rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 4px; }
+    .project-img-hero { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem 2.5rem; }
+    .project-img-hero .img-container { width: 100%; height: 360px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .project-img-hero .img-container img { width: 100%; height: 100%; object-fit: cover; display: none; }
+    .photo-placeholder { color: var(--text-secondary); font-size: 0.8rem; opacity: 0.5; }
+    article { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem 4rem; }
+    article h2 { font-family: var(--serif); font-size: 1.35rem; font-weight: 700; margin: 2.5rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    article h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+    article p { color: var(--text-secondary); margin-bottom: 1rem; }
+    article ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+    article li { color: var(--text-secondary); margin-bottom: 0.4rem; font-size: 0.95rem; }
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
+    .tech-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; }
+    .tech-item strong { font-size: 0.85rem; display: block; margin-bottom: 0.15rem; }
+    .tech-item span { font-size: 0.8rem; color: var(--text-secondary); }
+    .outcome-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
+    .outcome-card .stat { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--accent); }
+    .outcome-card .stat-label { font-size: 0.85rem; color: var(--text-secondary); }
+    .outcomes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .project-nav { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem 3rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .project-nav a { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .project-nav a:hover { color: var(--accent); }
+    footer { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; text-align: center; font-size: 0.8rem; color: var(--text-secondary); border-top: 1px solid var(--border); }
+    @media (max-width: 768px) { .project-hero h1 { font-size: 1.7rem; } .project-img-hero .img-container { height: 220px; } .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Aditya Abhang</a>
+      <div class="nav-links"><a href="../index.html#skills">Skills</a><a href="../index.html#experience">Experience</a><a href="../index.html#projects">Projects</a><a href="../index.html#contact">Contact</a></div>
+      <a href="../index.html#projects" class="back-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> All Projects</a>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <div class="label">Ignited Innovators of India — National Competition</div>
+    <h1>Automatic Medicine Dispenser</h1>
+    <div class="meta">Oct 2023 – Jan 2024 • Pune, India • Completed — Top 5 National Finish</div>
+    <div class="tags">
+      <span class="tag">SolidWorks</span>
+      <span class="tag">Raspberry Pi</span>
+      <span class="tag">Python</span>
+      <span class="tag">3D Printing</span>
+      <span class="tag">DFM</span>
+      <span class="tag">Mechatronics</span>
+    </div>
+  </header>
+
+  <div class="project-img-hero">
+    <div class="img-container"><img src="" alt="Medicine Dispenser" /><div class="photo-placeholder">Project hero image here (760×360)</div></div>
+  </div>
+
+  <article>
+    <h2>Overview</h2>
+    <p>This project was born from a real problem: medication adherence. Patients — particularly the elderly or those on complex multi-drug regimens — frequently miss doses, take incorrect amounts, or confuse medications. We designed and built an automatic medicine dispenser that reliably singulates and dispenses the correct medication at scheduled times, controlled by a Raspberry Pi running Python-based logic.</p>
+    <p>The project was developed for the Ignited Innovators of India national competition, where it earned sponsorship from Eaton India and a Top 5 National finish. The key engineering challenge was the singulation mechanism — reliably isolating and dispensing exactly one pill from a hopper containing pills of varying sizes and shapes.</p>
+
+    <h2>Methodology</h2>
+    <p><strong>1. Mechanical Design — Singulation Mechanism:</strong> The core innovation was a custom singulation mechanism designed in SolidWorks. Unlike simple gravity-fed dispensers that jam with irregular pill shapes, our mechanism used a rotating drum with precisely sized pockets. Each pocket captured a single pill regardless of orientation, and a cam-driven gate released it at the correct position. The mechanism went through multiple design iterations — initial prototypes jammed with oval tablets, leading to pocket geometry refinements that accommodated capsules, round tablets, and oblong pills.</p>
+    <p><strong>2. Rapid Prototyping &amp; Iteration:</strong> Every mechanical revision was 3D printed for immediate testing. This additive manufacturing approach let us go from CAD change to physical test in hours rather than days. We iterated through five major revisions of the singulation drum alone, each addressing specific failure modes discovered in testing (double dispensing, jamming, pill orientation issues).</p>
+    <p><strong>3. Control System:</strong> A Raspberry Pi served as the brain, running Python scripts that managed the dispensing schedule, motor control for the singulation mechanism, and basic user interaction (LCD display showing next scheduled dose, audio alerts for missed medications). The control logic handled edge cases like empty hoppers, jam detection (via current monitoring on the motor), and power recovery after outages.</p>
+    <p><strong>4. Hardware Integration:</strong> The team linked the mechanical dispensing components with electrical actuators, sensors for jam detection and hopper level monitoring, and the Raspberry Pi controller. Getting reliable physical-digital integration — where the software accurately knew the physical state of the mechanism — required careful sensor placement and debouncing logic.</p>
+
+    <h2>Tech Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-item"><strong>SolidWorks</strong><span>Full mechanical design &amp; GD&T drawings</span></div>
+      <div class="tech-item"><strong>Raspberry Pi</strong><span>Control logic &amp; scheduling</span></div>
+      <div class="tech-item"><strong>Python</strong><span>Motor control, scheduling, UI</span></div>
+      <div class="tech-item"><strong>3D Printing (FDM)</strong><span>Rapid prototyping — 5+ iterations</span></div>
+      <div class="tech-item"><strong>Sensors</strong><span>Jam detection &amp; hopper monitoring</span></div>
+      <div class="tech-item"><strong>DFM Principles</strong><span>Design for eventual mass production</span></div>
+    </div>
+
+    <h2>Challenges</h2>
+    <p><strong>Pill variability:</strong> Medications come in wildly different shapes — tiny round tablets, large oval caplets, cylindrical capsules, irregularly shaped extended-release formulations. Designing a single mechanism that reliably singulated all of these without redesigning for each drug was the primary engineering challenge. We solved it with adjustable pocket inserts that could be swapped for different pill form factors.</p>
+    <p><strong>Reliability under continuous use:</strong> A medicine dispenser that jams is worse than no dispenser at all — it gives false confidence that medication is being taken. Every mechanical component had to be tested extensively for wear, fatigue, and edge-case failures. 3D printed parts degrade differently than injection-molded ones, so we had to account for material limitations while keeping the prototype functional.</p>
+    <p><strong>Pitching to industry sponsors:</strong> Securing Eaton India's sponsorship required communicating the market potential and technical robustness of the design to a non-technical audience. Translating engineering decisions into business value — cost per unit, target market size, competitive differentiation — was a skill exercise in its own right.</p>
+
+    <h2>Outcomes</h2>
+    <div class="outcomes-grid">
+      <div class="outcome-card"><div class="stat">Top 5</div><div class="stat-label">National finish in Ignited Innovators of India competition</div></div>
+      <div class="outcome-card"><div class="stat">Eaton India</div><div class="stat-label">Full project sponsorship secured through technical pitch</div></div>
+      <div class="outcome-card"><div class="stat">5+</div><div class="stat-label">Design iterations from concept to functional prototype</div></div>
+    </div>
+    <p>The project demonstrated the full engineering lifecycle: identifying a real-world problem, designing and iterating a mechanical solution, integrating hardware and software controls, and pitching the result to industry stakeholders. It remains one of the projects I'm most proud of because it touched every part of the engineering stack — from SolidWorks assemblies to Python control scripts to standing in front of Eaton executives and making the case for the product.</p>
+  </article>
+
+  <div class="project-nav">
+    <a href="terrain-path-planning.html">← Previous: Terrain Path Planning</a>
+    <span></span>
+  </div>
+
+  <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+</body>
+</html>
