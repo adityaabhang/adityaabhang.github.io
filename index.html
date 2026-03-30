@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Abhang — Computer Vision & Autonomous Navigation</title>
+  <meta name="description" content="Portfolio of Aditya Uday Abhang — MS Robotics at Purdue University." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+<div class="skill-popup-overlay" id="skillPopup">
+    <div class="skill-popup">
+      <div class="skill-popup-header">
+        <h3 id="popupSkillName"></h3>
+        <button class="skill-popup-close" onclick="closePopup()">&times;</button>
+      </div>
+      <div class="skill-popup-label">Used in Projects</div>
+      <div id="popupProjects"></div>
+    </div>
+  </div>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-name">Aditya Abhang</a>
+      <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#contact" class="cta-link">Get in Touch</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>Aditya Uday Abhang</h1>
+    <div class="subtitle">Computer Vision &amp; Autonomous Navigation</div>
+    <div class="tagline">MS Robotics — Purdue University</div>
+    <p>Robotics engineer building autonomous systems that see, navigate, and act. Currently developing drone navigation and industrial monitoring systems at Purdue. Seeking Summer 2026 internships in robotics, computer vision, and physical AI.</p>
+    <div class="hero-links">
+      <a href="mailto:aabhang@purdue.edu"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Email</a>
+      <a href="https://github.com/adityaabhang" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"/></svg> GitHub</a>
+      <a href="https://linkedin.com/in/adityaabhang" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a>
+      <a href="tel:+14084225068"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg> +1-408-422-5068</a>
+    </div>
+  </header>
+
+  <section id="skills" class="fade-in">
+    <div class="section-label">What I Work With</div>
+    <h2 class="section-title">Skills &amp; Technologies</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3><span class="icon">🤖</span> Robotics &amp; Autonomy</h3>
+        <div class="tags">
+          <span class="tag" data-skill="ROS / ROS2">ROS / ROS2</span>
+          <span class="tag" data-skill="Computer Vision">Computer Vision</span>
+          <span class="tag" data-skill="Robotic Perception">Robotic Perception</span>
+          <span class="tag" data-skill="Navigation">Navigation</span>
+          <span class="tag" data-skill="Real-time Systems">Real-time Systems</span>
+          <span class="tag" data-skill="Multi-Agent Systems">Multi-Agent Systems</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="icon">🧠</span> AI &amp; Machine Learning</h3>
+        <div class="tags">
+          <span class="tag" data-skill="PyTorch">PyTorch</span>
+          <span class="tag" data-skill="Reinforcement Learning">Reinforcement Learning</span>
+          <span class="tag" data-skill="Machine Learning">Machine Learning</span>
+          <span class="tag" data-skill="Object Tracking">Object Tracking</span>
+          <span class="tag" data-skill="Semantic Segmentation">Semantic Segmentation</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="icon">💻</span> Programming &amp; Tools</h3>
+        <div class="tags">
+          <span class="tag" data-skill="Python">Python</span>
+          <span class="tag" data-skill="C++">C++</span>
+          <span class="tag" data-skill="MATLAB">MATLAB</span>
+          <span class="tag" data-skill="OpenCV">OpenCV</span>
+          <span class="tag" data-skill="NumPy">NumPy</span>
+          <span class="tag" data-skill="Git">Git</span>
+          <span class="tag" data-skill="Grafana">Grafana</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="icon">🔧</span> Simulation &amp; CAD</h3>
+        <div class="tags">
+          <span class="tag" data-skill="Nvidia Isaac Sim">Nvidia Isaac Sim</span>
+          <span class="tag" data-skill="Gazebo">Gazebo</span>
+          <span class="tag" data-skill="RViz">RViz</span>
+          <span class="tag" data-skill="MoveIt">MoveIt</span>
+          <span class="tag" data-skill="SolidWorks">SolidWorks</span>
+          <span class="tag" data-skill="ANSYS">ANSYS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="icon">⚙️</span> Hardware &amp; Manufacturing</h3>
+        <div class="tags">
+          <span class="tag" data-skill="Raspberry Pi">Raspberry Pi</span>
+          <span class="tag" data-skill="3D Printing">3D Printing</span>
+          <span class="tag" data-skill="Laser Cutting">Laser Cutting</span>
+          <span class="tag" data-skill="DFM">DFM</span>
+          <span class="tag" data-skill="GD&T">GD&amp;T</span>
+          <span class="tag" data-skill="PLC Programming">PLC Programming</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="fade-in">
+    <div class="section-label">Where I've Worked</div>
+    <h2 class="section-title">Experience</h2>
+    <div class="divider"></div>
+    <div class="timeline-item">
+      <div class="timeline-header"><h3>IDEAS Lab — Purdue University</h3><span class="timeline-date">Feb 2026 – Present</span></div>
+      <div class="timeline-sub">Graduate Research • West Lafayette, IN</div>
+      <ul>
+        <li>Developing a computer vision pipeline for human tracking in dense forest environments with frequent occlusions</li>
+        <li>Engineered LiDAR + RGB obstacle avoidance for real-time autonomous drone navigation in unstructured terrain</li>
+        <li>Achieved 85% accuracy across 100+ simulated trials in dense vegetation scenarios</li>
+        <li>Designed multi-agent communication protocol for real-time target relay between scouting drone and parent UAS</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-header"><h3>Maharajashree Industrial Solutions</h3><span class="timeline-date">Jul 2023 – Jan 2024</span></div>
+      <div class="timeline-sub">Automation Engineering Intern • Pune, India</div>
+      <ul>
+        <li>Engineered a high-speed automated mushroom packaging cell — 80% reduction in manual labor, 15% less material waste</li>
+        <li>Integrated pneumatic actuators, solenoid valves, Hall Effect sensors, and load cells into a closed-loop feedback system</li>
+        <li>Created detailed GD&T drawings in SolidWorks, reducing machining rework by 20%</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects" class="fade-in">
+    <div class="section-label">What I've Built</div>
+    <h2 class="section-title">Projects</h2>
+    <div class="divider"></div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-img"><img src="" alt="Autonomous Drone" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-body">
+          <h3>Autonomous Drone Navigation &amp; Human Tracking</h3>
+          <div class="project-meta">IDEAS Lab, Purdue • Feb 2026 – Present</div>
+          <p>Building a robust CV pipeline for autonomous drone navigation and human tracking in dense forest canopies using LiDAR, RGB, and multi-object tracking.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag" data-skill="Computer Vision">CV</span><span class="tag" data-skill="ROS / ROS2">ROS2</span><span class="tag" data-skill="Multi-Agent Systems">Multi-Agent</span></div>
+            <a href="projects/drone-navigation.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"><img src="" alt="TDS Plasma Monitoring" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-body">
+          <h3>TDS In-House Plasma Cutting Monitoring System</h3>
+          <div class="project-meta">ME 597 IIoT, Purdue • Ongoing – Apr 2026</div>
+          <p>Real-time acoustic and current data monitoring on CNC plasma cutting machine to classify sheet thickness and validate material specifications via Grafana dashboards.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag" data-skill="Python">Python</span><span class="tag" data-skill="Raspberry Pi">RPi</span><span class="tag" data-skill="Grafana">Grafana</span></div>
+            <a href="industry-implemented-projects/tds-plasma-monitoring.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"><img src="" alt="Multi-Robot Transport" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-body">
+          <h3>Cooperative Multi-Robot Transport Planning</h3>
+          <div class="project-meta">Purdue University • Oct – Dec 2025</div>
+          <p>Simulated multi-agent cooperative transport with kinematic constraints. Benchmarked Policy Iteration, Value Iteration, and Q-Learning for constrained navigation.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag" data-skill="Reinforcement Learning">RL</span><span class="tag" data-skill="Python">Python</span><span class="tag" data-skill="Navigation">Planning</span></div>
+            <a href="projects/multi-robot-transport.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"><img src="" alt="Terrain-Aware Planning" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-body">
+          <h3>Vision-Guided Terrain-Aware Path Planning</h3>
+          <div class="project-meta">Purdue University • Oct – Dec 2025</div>
+          <p>Closed-loop Gazebo/ROS2 pipeline fusing LiDAR and RGB-D with DeepLabV3+ segmentation for real-time costmap generation and trajectory optimization.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag" data-skill="Gazebo">Gazebo</span><span class="tag" data-skill="ROS / ROS2">ROS2</span><span class="tag" data-skill="Semantic Segmentation">Segmentation</span></div>
+            <a href="projects/terrain-path-planning.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"><img src="" alt="Medicine Dispenser" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-body">
+          <h3>Automatic Medicine Dispenser</h3>
+          <div class="project-meta">Ignited Innovators of India • Oct 2023 – Jan 2024</div>
+          <p>Custom singulation mechanism with Raspberry Pi controls. Sponsored by Eaton India, achieved Top 5 National finish in national innovation competition.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag" data-skill="SolidWorks">SolidWorks</span><span class="tag" data-skill="Raspberry Pi">RPi</span><span class="tag" data-skill="Python">Python</span></div>
+            <a href="projects/medicine-dispenser.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- IE 574: Industrial Robotics Labs -->
+      <div class="project-card">
+        <div class="project-img"><img src="" alt="Industrial Robotics Labs" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-body">
+          <h3>Industrial Robotics Labs (5 Projects)</h3>
+          <div class="project-meta">IE 574, Purdue University • Spring 2026</div>
+          <p>A series of hands-on robotics simulation projects using CoppeliaSim. Programmed robots to pick and place objects, plan collision-free paths, control precise movements, use computer vision for quality control, and apply deep learning for autonomous classification.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag">Robotics</span><span class="tag">CoppeliaSim</span><span class="tag">Automation</span><span class="tag">AI &amp; Deep Learning</span></div>
+            <a href="minor-projects/ie574-labs/index-ie574.html" class="read-more">View All Labs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <!-- ECE 569: Introduction to Robotics Labs -->
+      <div class="project-card">
+        <div class="project-img"><img src="" alt="Introduction to Robotics Labs" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-body">
+          <h3>Introduction to Robotics Labs (4 Projects)</h3>
+          <div class="project-meta">ECE 569, Purdue University • Spring 2026</div>
+          <p>ROS and RViz-based robotics labs covering workspace setup, 3D visualization, trajectory planning with velocity profiling, and end-effector curve tracing using inverse kinematics. Foundations of robotic software stacks.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag">ROS</span><span class="tag">RViz</span><span class="tag">Trajectory Planning</span><span class="tag">Kinematics</span></div>
+            <a href="minor-projects/ece569-labs/index-ece569.html" class="read-more">View All Labs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="fade-in">
+    <div class="section-label">Where I've Studied</div>
+    <h2 class="section-title">Education</h2>
+    <div class="divider"></div>
+    <div class="edu-card">
+      <div><h3>Purdue University</h3><div class="degree">MS in Engineering — Robotics / Interdisciplinary Engineering</div><div class="coursework">Motion Planning · Reinforcement Learning · Industrial Robotics · IoT Integration · Intro to Robotics</div></div>
+      <div class="edu-right"><div class="date">Aug 2025 – May 2027</div><div class="gpa">GPA: 3.67 / 4.0</div></div>
+    </div>
+    <div class="edu-card">
+      <div><h3>Govt College of Engineering, Pune</h3><div class="degree">BE Mechanical Engineering — Honors in System Engineering</div></div>
+      <div class="edu-right"><div class="date">Aug 2020 – May 2024</div><div class="gpa">GPA: 3.2 / 4.0</div></div>
+    </div>
+  </section>
+
+  <section id="contact" class="fade-in">
+    <div class="contact-section">
+      <div class="section-label">Let's Connect</div>
+      <h2 class="section-title" style="margin-bottom: 0.75rem;">Open to Summer 2026 Opportunities</h2>
+      <p>Actively seeking internship and co-op roles in robotics, computer vision, reinforcement learning, and physical AI. Let's talk.</p>
+      <div class="contact-grid">
+        <a href="/cdn-cgi/l/email-protection#d2b3b3b0bab3bcb592a2a7a0b6a7b7fcb7b6a7" class="contact-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> <span class="__cf_email__" data-cfemail="fc9d9d9e949d929bbc8c898e988999d2999889">[email&#160;protected]</span></a>
+        <a href="https://github.com/adityaabhang" target="_blank" class="contact-secondary">GitHub</a>
+        <a href="https://linkedin.com/in/adityaabhang" target="_blank" class="contact-secondary">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // cat: "project" | "industry" | "ie574" | "ece569"
+    const skillProjectMap = {
+      "ROS / ROS2": [
+        { name: "Autonomous Drone Navigation", desc: "LiDAR+RGB obstacle avoidance and human tracking in dense forest canopies", link: "projects/drone-navigation.html", cat: "project" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Closed-loop Gazebo/ROS2 pipeline with DeepLabV3+ semantic segmentation", link: "projects/terrain-path-planning.html", cat: "project" },
+        { name: "ROS Implementation (Lab 1)", desc: "Workspace setup, nodes, topics, services, and launch files", link: "minor-projects/ece569-labs/ros-implementation.html", cat: "ece569" },
+        { name: "RViz Implementation (Lab 2)", desc: "Robot model visualization, TF trees, and sensor data display", link: "minor-projects/ece569-labs/r-viz-implementation.html", cat: "ece569" }
+      ],
+      "Computer Vision": [
+        { name: "Autonomous Drone Navigation", desc: "Multi-object tracking pipeline for human subjects through dense forest environments", link: "projects/drone-navigation.html", cat: "project" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "RGB-D camera fusion for terrain classification and dynamic costmap generation", link: "projects/terrain-path-planning.html", cat: "project" },
+        { name: "Machine Vision for QC (Lab 4)", desc: "Automated defect detection and part classification using vision sensors", link: "minor-projects/ie574-labs/lab4-machine-vision.html", cat: "ie574" }
+      ],
+      "Robotic Perception": [
+        { name: "Autonomous Drone Navigation", desc: "LiDAR and RGB sensor fusion for obstacle detection in unstructured terrain", link: "projects/drone-navigation.html", cat: "project" }
+      ],
+      "Navigation": [
+        { name: "Autonomous Drone Navigation", desc: "Real-time autonomous navigation through dense forest with obstacle avoidance", link: "projects/drone-navigation.html", cat: "project" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "A* and RRT* benchmarking with semantic terrain awareness", link: "projects/terrain-path-planning.html", cat: "project" },
+        { name: "Cooperative Multi-Robot Transport", desc: "Constrained multi-agent navigation in static occupancy grids", link: "projects/multi-robot-transport.html", cat: "project" },
+        { name: "Path Planning with Smooth Curves (Lab 3)", desc: "Ferguson and Bézier curves for collision-free multi-robot trajectories", link: "minor-projects/ie574-labs/lab3-path-planning.html", cat: "ie574" },
+        { name: "Trajectory Planning (Lab 3)", desc: "Joint-space and Cartesian trajectory planning with velocity profiling", link: "minor-projects/ece569-labs/trajectory-planning.html", cat: "ece569" }
+      ],
+      "Real-time Systems": [
+        { name: "Autonomous Drone Navigation", desc: "Real-time obstacle avoidance and target coordinate relay at flight speed", link: "projects/drone-navigation.html", cat: "project" },
+        { name: "TDS Plasma Cutting Monitoring", desc: "Continuous acoustic and current data acquisition during CNC plasma operations", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" }
+      ],
+      "Multi-Agent Systems": [
+        { name: "Autonomous Drone Navigation", desc: "Communication protocol relaying target coordinates from scout drone to parent UAS", link: "projects/drone-navigation.html", cat: "project" },
+        { name: "Cooperative Multi-Robot Transport", desc: "Two-agent cooperative payload transport with fixed inter-agent distance constraints", link: "projects/multi-robot-transport.html", cat: "project" }
+      ],
+      "PyTorch": [
+        { name: "Autonomous Drone Navigation", desc: "Deep learning models for object detection and tracking in forest environments", link: "projects/drone-navigation.html", cat: "project" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "DeepLabV3+ semantic segmentation model for terrain classification", link: "projects/terrain-path-planning.html", cat: "project" },
+        { name: "Deep Learning Classification (Lab 5)", desc: "Trained CNNs for autonomous object classification in robotic systems", link: "minor-projects/ie574-labs/lab5-deep-learning.html", cat: "ie574" }
+      ],
+      "Reinforcement Learning": [
+        { name: "Cooperative Multi-Robot Transport", desc: "Benchmarked Policy Iteration, Value Iteration, and Q-Learning for constrained navigation", link: "projects/multi-robot-transport.html", cat: "project" }
+      ],
+      "Machine Learning": [
+        { name: "TDS Plasma Cutting Monitoring", desc: "Threshold matching and ML-based classification of plasma cut sheet thickness", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Semantic segmentation for drivable vs. non-drivable terrain classification", link: "projects/terrain-path-planning.html", cat: "project" },
+        { name: "Deep Learning Classification (Lab 5)", desc: "CNN training and inference for autonomous robotic decision-making", link: "minor-projects/ie574-labs/lab5-deep-learning.html", cat: "ie574" }
+      ],
+      "Object Tracking": [
+        { name: "Autonomous Drone Navigation", desc: "ByteTrack and BoT-SORT based multi-object tracking through heavy occlusions", link: "projects/drone-navigation.html", cat: "project" }
+      ],
+      "Semantic Segmentation": [
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "DeepLabV3+ classifying drivable terrain from RGB-D data for costmap generation", link: "projects/terrain-path-planning.html", cat: "project" }
+      ],
+      "Python": [
+        { name: "Autonomous Drone Navigation", desc: "Core CV pipeline for tracking and multi-agent communication", link: "projects/drone-navigation.html", cat: "project" },
+        { name: "TDS Plasma Cutting Monitoring", desc: "Sensor data collection, processing, and thickness classification", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" },
+        { name: "Cooperative Multi-Robot Transport", desc: "RL algorithm implementation and grid-world simulation", link: "projects/multi-robot-transport.html", cat: "project" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Segmentation inference and navigation stack integration", link: "projects/terrain-path-planning.html", cat: "project" },
+        { name: "Automatic Medicine Dispenser", desc: "Raspberry Pi control logic for dispensing mechanism", link: "projects/medicine-dispenser.html", cat: "project" },
+        { name: "ROS Implementation (Lab 1)", desc: "Publisher/subscriber nodes and service-client communication", link: "minor-projects/ece569-labs/ros-implementation.html", cat: "ece569" },
+        { name: "Curve Tracing (Lab 4)", desc: "End-effector path following with inverse kinematics", link: "minor-projects/ece569-labs/curve-tracing.html", cat: "ece569" }
+      ],
+      "C++": [
+        { name: "Autonomous Drone Navigation", desc: "Performance-critical components of the real-time navigation stack", link: "projects/drone-navigation.html", cat: "project" }
+      ],
+      "MATLAB": [
+        { name: "Cooperative Multi-Robot Transport", desc: "Analysis and visualization of algorithm convergence metrics", link: "projects/multi-robot-transport.html", cat: "project" },
+        { name: "Trajectory Planning (Lab 3)", desc: "Joint-space interpolation and velocity profile computation", link: "minor-projects/ece569-labs/trajectory-planning.html", cat: "ece569" },
+        { name: "Curve Tracing (Lab 4)", desc: "Inverse kinematics solving for complex end-effector paths", link: "minor-projects/ece569-labs/curve-tracing.html", cat: "ece569" }
+      ],
+      "OpenCV": [
+        { name: "Autonomous Drone Navigation", desc: "Image processing and feature extraction for tracking pipeline", link: "projects/drone-navigation.html", cat: "project" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Camera data preprocessing and costmap visualization", link: "projects/terrain-path-planning.html", cat: "project" }
+      ],
+      "NumPy": [
+        { name: "Cooperative Multi-Robot Transport", desc: "Grid-world representations and matrix operations for RL algorithms", link: "projects/multi-robot-transport.html", cat: "project" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Numerical processing of sensor data and costmap arrays", link: "projects/terrain-path-planning.html", cat: "project" }
+      ],
+      "Git": [
+        { name: "All Projects", desc: "Version control and collaborative development across all project work", link: "#projects", cat: "project" }
+      ],
+      "Grafana": [
+        { name: "TDS Plasma Cutting Monitoring", desc: "Real-time dashboards visualizing acoustic data, current readings, and thickness classification", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" }
+      ],
+      "Nvidia Isaac Sim": [
+        { name: "Autonomous Drone Navigation", desc: "Simulation environment for testing navigation algorithms", link: "projects/drone-navigation.html", cat: "project" }
+      ],
+      "Gazebo": [
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Full simulation environment for closed-loop navigation testing", link: "projects/terrain-path-planning.html", cat: "project" }
+      ],
+      "RViz": [
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Visualization of costmaps, trajectories, and sensor data", link: "projects/terrain-path-planning.html", cat: "project" },
+        { name: "RViz Implementation (Lab 2)", desc: "URDF robot models, TF trees, and interactive marker visualization", link: "minor-projects/ece569-labs/r-viz-implementation.html", cat: "ece569" }
+      ],
+      "MoveIt": [
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Motion planning framework integration", link: "projects/terrain-path-planning.html", cat: "project" }
+      ],
+      "SolidWorks": [
+        { name: "Automatic Medicine Dispenser", desc: "Custom singulation mechanism design with iterative 3D modeling", link: "projects/medicine-dispenser.html", cat: "project" }
+      ],
+      "ANSYS": [],
+      "Raspberry Pi": [
+        { name: "TDS Plasma Cutting Monitoring", desc: "Edge data collection from acoustic and current sensors", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" },
+        { name: "Automatic Medicine Dispenser", desc: "Hardware controller running Python-based dispensing logic", link: "projects/medicine-dispenser.html", cat: "project" }
+      ],
+      "3D Printing": [
+        { name: "Automatic Medicine Dispenser", desc: "Additive manufacturing for rapid mechanical design iteration", link: "projects/medicine-dispenser.html", cat: "project" }
+      ],
+      "Laser Cutting": [],
+      "DFM": [
+        { name: "Automatic Medicine Dispenser", desc: "Design for manufacturing considerations in singulation mechanism", link: "projects/medicine-dispenser.html", cat: "project" }
+      ],
+      "GD&T": [],
+      "PLC Programming": []
+    };
+
+    const catLabels = {
+      project:  { text: "Project",          bg: "#EDF2F7", color: "#2B5C8A" },
+      industry: { text: "Industry",         bg: "#D4EDDA", color: "#1B6B4A" },
+      ie574:    { text: "IE 574 Lab",       bg: "#FFF3E0", color: "#E65100" },
+      ece569:   { text: "ECE 569 Lab",      bg: "#E8EAF6", color: "#283593" }
+    };
+
+    function openPopup(skill) {
+      const projects = skillProjectMap[skill];
+      const overlay = document.getElementById('skillPopup');
+      document.getElementById('popupSkillName').textContent = skill;
+      const projEl = document.getElementById('popupProjects');
+      if (!projects || projects.length === 0) {
+        projEl.innerHTML = '<p style="font-size:0.85rem;color:var(--text-secondary);">Foundation skill — applied across coursework and professional work.</p>';
+      } else {
+        projEl.innerHTML = projects.map(p => {
+          const c = catLabels[p.cat] || catLabels.project;
+          const badge = '<span style="display:inline-block;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.12rem 0.4rem;border-radius:3px;background:' + c.bg + ';color:' + c.color + ';margin-bottom:0.25rem;">' + c.text + '</span>';
+          return '<div class="skill-popup-project">' + badge + '<br><a href="' + p.link + '">' + p.name + '</a><p>' + p.desc + '</p></div>';
+        }).join('');
+      }
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePopup() { document.getElementById('skillPopup').classList.remove('active'); document.body.style.overflow = ''; }
+    document.querySelectorAll('.tag[data-skill]').forEach(t => t.addEventListener('click', () => openPopup(t.dataset.skill)));
+    document.getElementById('skillPopup').addEventListener('click', e => { if (e.target === e.currentTarget) closePopup(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
+    window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10); });
+    const obs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { t
