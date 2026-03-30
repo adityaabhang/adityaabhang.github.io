@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sawyer Robot Pick & Place | Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+<header>
+        <nav class="container">
+            <span class="logo">Aditya Abhang</span>
+            <div class="nav-links">
+                <a href="https://adityaabhang.github.io">Home</a>
+                <a href="https://adityaabhang.github.io#projects">Projects</a>
+                <a href="https://github.com/adityaabhang">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="https://adityaabhang.github.io#projects" class="back-link">← Back to Projects</a>
+
+        <h1>Robot Pick and Place Project</h1>
+
+        <div class="project-meta">
+            <div class="meta-item">📅 Spring 2026</div>
+            <div class="meta-item">🏫 Purdue University</div>
+            <div class="meta-item">🤖 Robotics Class</div>
+        </div>
+
+        <div class="tags">
+            <span class="tag">Robotics</span>
+            <span class="tag">Problem Solving</span>
+            <span class="tag">Programming</span>
+            <span class="tag">Planning</span>
+        </div>
+
+        <!-- Video Section -->
+        <section>
+            <h2>Project Demo Video</h2>
+            <p>Watch the robot automatically pick up colored blocks and sort them into the correct bins:</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="https://adityaabhang.github.io/assets/Lab1_PickAndPlace.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section>
+            <h2>What Did I Do?</h2>
+            <p>For this project, I programmed a robot called Sawyer to automatically pick up colored blocks and place them in the correct bins. This involved writing instructions that tell the robot:</p>
+            <ul>
+                <li>Where each block is located</li>
+                <li>How to move its arm to reach the block safely</li>
+                <li>When to open and close its gripper (the hand that grabs things)</li>
+                <li>Where to place each block</li>
+            </ul>
+
+            <div class="highlight">
+                <strong>Goal:</strong> Successfully move all 6 blocks into their matching color bins without dropping them or hitting anything.
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section>
+            <h2>How It Works</h2>
+            <p>The robot follows a simple step-by-step process for each block:</p>
+
+            <ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li><strong>Move Above:</strong> The robot moves its arm above the block</li>
+                <li><strong>Move Down:</strong> It lowers the arm to the block's location</li>
+                <li><strong>Grab:</strong> The gripper closes and picks up the block</li>
+                <li><strong>Move Up:</strong> The arm rises to avoid hitting anything</li>
+                <li><strong>Move to Bin:</strong> The arm travels to the correct color bin</li>
+                <li><strong>Release:</strong> The gripper opens and the block drops into the bin</li>
+            </ol>
+
+            <p>This process is repeated for all 6 blocks, and the robot sorts them correctly into red, green, and blue bins.</p>
+        </section>
+
+        <!-- Results Section -->
+        <section>
+            <h2>Results</h2>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h4>✅ All Blocks Sorted Correctly</h4>
+                    <p>All 6 blocks were successfully moved to their correct color bins with 100% accuracy</p>
+                </div>
+                <div class="result-card">
+                    <h4>🎯 Precise Placement</h4>
+                    <p>Each block was placed exactly where it needed to be in the bin</p>
+                </div>
+                <div class="result-card">
+                    <h4>⚡ Safe Movements</h4>
+                    <p>The robot avoided collisions and moved safely around the workspace</p>
+                </div>
+                <div class="result-card">
+                    <h4>🔧 Reliable Performance</h4>
+                    <p>The gripper worked consistently to grab and release each block</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What I Learned -->
+        <section>
+            <h2>What I Learned</h2>
+            <ul>
+                <li><strong>Breaking Down Problems:</strong> I learned how to break a complex task (sorting blocks) into smaller, manageable steps that a robot can follow</li>
+                <li><strong>Attention to Detail:</strong> Small changes in positioning make a big difference in whether a task succeeds</li>
+                <li><strong>Robot Control:</strong> I gained experience in how robots actually work and how to control them programmatically</li>
+                <li><strong>Practical Problem Solving:</strong> I had to test and adjust my approach multiple times to get everything working correctly</li>
+                <li><strong>Simulation Tools:</strong> I learned how to use software that simulates real robots before deploying to actual hardware</li>
+            </ul>
+        </section>
+
+        <!-- Why This Matters -->
+        <section>
+            <h2>Why This Matters</h2>
+            <p>This type of work is used in real-world applications like:</p>
+            <ul>
+                <li><strong>Warehouse Automation:</strong> Robots sorting and organizing packages</li>
+                <li><strong>Manufacturing:</strong> Robots assembling products on production lines</li>
+                <li><strong>Logistics:</strong> Automated systems organizing and moving items</li>
+                <li><strong>Healthcare:</strong> Robots helping with repetitive or dangerous tasks</li>
+            </ul>
+            <p>By learning these skills, I'm building expertise in automation and robotics—two of the fastest-growing fields in industry.</p>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-links">
+            <a href="https://adityaabhang.github.io">← Back to Home</a>
+            <a href="https://adityaabhang.github.io#projects">View All Projects</a>
+            <a href="https://github.com/adityaabhang">GitHub Profile</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Machine Vision for Robot Quality Control | Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+<header>
+        <nav class="container">
+            <span class="logo">Aditya Abhang</span>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="../../index.html#projects">Projects</a>
+                <a href="https://github.com/adityaabhang">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index-ie574.html" class="back-link">← Back to Industrial Robotics Labs</a>
+
+        <h1>Machine Vision for Quality Control</h1>
+
+        <div class="project-meta">
+            <div class="meta-item">📅 Spring 2026</div>
+            <div class="meta-item">🏫 Lab 4</div>
+            <div class="meta-item">🤖 Purdue University</div>
+        </div>
+
+        <div class="tags">
+            <span class="tag">Machine Vision</span>
+            <span class="tag">Image Recognition</span>
+            <span class="tag">Quality Control</span>
+            <span class="tag">Python</span>
+        </div>
+
+        <!-- Video Section -->
+        <section>
+            <h2>Project Demonstration</h2>
+            <p>Watch the robot use its camera to identify and classify parts by size:</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="../../assets/Lab4.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section>
+            <h2>What Did I Do?</h2>
+            <p>In this lab, I gave a robot the ability to "see" and make decisions based on what it sees. Using a camera mounted on the robot, I programmed it to identify parts, measure them, and decide whether they are good or defective based on their size.</p>
+
+            <div class="highlight">
+                <strong>Goal:</strong> Use machine vision to classify parts as good or defective, and have the robot pick and sort them accordingly.
+            </div>
+
+            <h3>The Challenge</h3>
+            <p>The robot needed to:</p>
+            <ul>
+                <li>Capture an image of the part using its camera</li>
+                <li>Analyze the image to measure the part's size</li>
+                <li>Compare the size to a standard threshold</li>
+                <li>Decide if the part is good or defective</li>
+                <li>Pick and place the part in the correct bin</li>
+            </ul>
+        </section>
+
+        <!-- How It Works Section -->
+        <section>
+            <h2>How Machine Vision Works</h2>
+            <p>The robot uses a 4-step process to identify and classify parts:</p>
+
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Capture Image</div>
+                    <div class="step-description">Robot camera takes a photo of the part</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Convert to Binary</div>
+                    <div class="step-description">Convert image to black and white for easier analysis</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Measure Area</div>
+                    <div class="step-description">Calculate the size/area of the part</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Classify Part</div>
+                    <div class="step-description">Compare size to threshold, decide good or defective</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Details -->
+        <section>
+            <h2>The Vision Technology</h2>
+            <p>I used mathematical techniques called "moments" to analyze part shapes and sizes:</p>
+
+            <div class="comparison-box">
+                <h4>Central Moments</h4>
+                <p>A way to measure the size of a part. The "central moment" tells us the total area of the part in the image. For example, a larger nut has a larger central moment than a smaller nut.</p>
+            </div>
+
+            <div class="comparison-box">
+                <h4>Hu Moments</h4>
+                <p>A set of seven special measurements that describe the shape of an object. These are powerful because they work even if the object is rotated or scaled. This makes shape recognition more reliable in real-world scenarios.</p>
+            </div>
+
+            <p><strong>Why use these techniques?</strong> They allow the robot to recognize parts accurately, even with slight variations in lighting, position, or rotation.</p>
+        </section>
+
+        <!-- Classification Strategy -->
+        <section>
+            <h2>Classification Strategy</h2>
+            <p>The robot follows a decision tree to classify parts:</p>
+            
+            <h3>Step 1: Capture Grayscale Image</h3>
+            <p>The camera captures a color image and converts it to grayscale (black and white).</p>
+
+            <h3>Step 2: Convert to Binary</h3>
+            <p>The image is converted to pure black and white using a threshold. Black represents the part, white represents the background.</p>
+
+            <h3>Step 3: Calculate Total Area (M00)</h3>
+            <p>The robot counts all the black pixels to get the total area of the part. This is called the "M00" measurement.</p>
+
+            <h3>Step 4: Compare to Threshold</h3>
+            <p>If M00 is above the threshold (1000), the robot checks if it meets the quality standard. If it does, it picks the part. If it's below the threshold or doesn't meet quality, it's marked as defective.</p>
+        </section>
+
+        <!-- Results Section -->
+        <section>
+            <h2>Results</h2>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h4>✅ 3 Parts Analyzed</h4>
+                    <p>Successfully measured and classified 3 different part samples using image analysis</p>
+                </div>
+                <div class="result-card">
+                    <h4>🎯 Accurate Measurements</h4>
+                    <p>Computed central moments and Hu moments for each part with high precision</p>
+                </div>
+                <div class="result-card">
+                    <h4>🔍 Defect Detection</h4>
+                    <p>Classified parts as good or defective based on size and shape analysis</p>
+                </div>
+                <div class="result-card">
+                    <h4>🤖 Automated Sorting</h4>
+                    <p>Robot automatically picked good parts and placed them in the correct bin</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What I Learned -->
+        <section>
+            <h2>What I Learned</h2>
+            <ul>
+                <li><strong>Computer Vision Basics:</strong> How computers "see" and interpret images</li>
+                <li><strong>Image Processing:</strong> Techniques to convert and analyze images (grayscale, binary, thresholding)</li>
+                <li><strong>Shape Recognition:</strong> Using mathematical moments to identify and classify objects</li>
+                <li><strong>Quality Control:</strong> How vision systems automate quality checks in manufacturing</li>
+                <li><strong>Decision Making:</strong> How to program robots to make decisions based on visual data</li>
+            </ul>
+        </section>
+
+        <!-- Real-World Applications -->
+        <section>
+            <h2>Why This Matters</h2>
+            <p>Machine vision is transforming industries worldwide:</p>
+            <ul>
+                <li><strong>Manufacturing Quality:</strong> Cameras automatically inspect thousands of parts per day, catching defects humans might miss</li>
+                <li><strong>Cost Savings:</strong> Fewer defective products reach customers, reducing waste and returns</li>
+                <li><strong>Speed & Efficiency:</strong> Vision-based inspection happens in milliseconds, keeping production fast</li>
+                <li><strong>Safety:</strong> Robots can inspect hazardous materials without putting humans at risk</li>
+                <li><strong>Consistency:</strong> Machines always apply the same standards, unlike human inspectors who might vary day to day</li>
+            </ul>
+        </section>
+
+        <!-- Challenges Overcome -->
+        <section>
+            <h2>Challenges I Overcame</h2>
+            <p>During this lab, I faced and resolved several challenges:</p>
+            <ul>
+                <li><strong>Understanding Pixel Values:</strong> I initially confused which pixel values represented black vs. white, but quickly corrected this and understood the convention</li>
+                <li><strong>Image Quality:</strong> The simulation had grainy textures that could affect measurements. I learned to account for these real-world imperfections</li>
+                <li><strong>Threshold Tuning:</strong> Finding the right threshold value to accurately classify parts required testing and refinement</li>
+            </ul>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-links">
+            <a href="../../index.html">← Back to Home</a>
+            <a href="index-ie574.html">Back to All Labs</a>
+            <a href="https://github.com/adityaabhang">GitHub Profile</a>
+        </div>
+    </div>
+</body>
+</html>

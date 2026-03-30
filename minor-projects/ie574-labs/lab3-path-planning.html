@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robot Path Planning | Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+<header>
+        <nav class="container">
+            <span class="logo">Aditya Abhang</span>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="../../index.html#projects">Projects</a>
+                <a href="https://github.com/adityaabhang">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index-ie574.html" class="back-link">← Back to Industrial Robotics Labs</a>
+
+        <h1>Path Planning with Smooth Curves</h1>
+
+        <div class="project-meta">
+            <div class="meta-item">📅 Spring 2026</div>
+            <div class="meta-item">🏫 Lab 3</div>
+            <div class="meta-item">🤖 Purdue University</div>
+        </div>
+
+        <div class="tags">
+            <span class="tag">Path Planning</span>
+            <span class="tag">Robotics</span>
+            <span class="tag">Motion Control</span>
+            <span class="tag">Trajectory Design</span>
+        </div>
+
+        <!-- Image Section -->
+        <section>
+            <h2>Project Setup</h2>
+            <p>For this lab, I worked with a UR3 robot in a simulated manufacturing environment. The goal was to plan smooth, collision-free paths for the robot to pick up objects and place them in different locations.</p>
+            <div class="image-container">
+                <img src="../../assets/lab3-setup.jpg" alt="Lab 3 Robot Setup in CoppeliaSim">
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section>
+            <h2>What Did I Do?</h2>
+            <p>In this lab, I designed smooth paths for a robot to follow. Instead of moving the robot in straight lines (which can be jerky and inefficient), I created curved paths that allow smooth, natural movement.</p>
+
+            <div class="highlight">
+                <strong>Goal:</strong> Plan 4 different paths for the robot to complete 2 pick-and-place tasks while avoiding obstacles and other robots.
+            </div>
+
+            <h3>The Challenge</h3>
+            <p>The robot needed to:</p>
+            <ul>
+                <li>Pick up an object from one location</li>
+                <li>Navigate around obstacles and another robot safely</li>
+                <li>Place the object in a drop-off location</li>
+                <li>Do this twice with different paths</li>
+            </ul>
+        </section>
+
+        <!-- Process Section -->
+        <section>
+            <h2>How Path Planning Works</h2>
+            <p>Path planning involves breaking a complex movement into smaller, manageable steps:</p>
+
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Define Key Points</div>
+                    <div class="step-description">Mark the start, goal, and waypoints the robot must pass through</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Create Smooth Curves</div>
+                    <div class="step-description">Connect points with smooth mathematical curves instead of straight lines</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Check for Collisions</div>
+                    <div class="step-description">Verify the path doesn't hit any obstacles or other objects</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Execute the Path</div>
+                    <div class="step-description">Send the smooth trajectory to the robot to follow</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Details -->
+        <section>
+            <h2>Smooth Curves in Path Planning</h2>
+            <p>I used two mathematical methods to create smooth paths:</p>
+
+            <div class="comparison-box">
+                <h4>Ferguson Curves (for paths 1 & 2)</h4>
+                <p>A type of curve that smoothly connects two points while maintaining direction control. These curves are like drawing a smooth arc between points instead of a straight line.</p>
+            </div>
+
+            <div class="comparison-box">
+                <h4>Bézier Curves (for paths 3 & 4)</h4>
+                <p>Another smooth curve method that uses control points to shape the path. This gives more flexibility in how the robot moves through space.</p>
+            </div>
+
+            <p><strong>Why use curves?</strong> Curves create smooth, natural movement. Robots moving along curves instead of jagged lines are faster, smoother, and less likely to damage sensitive equipment.</p>
+        </section>
+
+        <!-- Four Paths Explanation -->
+        <section>
+            <h2>The Four Paths</h2>
+            
+            <h3>Path 1: Approach to Pick Location</h3>
+            <p>The robot moves from its starting position to the first object. The path carefully descends while avoiding obstacles.</p>
+
+            <h3>Path 2: Move to First Drop Location</h3>
+            <p>After picking up the object, the robot travels to the first drop-off point, moving around the KUKA robot in the workspace.</p>
+
+            <h3>Path 3: Return to Pick Second Object</h3>
+            <p>The robot moves back to the workspace to pick up a second object, taking a different route to avoid interference.</p>
+
+            <h3>Path 4: Move to Second Drop Location</h3>
+            <p>Finally, the robot delivers the second object to its destination, completing the task.</p>
+        </section>
+
+        <!-- Results Section -->
+        <section>
+            <h2>Results</h2>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h4>✅ 4 Smooth Paths Planned</h4>
+                    <p>Successfully created 4 collision-free paths with smooth curves connecting 4 points each</p>
+                </div>
+                <div class="result-card">
+                    <h4>🎯 No Collisions</h4>
+                    <p>All paths avoided obstacles and the other KUKA robot working in the shared space</p>
+                </div>
+                <div class="result-card">
+                    <h4>⚡ 44 Total Waypoints</h4>
+                    <p>Generated 11 intermediate points per path (4 paths × 11 points = 44 waypoints)</p>
+                </div>
+                <div class="result-card">
+                    <h4>📊 Two Methods Compared</h4>
+                    <p>Used Ferguson and Bézier curves to understand different path generation techniques</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What I Learned -->
+        <section>
+            <h2>What I Learned</h2>
+            <ul>
+                <li><strong>Motion Planning:</strong> How to design robot movements that are smooth, efficient, and collision-free</li>
+                <li><strong>Workspace Analysis:</strong> Understanding how to work with multiple robots in shared environments</li>
+                <li><strong>Curve Mathematics:</strong> How Ferguson and Bézier curves create smooth trajectories</li>
+                <li><strong>Waypoint Design:</strong> The importance of intermediate points (waypoints) in path planning</li>
+                <li><strong>Practical Robotics:</strong> That good path planning is crucial for safe, efficient automation</li>
+            </ul>
+        </section>
+
+        <!-- Real-World Applications -->
+        <section>
+            <h2>Why This Matters</h2>
+            <p>Path planning is essential in real manufacturing environments:</p>
+            <ul>
+                <li><strong>Manufacturing Lines:</strong> Multiple robots work together safely by planning collision-free paths</li>
+                <li><strong>Efficiency:</strong> Smooth curves reduce energy use and make robots work faster</li>
+                <li><strong>Safety:</strong> Careful planning prevents robots from hitting each other or obstacles</li>
+                <li><strong>Automation:</strong> Good path planning allows factories to run complex multi-robot operations 24/7</li>
+                <li><strong>Precision:</strong> Smooth paths lead to more accurate object placement</li>
+            </ul>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-links">
+            <a href="../../index.html">← Back to Home</a>
+            <a href="index-ie574.html">Back to All Labs</a>
+            <a href="https://github.com/adityaabhang">GitHub Profile</a>
+        </div>
+    </div>
+</body>
+</html>

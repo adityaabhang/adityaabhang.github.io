@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robot Programming: Online vs Offline | Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+<header>
+        <nav class="container">
+            <span class="logo">Aditya Abhang</span>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="../../index.html#projects">Projects</a>
+                <a href="https://github.com/adityaabhang">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index-ie574.html" class="back-link">← Back to Industrial Robotics Labs</a>
+
+        <h1>Online vs Offline Robot Programming</h1>
+
+        <div class="project-meta">
+            <div class="meta-item">📅 Spring 2026</div>
+            <div class="meta-item">🏫 Lab 2</div>
+            <div class="meta-item">🤖 Purdue University</div>
+        </div>
+
+        <div class="tags">
+            <span class="tag">Robotics</span>
+            <span class="tag">Programming</span>
+            <span class="tag">Automation</span>
+            <span class="tag">Comparison Study</span>
+        </div>
+
+        <!-- Video Section -->
+        <section>
+            <h2>Project Demonstrations</h2>
+            <p>This lab involved two different approaches to control a robot. Watch both methods in action:</p>
+            
+            <h3>Online Programming (Using Commands)</h3>
+            <p>Controlling the robot step-by-step with direct commands:</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="../../assets/Lab2_online_recording.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Offline Programming (Using Code)</h3>
+            <p>Controlling the robot with a pre-written script:</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="../../assets/Lab2_offline.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section>
+            <h2>What Did I Do?</h2>
+            <p>In this lab, I programmed a robot to pick up objects from a moving conveyor belt and place them in a drop-off location. However, I did this in two completely different ways to learn about the pros and cons of each approach.</p>
+
+            <div class="highlight">
+                <strong>Goal:</strong> Compare two methods of controlling robots—one by giving commands manually, and one by writing a script that runs automatically.
+            </div>
+
+            <h3>Approach 1: Online Programming</h3>
+            <p>I controlled the robot step-by-step, giving it commands one at a time:</p>
+            <ul>
+                <li>Resume the conveyor belt</li>
+                <li>Move to the pick position</li>
+                <li>Open the gripper</li>
+                <li>Move to the drop position</li>
+                <li>Close the gripper</li>
+                <li>Repeat for multiple objects</li>
+            </ul>
+
+            <h3>Approach 2: Offline Programming</h3>
+            <p>I wrote a script that tells the robot exactly what to do, and it runs the entire task automatically:</p>
+            <ul>
+                <li>Define where to pick up objects</li>
+                <li>Define where to drop objects</li>
+                <li>Write code to repeat the task 3 times</li>
+                <li>Run the entire script at once</li>
+            </ul>
+        </section>
+
+        <!-- Comparison Section -->
+        <section>
+            <h2>Online vs Offline Programming</h2>
+            <p>Both methods work, but they have different advantages and disadvantages:</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-box">
+                    <h4>🎮 Online Programming</h4>
+                    <p><strong>What it is:</strong> You control the robot step-by-step with commands, like teaching it in real-time.</p>
+                    <ul>
+                        <li>Good for learning and training robots</li>
+                        <li>Works for simple, one-off tasks</li>
+                        <li>Doesn't require much coding knowledge</li>
+                        <li>Robot must be available to use</li>
+                        <li>Takes time to repeat tasks manually</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-box">
+                    <h4>⚙️ Offline Programming</h4>
+                    <p><strong>What it is:</strong> You write a complete script, and the robot runs it automatically without you controlling each step.</p>
+                    <ul>
+                        <li>Fast and efficient for repetitive tasks</li>
+                        <li>Can run without user interaction</li>
+                        <li>Exact same results every time</li>
+                        <li>Requires programming knowledge</li>
+                        <li>Takes time to write and test the code</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Insights -->
+        <section>
+            <h2>What I Learned</h2>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h4>📚 Two Different Approaches</h4>
+                    <p>There's more than one way to control a robot. Different situations need different solutions.</p>
+                </div>
+                <div class="result-card">
+                    <h4>🎯 When to Use Each Method</h4>
+                    <p>Online is good for learning and testing. Offline is good for real production work that repeats many times.</p>
+                </div>
+                <div class="result-card">
+                    <h4>💡 Real-World Applications</h4>
+                    <p>In factories, robots use offline programming to run 24/7 without anyone controlling them. Online is used for setup and training.</p>
+                </div>
+                <div class="result-card">
+                    <h4>🔄 Automation Benefits</h4>
+                    <p>Writing code once lets you run complex tasks perfectly many times. This saves time and money in manufacturing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Takeaway -->
+        <section>
+            <h2>Why This Matters</h2>
+            <p>Understanding these two programming methods is crucial in robotics and automation:</p>
+            <ul>
+                <li><strong>Manufacturing:</strong> Factories use offline programming to automate production lines 24/7</li>
+                <li><strong>Testing & Development:</strong> Engineers use online programming to test new ideas quickly</li>
+                <li><strong>Training:</strong> Teaching robots new tasks often starts with online, manual control</li>
+                <li><strong>Efficiency:</strong> Offline programming reduces human error and makes robots work faster</li>
+                <li><strong>Flexibility:</strong> Knowing both methods makes you adaptable to different industrial environments</li>
+            </ul>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-links">
+            <a href="../../index.html">← Back to Home</a>
+            <a href="index-ie574.html">Back to All Labs</a>
+            <a href="https://github.com/adityaabhang">GitHub Profile</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trajectory Planning — ECE 569 Lab 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="../../index.html" class="nav-name">Aditya Abhang</a>
+      <div class="nav-links">
+        <a href="../../index.html#skills">Skills</a>
+        <a href="../../index.html#projects">Projects</a>
+        <a href="https://github.com/adityaabhang">GitHub</a>
+      </div>
+      <a href="index-ece569.html" class="back-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        All ECE 569 Labs
+      </a>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <div class="label">ECE 569 — Lab 3</div>
+    <h1>Trajectory Planning</h1>
+    <div class="meta">Spring 2026 • Purdue University • Completed</div>
+    <div class="tags"><span class="tag">Kinematics</span><span class="tag">Trajectory</span><span class="tag">Joint Space</span><span class="tag">Cartesian</span><span class="tag">MATLAB</span></div>
+  </header>
+
+  <div class="project-img-hero">
+    <div class="img-container">
+      <img src="" alt="Trajectory Planning" />
+      <div class="photo-placeholder">Project image here (760×360)</div>
+    </div>
+  </div>
+
+  <article>
+    <h2>Overview</h2>
+    <p>This lab covered trajectory planning for robotic manipulators in both joint space and Cartesian space. I implemented trapezoidal and polynomial velocity profiles to generate smooth motion between waypoints, ensuring the robot moved without abrupt acceleration changes. The lab bridged the gap between knowing where the robot needs to go and generating the actual motion commands to get there.</p>
+
+    <h2>Methodology</h2>
+    <p>I implemented cubic and quintic polynomial interpolation for joint-space trajectories, designed trapezoidal velocity profiles with acceleration limits, and computed Cartesian straight-line paths using inverse kinematics at each interpolation step. Each approach was evaluated for smoothness, execution time, and joint-limit compliance.</p>
+
+    <h2>Outcomes</h2>
+    <div class="outcomes-grid">
+      <div class="outcome-card"><div class="stat">Smooth</div><div class="stat-label">Jerk-limited trajectory generation</div></div>
+      <div class="outcome-card"><div class="stat">2 Spaces</div><div class="stat-label">Joint-space and Cartesian planning</div></div>
+      <div class="outcome-card"><div class="stat">Profiles</div><div class="stat-label">Trapezoidal and polynomial velocity control</div></div>
+      
+    </div>
+  </article>
+
+  <div class="project-nav">
+    <a href="r-viz-implementation.html">← Previous: RViz Implementation</a>
+    <a href="curve-tracing.html">Next: Curve Tracing →</a>
+  </div>
+
+  <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+</body>
+</html>

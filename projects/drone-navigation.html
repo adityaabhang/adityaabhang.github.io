@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomous Drone Navigation — Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+<nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Aditya Abhang</a>
+      <div class="nav-links">
+        <a href="../index.html#skills">Skills</a>
+        <a href="../index.html#experience">Experience</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#contact">Contact</a>
+      </div>
+      <a href="../index.html#projects" class="back-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        All Projects
+      </a>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <div class="label">IDEAS Lab — Purdue University</div>
+    <h1>Autonomous Drone Navigation &amp; Human Tracking</h1>
+    <div class="meta">Feb 2026 – Present • West Lafayette, IN • Ongoing Research</div>
+    <div class="tags">
+      <span class="tag">Computer Vision</span>
+      <span class="tag">LiDAR</span>
+      <span class="tag">ROS2</span>
+      <span class="tag">Multi-Agent Systems</span>
+      <span class="tag">Object Tracking</span>
+      <span class="tag">Python</span>
+      <span class="tag">C++</span>
+    </div>
+  </header>
+
+  <div class="project-img-hero">
+    <div class="img-container">
+      <img src="" alt="Autonomous Drone Navigation" />
+      <div class="photo-placeholder">Project hero image here (760×360)</div>
+    </div>
+  </div>
+
+  <article>
+    <h2>Overview</h2>
+    <p>At Purdue's IDEAS Lab, I'm developing a fully autonomous drone system capable of navigating through dense forest canopies while tracking human subjects in real-time. The project addresses a critical gap in search-and-rescue and environmental monitoring: most existing drone systems fail in heavily occluded, GPS-denied environments where tree cover disrupts both navigation and target visibility.</p>
+    <p>The system combines a robust computer vision pipeline with LiDAR-based obstacle avoidance, multi-object tracking, and a multi-agent communication protocol that relays live target coordinates from a scouting drone to a parent UAS for continuous situational awareness.</p>
+
+    <h2>Methodology</h2>
+    <p>The pipeline is built around three core subsystems that work in concert:</p>
+    <p><strong>1. Perception &amp; Obstacle Avoidance:</strong> The drone fuses LiDAR point cloud data with RGB camera feeds to build a real-time 3D map of the environment. LiDAR handles structural obstacles (trees, branches, terrain changes) while the RGB stream provides texture-level detail for gap detection and path validation. The obstacle avoidance module processes this fused data to generate safe flight corridors through the canopy.</p>
+    <p><strong>2. Human Tracking Pipeline:</strong> For target tracking, I evaluated multiple multi-object tracking (MOT) approaches including ByteTrack and BoT-SORT with camera motion compensation (CMC). The tracking system needs to handle frequent full occlusions as subjects move behind trees, variable lighting from canopy filtering, and appearance changes. ReID-capable tracking ensures re-identification after prolonged occlusion events, which is critical in forest scenarios where a subject can disappear behind cover for several seconds.</p>
+    <p><strong>3. Multi-Agent Communication:</strong> The scouting drone transmits real-time target coordinates, confidence scores, and trajectory predictions to a parent UAS operating at a higher altitude. This layered approach ensures continuous coverage even when the scout loses line-of-sight, and allows the parent to coordinate broader area search patterns.</p>
+
+    <h2>Tech Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-item"><strong>Python / C++</strong><span>Core pipeline &amp; real-time components</span></div>
+      <div class="tech-item"><strong>ROS2</strong><span>Communication &amp; node architecture</span></div>
+      <div class="tech-item"><strong>PyTorch</strong><span>Detection &amp; tracking models</span></div>
+      <div class="tech-item"><strong>OpenCV</strong><span>Image processing &amp; feature extraction</span></div>
+      <div class="tech-item"><strong>LiDAR Processing</strong><span>Point cloud to obstacle map</span></div>
+      <div class="tech-item"><strong>ByteTrack / BoT-SORT</strong><span>Multi-object tracking with ReID</span></div>
+    </div>
+
+    <h2>Challenges</h2>
+    <p><strong>Dense occlusion handling:</strong> Forest environments create persistent, unpredictable occlusions. A target can be fully visible one frame and completely hidden the next as they move behind a tree trunk. Standard trackers lose identity quickly in these conditions. We addressed this by integrating ReID features that maintain identity across multi-second occlusion gaps, and by using trajectory prediction to estimate target position during blind periods.</p>
+    <p><strong>Variable lighting conditions:</strong> Canopy-filtered sunlight creates extreme dynamic range — bright patches of direct light next to deep shadow. This wreaks havoc on both detection confidence and appearance-based ReID. We implemented adaptive exposure management and lighting-invariant feature representations to maintain tracking consistency.</p>
+    <p><strong>Real-time constraint on embedded hardware:</strong> The entire pipeline needs to run on drone-mounted compute (Jetson platform) with strict latency requirements. Teammate Ayush Kumar is running a parallel YOLO + BoT-SORT + Eigen Trajectories pipeline on a Jetson, and we're benchmarking throughput vs. accuracy tradeoffs to find the optimal operating point for real-time flight.</p>
+
+    <h2>Outcomes</h2>
+    <div class="outcomes-grid">
+      <div class="outcome-card"><div class="stat">85%</div><div class="stat-label">Tracking accuracy across 100+ simulated trials in dense vegetation</div></div>
+      <div class="outcome-card"><div class="stat">100+</div><div class="stat-label">Simulated trials completed in varied forest density scenarios</div></div>
+      <div class="outcome-card"><div class="stat">Real-time</div><div class="stat-label">Multi-agent coordinate relay maintaining continuous situational awareness</div></div>
+    </div>
+    <p>The project is ongoing, with current work focused on improving tracking robustness in the densest canopy scenarios and optimizing the pipeline for deployment on Jetson hardware for field testing.</p>
+  </article>
+
+  <div class="project-nav">
+    <span></span>
+    <a href="../industry-implemented-projects/tds-plasma-monitoring.html">Next: TDS Plasma Monitoring →</a>
+  </div>
+
+  <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+</body>
+</html>

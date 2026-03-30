@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cooperative Multi-Robot Transport — Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+<nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Aditya Abhang</a>
+      <div class="nav-links"><a href="../index.html#skills">Skills</a><a href="../index.html#experience">Experience</a><a href="../index.html#projects">Projects</a><a href="../index.html#contact">Contact</a></div>
+      <a href="../index.html#projects" class="back-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> All Projects</a>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <div class="label">Purdue University — Reinforcement Learning Course</div>
+    <h1>Cooperative Transport Planning for Multi-Robot Systems</h1>
+    <div class="meta">Oct – Dec 2025 • West Lafayette, IN • Completed</div>
+    <div class="tags">
+      <span class="tag">Reinforcement Learning</span>
+      <span class="tag">Multi-Agent Systems</span>
+      <span class="tag">Python</span>
+      <span class="tag">NumPy</span>
+      <span class="tag">Dynamic Programming</span>
+    </div>
+  </header>
+
+  <div class="project-img-hero">
+    <div class="img-container"><img src="" alt="Multi-Robot Transport" /><div class="photo-placeholder">Project hero image here (760×360)</div></div>
+  </div>
+
+  <article>
+    <h2>Overview</h2>
+    <p>This project tackled the classic "piano movers" problem — how do you coordinate two robots carrying a shared payload through a cluttered home environment? The twist: the robots must maintain a fixed inter-agent distance throughout the transport, meaning they can't independently navigate around obstacles. Every move by one robot constrains the other.</p>
+    <p>The goal was to benchmark model-based dynamic programming against model-free reinforcement learning for this constrained cooperative navigation task, analyzing convergence speed, path optimality, and computational cost across three algorithms: Policy Iteration, Value Iteration, and Q-Learning.</p>
+
+    <h2>Methodology</h2>
+    <p><strong>1. Environment Design:</strong> The environment was modeled as a static occupancy grid representing a home floor plan, parsed from DXF architectural drawings. The grid captured walls, furniture, doorways, and narrow passages. Two agents were placed in this grid with a rigid distance constraint — they could only move in tandem, maintaining exact separation.</p>
+    <p><strong>2. Algorithm Implementation:</strong> Three algorithms were implemented and benchmarked against each other:</p>
+    <ul>
+      <li><strong>Policy Iteration:</strong> Full model-based dynamic programming. Iteratively evaluates and improves a policy until convergence. Guarantees optimality but requires complete environment knowledge and is computationally expensive in large state spaces.</li>
+      <li><strong>Value Iteration:</strong> Another model-based approach that directly computes optimal values through iterative Bellman updates. Faster convergence than Policy Iteration in practice, but still requires the full transition model.</li>
+      <li><strong>Q-Learning:</strong> Model-free RL approach. Learns action-value functions purely from experience without needing an environment model. More adaptable to unknown environments but sample-inefficient and slower to converge.</li>
+    </ul>
+    <p><strong>3. Constraint Handling:</strong> The kinematic constraint (fixed inter-agent distance) was enforced directly in the state-action space. Any joint action that would violate the distance constraint was masked as invalid, effectively pruning the action space to only physically feasible moves.</p>
+
+    <h2>Tech Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-item"><strong>Python</strong><span>Algorithm implementation &amp; simulation</span></div>
+      <div class="tech-item"><strong>NumPy</strong><span>Grid-world &amp; matrix operations</span></div>
+      <div class="tech-item"><strong>Google Colab</strong><span>Compute environment for training</span></div>
+      <div class="tech-item"><strong>DXF Parsing</strong><span>Floor plan to occupancy grid conversion</span></div>
+      <div class="tech-item"><strong>MATLAB</strong><span>Convergence analysis &amp; visualization</span></div>
+    </div>
+
+    <h2>Challenges</h2>
+    <p><strong>State space explosion:</strong> With two agents on a grid, each with position coordinates, the joint state space grows quadratically. Adding the fixed-distance constraint actually helps by pruning many joint states, but the remaining valid state space is still large enough to make convergence slow — especially for Q-Learning, which needed significantly more episodes to reach reasonable policies.</p>
+    <p><strong>Narrow passage coordination:</strong> The hardest scenarios involved doorways and tight corridors. The rigid distance constraint meant both agents had to fit through simultaneously, often requiring non-intuitive routing detours that simple heuristics would miss. The DP methods found these optimal detours; Q-Learning took much longer to discover them.</p>
+    <p><strong>Comparing fairly across paradigms:</strong> Model-based and model-free methods have fundamentally different computational profiles — wall-clock time, sample efficiency, and memory usage don't scale the same way. Designing metrics that gave a fair, insightful comparison rather than just declaring one "better" required careful thought about what matters in different deployment scenarios.</p>
+
+    <h2>Outcomes</h2>
+    <div class="outcomes-grid">
+      <div class="outcome-card"><div class="stat">3</div><div class="stat-label">Algorithms benchmarked: Policy Iteration, Value Iteration, Q-Learning</div></div>
+      <div class="outcome-card"><div class="stat">Optimal</div><div class="stat-label">Model-based DP achieved globally optimal paths in all test scenarios</div></div>
+      <div class="outcome-card"><div class="stat">Trade-offs</div><div class="stat-label">Quantified cost of model-free adaptability vs. model-based optimality</div></div>
+    </div>
+    <p>The analysis demonstrated that model-based approaches (Policy and Value Iteration) consistently found optimal or near-optimal paths but required full environment knowledge and significant computation. Q-Learning produced reasonable but suboptimal paths with much less environment knowledge, highlighting the classic exploration-exploitation trade-off in constrained multi-agent settings.</p>
+  </article>
+
+  <div class="project-nav">
+    <a href="../industry-implemented-projects/tds-plasma-monitoring.html">← Previous: TDS Plasma Monitoring</a>
+    <a href="terrain-path-planning.html">Next: Terrain Path Planning →</a>
+  </div>
+
+  <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+</body>
+</html>

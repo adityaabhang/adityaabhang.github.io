@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep Learning for Robot Intelligence | Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+<header>
+        <nav class="container">
+            <span class="logo">Aditya Abhang</span>
+            <div class="nav-links">
+                <a href="../../index.html">Home</a>
+                <a href="../../index.html#projects">Projects</a>
+                <a href="https://github.com/adityaabhang">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index-ie574.html" class="back-link">← Back to Industrial Robotics Labs</a>
+
+        <div class="badge">🎓 CAPSTONE PROJECT - Final Lab</div>
+
+        <h1>Deep Learning for Robot Intelligence</h1>
+
+        <div class="project-meta">
+            <div class="meta-item">📅 Spring 2026</div>
+            <div class="meta-item">🏫 Lab 5 (Final)</div>
+            <div class="meta-item">🤖 Purdue University</div>
+        </div>
+
+        <div class="tags">
+            <span class="tag">Deep Learning</span>
+            <span class="tag">Neural Networks</span>
+            <span class="tag">Artificial Intelligence</span>
+            <span class="tag">Object Classification</span>
+            <span class="tag">Python</span>
+        </div>
+
+        <!-- Video Section -->
+        <section>
+            <h2>Project Demonstration</h2>
+            <p>Watch the robot use artificial intelligence to automatically classify and sort 12 different objects:</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="../../assets/Lab5.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section>
+            <h2>What Did I Do?</h2>
+            <p>In this capstone lab, I taught a robot to think like a human. Using artificial intelligence and neural networks, I created a system where the robot can look at an object, identify what it is (carton, glass, metal, or plastic), and automatically place it in the correct bin—all without being explicitly programmed for each type of object.</p>
+
+            <div class="highlight">
+                <strong>Goal:</strong> Train a deep learning model to classify 4 different material types with 97%+ accuracy, then use it to automatically sort 12 mixed objects.
+            </div>
+
+            <h3>The Challenge</h3>
+            <p>Instead of writing rules like "if the object is shiny, it's metal," I let the robot learn patterns from examples. This is the power of artificial intelligence:</p>
+            <ul>
+                <li>Train a neural network on hundreds of labeled images</li>
+                <li>The network learns what makes each material type unique</li>
+                <li>Use the trained model to classify new, unseen objects</li>
+                <li>Achieve high accuracy (97%+) with minimal manual programming</li>
+            </ul>
+        </section>
+
+        <!-- Achievement Card -->
+        <section>
+            <div class="achievement-card">
+                <h4>✓ Achieved 98.17% Validation Accuracy</h4>
+                <p>Exceeded the 97% requirement by optimizing the neural network architecture and training process. The model successfully learned to distinguish between carton, glass, metal, and plastic materials.</p>
+            </div>
+
+            <div class="accuracy-stat">
+                <div class="accuracy-number">98.17%</div>
+                <div class="accuracy-label">Validation Accuracy</div>
+            </div>
+        </section>
+
+        <!-- How Deep Learning Works -->
+        <section>
+            <h2>How Deep Learning Works</h2>
+            <p>Deep learning uses neural networks—computer programs inspired by the human brain—to learn patterns from data:</p>
+
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Train</div>
+                    <div class="step-description">Show the network hundreds of labeled images</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Learn</div>
+                    <div class="step-description">Network learns what features define each class</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Validate</div>
+                    <div class="step-description">Test on new images to verify accuracy</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Deploy</div>
+                    <div class="step-description">Use trained model to classify real objects</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Network Architecture -->
+        <section>
+            <h2>The AI Brain: Neural Network Architecture</h2>
+            <p>I designed a deep neural network with multiple layers to learn increasingly complex patterns:</p>
+
+            <h3>Network Layers</h3>
+            <ul>
+                <li><strong>Convolution Layer 1:</strong> 16 filters to detect basic features (edges, textures)</li>
+                <li><strong>Pooling Layer 1:</strong> Reduces size while keeping important information</li>
+                <li><strong>Convolution Layer 2:</strong> 32 filters to detect more complex patterns</li>
+                <li><strong>Pooling Layer 2:</strong> Further simplification</li>
+                <li><strong>Convolution Layer 3:</strong> 64 filters to detect high-level features</li>
+                <li><strong>Pooling Layer 3:</strong> Final size reduction</li>
+                <li><strong>Dense Layer:</strong> 128 neurons to make the final classification decision</li>
+            </ul>
+
+            <p><strong>Why this design?</strong> Each layer learns different levels of complexity. Early layers learn simple features (edges), middle layers learn combinations (shapes), and deep layers learn high-level patterns (material types).</p>
+        </section>
+
+        <!-- Optimization Details -->
+        <section>
+            <h2>Optimization & Tuning</h2>
+            <p>To achieve 97%+ accuracy, I made several key improvements:</p>
+
+            <div class="comparison-box">
+                <h4>Architecture Improvements</h4>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Added extra convolution layers for deeper learning</li>
+                    <li>Increased filters per layer (16 → 32 → 64) to extract richer features</li>
+                    <li>Expanded dense layer from 64 to 128 units for better classification</li>
+                </ul>
+            </div>
+
+            <div class="comparison-box">
+                <h4>Training Parameters</h4>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>100 training epochs to ensure convergence</li>
+                    <li>Batch size of 32 for stable gradient updates</li>
+                    <li>Adam optimizer with default learning rate (0.001)</li>
+                    <li>Categorical cross-entropy loss for 4-class classification</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section>
+            <h2>Results & Performance</h2>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h4>🎯 98.17% Validation Accuracy</h4>
+                    <p>Trained neural network achieved accuracy exceeding the 97% requirement</p>
+                </div>
+                <div class="result-card">
+                    <h4>📊 100% Test Accuracy</h4>
+                    <p>Perfect classification on test dataset with 20 images per class</p>
+                </div>
+                <div class="result-card">
+                    <h4>🤖 12 Objects Classified</h4>
+                    <p>Successfully sorted 12 mixed objects into 4 categories in real-time</p>
+                </div>
+                <div class="result-card">
+                    <h4>⚡ Real-Time Performance</h4>
+                    <p>Classification happens in milliseconds, enabling live robot operation</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- What I Learned -->
+        <section>
+            <h2>What I Learned</h2>
+            <ul>
+                <li><strong>Deep Learning Fundamentals:</strong> How neural networks learn from data without explicit programming</li>
+                <li><strong>Convolutional Neural Networks (CNNs):</strong> Why they're ideal for image recognition tasks</li>
+                <li><strong>Model Training:</strong> How to train, validate, and test neural networks effectively</li>
+                <li><strong>Hyperparameter Tuning:</strong> How small changes in architecture and training parameters impact accuracy</li>
+                <li><strong>Integration with Robotics:</strong> How to deploy AI models in real robotic systems</li>
+                <li><strong>Problem-Solving:</strong> Iterative approach to achieving and exceeding performance targets</li>
+            </ul>
+        </section>
+
+        <!-- Why This Matters -->
+        <section>
+            <h2>Why This Matters</h2>
+            <p>Deep learning is revolutionizing industries worldwide:</p>
+            <ul>
+                <li><strong>Manufacturing Quality:</strong> AI systems inspect millions of products with superhuman accuracy</li>
+                <li><strong>Autonomous Vehicles:</strong> Neural networks power self-driving cars that recognize pedestrians, traffic signs, and roads</li>
+                <li><strong>Medical Diagnosis:</strong> AI systems diagnose diseases from medical images as well as or better than experts</li>
+                <li><strong>Smart Robots:</strong> Robots can now learn and adapt to new tasks, not just follow pre-programmed routines</li>
+                <li><strong>Cost Savings:</strong> Automation powered by AI reduces labor costs and human error</li>
+                <li><strong>Innovation:</strong> AI unlocks capabilities that weren't possible with traditional programming</li>
+            </ul>
+        </section>
+
+        <!-- Capstone Significance -->
+        <section>
+            <h2>Capstone Project Significance</h2>
+            <p>This final lab brought together everything from the previous four labs:</p>
+            <ul>
+                <li><strong>Lab 1 Skills:</strong> Pick and place operations to move objects into sorting bins</li>
+                <li><strong>Lab 2 Skills:</strong> Automated script to control the robot without manual intervention</li>
+                <li><strong>Lab 3 Skills:</strong> Path planning to navigate around the workspace safely</li>
+                <li><strong>Lab 4 Skills:</strong> Machine vision to capture and process images</li>
+                <li><strong>Lab 5 Skills:</strong> Deep learning to make intelligent decisions about what to do with each object</li>
+            </ul>
+            <p>Together, these create a fully autonomous robotic system that can see, think, and act—the future of manufacturing and robotics.</p>
+        </section>
+
+        <!-- Footer Navigation -->
+        <div class="footer-links">
+            <a href="../../index.html">← Back to Home</a>
+            <a href="index-ie574.html">Back to All Labs</a>
+            <a href="https://github.com/adityaabhang">GitHub Profile</a>
+        </div>
+    </div>
+</body>
+</html>
