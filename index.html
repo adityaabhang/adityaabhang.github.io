@@ -4,15 +4,149 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aditya Abhang — Computer Vision & Autonomous Navigation</title>
-  <meta name="description" content="Portfolio of Aditya Uday Abhang — MS Robotics at Purdue University." />
+  <meta name="description" content="Portfolio of Aditya Uday Abhang — MS Robotics at Purdue University. Computer Vision, Autonomous Navigation, RL, Robotics." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #FAF9F7; --bg-alt: #F1EFEB; --text: #1A1A1A; --text-secondary: #5A5A5A;
+      --accent: #2B5C8A; --accent-light: #3A7BBF; --border: #E0DDD8;
+      --card-bg: #FFFFFF; --tag-bg: #EDF2F7; --tag-text: #2B5C8A;
+      --serif: 'Source Serif 4', Georgia, serif; --sans: 'DM Sans', -apple-system, sans-serif;
+      --max-w: 960px; --section-gap: 5rem;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,249,247,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+    nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .nav-name { font-family: var(--serif); font-weight: 700; font-size: 1.15rem; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.8rem; align-items: center; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links .cta-link { background: var(--accent); color: #fff; padding: 0.45rem 1rem; border-radius: 6px; font-weight: 600; transition: background 0.2s; }
+    .nav-links .cta-link:hover { background: var(--accent-light); color: #fff; }
+    .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.25rem; }
+    .mobile-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; transition: 0.3s; border-radius: 2px; }
+
+    .hero { max-width: var(--max-w); margin: 0 auto; padding: 8rem 1.5rem 4rem; }
+    .hero h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; line-height: 1.15; margin-bottom: 0.4rem; }
+    .hero .subtitle { font-size: 1.1rem; color: var(--accent); margin-bottom: 0.3rem; font-weight: 600; letter-spacing: 0.02em; }
+    .hero .tagline { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .hero p { color: var(--text-secondary); font-size: 1rem; max-width: 600px; margin-bottom: 2rem; }
+    .hero-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .hero-links a { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 500; text-decoration: none; color: var(--text-secondary); padding: 0.5rem 0.9rem; border: 1px solid var(--border); border-radius: 6px; transition: all 0.2s; }
+    .hero-links a:hover { border-color: var(--accent); color: var(--accent); background: rgba(43,92,138,0.04); }
+
+    section { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem var(--section-gap); }
+    .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.5rem; }
+    .section-title { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; line-height: 1.25; }
+    .divider { width: 48px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 2.5rem; }
+
+    /* Skills */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+    .skill-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; transition: border-color 0.2s, box-shadow 0.2s; }
+    .skill-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(43,92,138,0.08); }
+    .skill-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+    .skill-card .icon { width: 28px; height: 28px; border-radius: 6px; background: var(--tag-bg); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.78rem; font-weight: 500; padding: 0.25rem 0.65rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 4px; white-space: nowrap; cursor: pointer; transition: background 0.2s, transform 0.15s; border: none; }
+    .tag:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+
+    /* Skill popup */
+    .skill-popup-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 200; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s; }
+    .skill-popup-overlay.active { display: flex; opacity: 1; }
+    .skill-popup { background: var(--card-bg); border-radius: 12px; padding: 2rem; max-width: 480px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.15); transform: translateY(12px); transition: transform 0.25s; max-height: 80vh; overflow-y: auto; }
+    .skill-popup-overlay.active .skill-popup { transform: translateY(0); }
+    .skill-popup-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .skill-popup-header h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; }
+    .skill-popup-close { background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-secondary); padding: 0.25rem; line-height: 1; transition: color 0.2s; }
+    .skill-popup-close:hover { color: var(--text); }
+    .skill-popup-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.75rem; }
+    .skill-popup-project { padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+    .skill-popup-project:last-child { border-bottom: none; }
+    .skill-popup-project a { font-size: 0.9rem; font-weight: 600; color: var(--text); text-decoration: none; transition: color 0.2s; }
+    .skill-popup-project a:hover { color: var(--accent); }
+    .skill-popup-project p { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem; line-height: 1.5; }
+
+    /* Timeline */
+    .timeline-item { position: relative; padding-left: 1.5rem; padding-bottom: 2.5rem; border-left: 2px solid var(--border); }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -6px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+    .timeline-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .timeline-header h3 { font-size: 1rem; font-weight: 600; }
+    .timeline-date { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; white-space: nowrap; }
+    .timeline-sub { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.6rem; }
+    .timeline-item ul { list-style: none; padding: 0; }
+    .timeline-item li { position: relative; padding-left: 1rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.35rem; line-height: 1.6; }
+    .timeline-item li::before { content: '–'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+
+    /* Projects grid */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1.25rem; }
+    .project-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+    .project-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(43,92,138,0.08); }
+    .project-img { width: 100%; height: 200px; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); overflow: hidden; position: relative; }
+    .project-img img { width: 100%; height: 100%; object-fit: cover; }
+    .project-img video { width: 100%; height: 100%; object-fit: cover; }
+    .project-img .photo-placeholder { color: var(--text-secondary); font-size: 0.75rem; text-align: center; opacity: 0.5; position: absolute; pointer-events: none; }
+    .project-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .project-body h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .project-meta { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.6rem; }
+    .project-body p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
+    .project-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+    .read-more { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.82rem; font-weight: 600; color: var(--accent); text-decoration: none; padding: 0.4rem 0.85rem; border: 1px solid var(--accent); border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
+    .read-more:hover { background: var(--accent); color: #fff; }
+    .read-more svg { transition: transform 0.2s; }
+    .read-more:hover svg { transform: translateX(2px); }
+
+    /* Sub-section divider within projects */
+    .projects-subsection { margin-top: 2.5rem; }
+    .subsection-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+
+    /* Education */
+    .edu-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+    .edu-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .edu-card .degree { font-size: 0.9rem; color: var(--text-secondary); }
+    .edu-card .coursework { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem; }
+    .edu-right { text-align: right; flex-shrink: 0; }
+    .edu-right .date { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+    .edu-right .gpa { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-top: 0.25rem; }
+
+    /* Contact */
+    .contact-section { background: var(--bg-alt); border-radius: 12px; padding: 3rem; text-align: center; border: 1px solid var(--border); }
+    .contact-section p { color: var(--text-secondary); max-width: 480px; margin: 0 auto 1.5rem; }
+    .contact-grid { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+    .contact-grid a { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.1rem; font-size: 0.875rem; font-weight: 500; text-decoration: none; border-radius: 6px; transition: all 0.2s; }
+    .contact-primary { background: var(--accent); color: #fff; }
+    .contact-primary:hover { background: var(--accent-light); }
+    .contact-secondary { border: 1px solid var(--border); color: var(--text-secondary); background: var(--card-bg); }
+    .contact-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer { max-width: var(--max-w); margin: 0 auto; padding: 2rem 1.5rem; text-align: center; font-size: 0.8rem; color: var(--text-secondary); }
+
+    .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .hero { padding-top: 6rem; }
+      .hero h1 { font-size: 2rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(250,249,247,0.97); backdrop-filter: blur(12px); flex-direction: column; padding: 1rem 1.5rem; gap: 0.75rem; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .mobile-toggle { display: block; }
+      .contact-section { padding: 2rem 1.5rem; }
+      .edu-card { flex-direction: column; }
+      .edu-right { text-align: left; }
+      .section-title { font-size: 1.5rem; }
+      :root { --section-gap: 3.5rem; }
+    }
+  </style>
 </head>
 <body>
-<div class="skill-popup-overlay" id="skillPopup">
+  <div class="skill-popup-overlay" id="skillPopup">
     <div class="skill-popup">
       <div class="skill-popup-header">
         <h3 id="popupSkillName"></h3>
@@ -144,9 +278,16 @@
     <div class="section-label">What I've Built</div>
     <h2 class="section-title">Projects</h2>
     <div class="divider"></div>
+
+    <!-- Main Research & Personal Projects -->
     <div class="projects-grid">
+
       <div class="project-card">
-        <div class="project-img"><img src="" alt="Autonomous Drone" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-img">
+          <img src="media/drone/cover.jpg" alt="Autonomous Drone Navigation" onerror="this.style.display='none'" />
+          <video src="media/drone/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+          <div class="photo-placeholder">Project image here</div>
+        </div>
         <div class="project-body">
           <h3>Autonomous Drone Navigation &amp; Human Tracking</h3>
           <div class="project-meta">IDEAS Lab, Purdue • Feb 2026 – Present</div>
@@ -157,20 +298,13 @@
           </div>
         </div>
       </div>
+
       <div class="project-card">
-        <div class="project-img"><img src="" alt="TDS Plasma Monitoring" /><div class="photo-placeholder">Project image here</div></div>
-        <div class="project-body">
-          <h3>TDS In-House Plasma Cutting Monitoring System</h3>
-          <div class="project-meta">ME 597 IIoT, Purdue • Ongoing – Apr 2026</div>
-          <p>Real-time acoustic and current data monitoring on CNC plasma cutting machine to classify sheet thickness and validate material specifications via Grafana dashboards.</p>
-          <div class="project-footer">
-            <div class="tags"><span class="tag" data-skill="Python">Python</span><span class="tag" data-skill="Raspberry Pi">RPi</span><span class="tag" data-skill="Grafana">Grafana</span></div>
-            <a href="industry-implemented-projects/tds-plasma-monitoring.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-          </div>
+        <div class="project-img">
+          <img src="media/multi-robot/cover.jpg" alt="Multi-Robot Transport" onerror="this.style.display='none'" />
+          <video src="media/multi-robot/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+          <div class="photo-placeholder">Project image here</div>
         </div>
-      </div>
-      <div class="project-card">
-        <div class="project-img"><img src="" alt="Multi-Robot Transport" /><div class="photo-placeholder">Project image here</div></div>
         <div class="project-body">
           <h3>Cooperative Multi-Robot Transport Planning</h3>
           <div class="project-meta">Purdue University • Oct – Dec 2025</div>
@@ -181,20 +315,30 @@
           </div>
         </div>
       </div>
+
       <div class="project-card">
-        <div class="project-img"><img src="" alt="Terrain-Aware Planning" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-img">
+          <img src="media/terrain/cover.jpg" alt="Terrain-Aware Planning" onerror="this.style.display='none'" />
+          <video src="media/terrain/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+          <div class="photo-placeholder">Project image here</div>
+        </div>
         <div class="project-body">
           <h3>Vision-Guided Terrain-Aware Path Planning</h3>
           <div class="project-meta">Purdue University • Oct – Dec 2025</div>
-          <p>Closed-loop Gazebo/ROS2 pipeline fusing LiDAR and RGB-D with DeepLabV3+ segmentation for real-time costmap generation and trajectory optimization.</p>
+          <p>Closed-loop Gazebo/ROS2 pipeline fusing LiDAR and RGB-D with DeepLabV3+ segmentation for real-time costmap generation and trajectory optimization. Documented in IEEE Format.</p>
           <div class="project-footer">
             <div class="tags"><span class="tag" data-skill="Gazebo">Gazebo</span><span class="tag" data-skill="ROS / ROS2">ROS2</span><span class="tag" data-skill="Semantic Segmentation">Segmentation</span></div>
             <a href="projects/terrain-path-planning.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
           </div>
         </div>
       </div>
+
       <div class="project-card">
-        <div class="project-img"><img src="" alt="Medicine Dispenser" /><div class="photo-placeholder">Project image here</div></div>
+        <div class="project-img">
+          <img src="media/medicine/cover.jpg" alt="Medicine Dispenser" onerror="this.style.display='none'" />
+          <video src="media/medicine/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+          <div class="photo-placeholder">Project image here</div>
+        </div>
         <div class="project-body">
           <h3>Automatic Medicine Dispenser</h3>
           <div class="project-meta">Ignited Innovators of India • Oct 2023 – Jan 2024</div>
@@ -205,32 +349,121 @@
           </div>
         </div>
       </div>
-      
-      <!-- IE 574: Industrial Robotics Labs -->
-      <div class="project-card">
-        <div class="project-img"><img src="" alt="Industrial Robotics Labs" /><div class="photo-placeholder">Project image here</div></div>
-        <div class="project-body">
-          <h3>Industrial Robotics Labs (5 Projects)</h3>
-          <div class="project-meta">IE 574, Purdue University • Spring 2026</div>
-          <p>A series of hands-on robotics simulation projects using CoppeliaSim. Programmed robots to pick and place objects, plan collision-free paths, control precise movements, use computer vision for quality control, and apply deep learning for autonomous classification.</p>
-          <div class="project-footer">
-            <div class="tags"><span class="tag">Robotics</span><span class="tag">CoppeliaSim</span><span class="tag">Automation</span><span class="tag">AI &amp; Deep Learning</span></div>
-            <a href="minor-projects/ie574-labs/index-ie574.html" class="read-more">View All Labs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+
+    </div>
+
+    <!-- Industry Collaboration -->
+    <div class="projects-subsection">
+      <div class="subsection-label">Industry Collaboration</div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-img">
+            <img src="media/tds-plasma/cover.jpg" alt="TDS Plasma Monitoring" onerror="this.style.display='none'" />
+            <video src="media/tds-plasma/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+            <div class="photo-placeholder">Project image here</div>
+          </div>
+          <div class="project-body">
+            <h3>TDS In-House Plasma Cutting Monitoring System</h3>
+            <div class="project-meta">ME 597 IIoT, Purdue • Ongoing – Apr 2026</div>
+            <p>Real-time acoustic and current data monitoring on CNC plasma cutting machine to classify sheet thickness and validate material specifications via Grafana dashboards.</p>
+            <div class="project-footer">
+              <div class="tags"><span class="tag" data-skill="Python">Python</span><span class="tag" data-skill="Raspberry Pi">RPi</span><span class="tag" data-skill="Grafana">Grafana</span></div>
+              <a href="industry-implemented-projects/tds-plasma-monitoring.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            </div>
           </div>
         </div>
+
       </div>
-      <!-- ECE 569: Introduction to Robotics Labs -->
-      <div class="project-card">
-        <div class="project-img"><img src="" alt="Introduction to Robotics Labs" /><div class="photo-placeholder">Project image here</div></div>
-        <div class="project-body">
-          <h3>Introduction to Robotics Labs (4 Projects)</h3>
-          <div class="project-meta">ECE 569, Purdue University • Spring 2026</div>
-          <p>ROS and RViz-based robotics labs covering workspace setup, 3D visualization, trajectory planning with velocity profiling, and end-effector curve tracing using inverse kinematics. Foundations of robotic software stacks.</p>
-          <div class="project-footer">
-            <div class="tags"><span class="tag">ROS</span><span class="tag">RViz</span><span class="tag">Trajectory Planning</span><span class="tag">Kinematics</span></div>
-            <a href="minor-projects/ece569-labs/index-ece569.html" class="read-more">View All Labs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+
+    <!-- IE 574 Industrial Robotics Group Projects -->
+    <div class="projects-subsection">
+      <div class="subsection-label">IE 574 Industrial Robotics — Group Projects</div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-img">
+            <img src="media/ie574-gp1/cover.jpg" alt="Multi-Robot System Integration" onerror="this.style.display='none'" />
+            <video src="media/ie574-gp1/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+            <div class="photo-placeholder">Project image here</div>
+          </div>
+          <div class="project-body">
+            <h3>Multi-Robot System Integration</h3>
+            <div class="project-meta">IE 574, Purdue • Spring 2026</div>
+            <p>Programmed two Techman cobots (TM-12S "Daisey" and TM-12 "Rosie") and a Freight100 AMR ("Jerry") to execute a full 6-task pick-and-place and transport workflow, orchestrated via Node-RED.</p>
+            <div class="project-footer">
+              <div class="tags"><span class="tag">Cobots</span><span class="tag">AMR</span><span class="tag">Node-RED</span><span class="tag">System Integration</span></div>
+              <a href="minor-projects/ie574-labs/group-project-1.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            </div>
           </div>
         </div>
+
+        <div class="project-card">
+          <div class="project-img">
+            <img src="media/ie574-gp2/cover.jpg" alt="Imitation Learning with LeRobot" onerror="this.style.display='none'" />
+            <video src="media/ie574-gp2/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+            <div class="photo-placeholder">Project image here</div>
+          </div>
+          <div class="project-body">
+            <h3>Imitation Learning for Robot Manipulation</h3>
+            <div class="project-meta">IE 574, Purdue • Spring 2026</div>
+            <p>Built the full imitation learning pipeline on a real SO-ARM101 dual-arm platform — collected teleoperation demos, trained a visuomotor policy with LeRobot, and deployed it for autonomous pick-and-place.</p>
+            <div class="project-footer">
+              <div class="tags"><span class="tag">Imitation Learning</span><span class="tag">LeRobot</span><span class="tag" data-skill="PyTorch">PyTorch</span><span class="tag">Real Robot</span></div>
+              <a href="minor-projects/ie574-labs/group-project-2.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- IE 574 Simulation Labs -->
+    <div class="projects-subsection">
+      <div class="subsection-label">IE 574 Industrial Robotics — Simulation Labs</div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-img">
+            <img src="media/ie574-labs/cover.jpg" alt="IE 574 Simulation Labs" onerror="this.style.display='none'" />
+            <div class="photo-placeholder">Project image here</div>
+          </div>
+          <div class="project-body">
+            <h3>Industrial Robotics Simulation Labs (5 Labs)</h3>
+            <div class="project-meta">IE 574, Purdue • Spring 2026</div>
+            <p>Five hands-on CoppeliaSim simulation labs covering pick-and-place, online vs offline programming, path planning, machine vision, and deep learning classification with a Sawyer cobot.</p>
+            <div class="project-footer">
+              <div class="tags"><span class="tag">CoppeliaSim</span><span class="tag">Sawyer Robot</span><span class="tag">Deep Learning</span><span class="tag">Automation</span></div>
+              <a href="minor-projects/ie574-labs/index-ie574.html" class="read-more">View All Labs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ECE-569 Intro to Robotics Labs -->
+    <div class="projects-subsection">
+      <div class="subsection-label">ECE 569 Intro to Robotics — Simulation Labs</div>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-img">
+            <img src="media/ece569-labs/cover.jpg" alt="ECE 569 Simulation Labs" onerror="this.style.display='none'" />
+            <div class="photo-placeholder">Project image here</div>
+          </div>
+          <div class="project-body">
+            <h3>Introduction to Robotics ROS Simulation Labs (4 Labs)</h3>
+            <div class="project-meta">ECE 569, Purdue • Fall 2025</div>
+            <p>RViz simulation platform for ROS2 application with the use of Universal Robots and using trajectory planning, curve tracing and ^ DoF arm simulation</p>
+            <div class="project-footer">
+              <div class="tags"><span class="tag">RViz</span><span class="tag">Universal Robotics</span><span class="tag">trajectory tracing</span><span class="tag">Automation</span></div>
+              <a href="minor-projects/ece569-labs/index-ece569.html" class="read-more">View All Labs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -255,7 +488,7 @@
       <h2 class="section-title" style="margin-bottom: 0.75rem;">Open to Summer 2026 Opportunities</h2>
       <p>Actively seeking internship and co-op roles in robotics, computer vision, reinforcement learning, and physical AI. Let's talk.</p>
       <div class="contact-grid">
-        <a href="/cdn-cgi/l/email-protection#d2b3b3b0bab3bcb592a2a7a0b6a7b7fcb7b6a7" class="contact-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> <span class="__cf_email__" data-cfemail="fc9d9d9e949d929bbc8c898e988999d2999889">[email&#160;protected]</span></a>
+        <a href="mailto:aabhang@purdue.edu" class="contact-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> aabhang@purdue.edu</a>
         <a href="https://github.com/adityaabhang" target="_blank" class="contact-secondary">GitHub</a>
         <a href="https://linkedin.com/in/adityaabhang" target="_blank" class="contact-secondary">LinkedIn</a>
       </div>
@@ -264,125 +497,86 @@
 
   <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // cat: "project" | "industry" | "ie574" | "ece569"
+  <script>
     const skillProjectMap = {
       "ROS / ROS2": [
-        { name: "Autonomous Drone Navigation", desc: "LiDAR+RGB obstacle avoidance and human tracking in dense forest canopies", link: "projects/drone-navigation.html", cat: "project" },
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Closed-loop Gazebo/ROS2 pipeline with DeepLabV3+ semantic segmentation", link: "projects/terrain-path-planning.html", cat: "project" },
-        { name: "ROS Implementation (Lab 1)", desc: "Workspace setup, nodes, topics, services, and launch files", link: "minor-projects/ece569-labs/ros-implementation.html", cat: "ece569" },
-        { name: "RViz Implementation (Lab 2)", desc: "Robot model visualization, TF trees, and sensor data display", link: "minor-projects/ece569-labs/r-viz-implementation.html", cat: "ece569" }
+        { name: "Autonomous Drone Navigation", desc: "LiDAR+RGB obstacle avoidance and human tracking in dense forest canopies", link: "projects/drone-navigation.html" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Closed-loop Gazebo/ROS2 pipeline with DeepLabV3+ semantic segmentation", link: "projects/terrain-path-planning.html" }
       ],
       "Computer Vision": [
-        { name: "Autonomous Drone Navigation", desc: "Multi-object tracking pipeline for human subjects through dense forest environments", link: "projects/drone-navigation.html", cat: "project" },
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "RGB-D camera fusion for terrain classification and dynamic costmap generation", link: "projects/terrain-path-planning.html", cat: "project" },
-        { name: "Machine Vision for QC (Lab 4)", desc: "Automated defect detection and part classification using vision sensors", link: "minor-projects/ie574-labs/lab4-machine-vision.html", cat: "ie574" }
+        { name: "Autonomous Drone Navigation", desc: "Multi-object tracking pipeline for human subjects through dense forest environments", link: "projects/drone-navigation.html" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "RGB-D camera fusion for terrain classification and dynamic costmap generation", link: "projects/terrain-path-planning.html" }
       ],
       "Robotic Perception": [
-        { name: "Autonomous Drone Navigation", desc: "LiDAR and RGB sensor fusion for obstacle detection in unstructured terrain", link: "projects/drone-navigation.html", cat: "project" }
+        { name: "Autonomous Drone Navigation", desc: "LiDAR and RGB sensor fusion for obstacle detection in unstructured terrain", link: "projects/drone-navigation.html" }
       ],
       "Navigation": [
-        { name: "Autonomous Drone Navigation", desc: "Real-time autonomous navigation through dense forest with obstacle avoidance", link: "projects/drone-navigation.html", cat: "project" },
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "A* and RRT* benchmarking with semantic terrain awareness", link: "projects/terrain-path-planning.html", cat: "project" },
-        { name: "Cooperative Multi-Robot Transport", desc: "Constrained multi-agent navigation in static occupancy grids", link: "projects/multi-robot-transport.html", cat: "project" },
-        { name: "Path Planning with Smooth Curves (Lab 3)", desc: "Ferguson and Bézier curves for collision-free multi-robot trajectories", link: "minor-projects/ie574-labs/lab3-path-planning.html", cat: "ie574" },
-        { name: "Trajectory Planning (Lab 3)", desc: "Joint-space and Cartesian trajectory planning with velocity profiling", link: "minor-projects/ece569-labs/trajectory-planning.html", cat: "ece569" }
+        { name: "Autonomous Drone Navigation", desc: "Real-time autonomous navigation through dense forest with obstacle avoidance", link: "projects/drone-navigation.html" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "A* and RRT* benchmarking with semantic terrain awareness", link: "projects/terrain-path-planning.html" },
+        { name: "Cooperative Multi-Robot Transport", desc: "Constrained multi-agent navigation in static occupancy grids", link: "projects/multi-robot-transport.html" }
       ],
       "Real-time Systems": [
-        { name: "Autonomous Drone Navigation", desc: "Real-time obstacle avoidance and target coordinate relay at flight speed", link: "projects/drone-navigation.html", cat: "project" },
-        { name: "TDS Plasma Cutting Monitoring", desc: "Continuous acoustic and current data acquisition during CNC plasma operations", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" }
+        { name: "Autonomous Drone Navigation", desc: "Real-time obstacle avoidance and target coordinate relay at flight speed", link: "projects/drone-navigation.html" },
+        { name: "TDS Plasma Cutting Monitoring", desc: "Continuous acoustic and current data acquisition during CNC plasma operations", link: "industry-implemented-projects/tds-plasma-monitoring.html" }
       ],
       "Multi-Agent Systems": [
-        { name: "Autonomous Drone Navigation", desc: "Communication protocol relaying target coordinates from scout drone to parent UAS", link: "projects/drone-navigation.html", cat: "project" },
-        { name: "Cooperative Multi-Robot Transport", desc: "Two-agent cooperative payload transport with fixed inter-agent distance constraints", link: "projects/multi-robot-transport.html", cat: "project" }
+        { name: "Autonomous Drone Navigation", desc: "Communication protocol relaying target coordinates from scout drone to parent UAS", link: "projects/drone-navigation.html" },
+        { name: "Cooperative Multi-Robot Transport", desc: "Two-agent cooperative payload transport with fixed inter-agent distance constraints", link: "projects/multi-robot-transport.html" },
+        { name: "Multi-Robot System Integration", desc: "Coordinating two cobots and an AMR in a fully automated 6-task workflow", link: "minor-projects/ie574-labs/group-project-1.html" }
       ],
       "PyTorch": [
-        { name: "Autonomous Drone Navigation", desc: "Deep learning models for object detection and tracking in forest environments", link: "projects/drone-navigation.html", cat: "project" },
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "DeepLabV3+ semantic segmentation model for terrain classification", link: "projects/terrain-path-planning.html", cat: "project" },
-        { name: "Deep Learning Classification (Lab 5)", desc: "Trained CNNs for autonomous object classification in robotic systems", link: "minor-projects/ie574-labs/lab5-deep-learning.html", cat: "ie574" }
+        { name: "Autonomous Drone Navigation", desc: "Deep learning models for object detection and tracking in forest environments", link: "projects/drone-navigation.html" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "DeepLabV3+ semantic segmentation model for terrain classification", link: "projects/terrain-path-planning.html" },
+        { name: "Imitation Learning for Robot Manipulation", desc: "Visuomotor policy training using the LeRobot framework", link: "minor-projects/ie574-labs/group-project-2.html" }
       ],
       "Reinforcement Learning": [
-        { name: "Cooperative Multi-Robot Transport", desc: "Benchmarked Policy Iteration, Value Iteration, and Q-Learning for constrained navigation", link: "projects/multi-robot-transport.html", cat: "project" }
+        { name: "Cooperative Multi-Robot Transport", desc: "Benchmarked Policy Iteration, Value Iteration, and Q-Learning for constrained navigation", link: "projects/multi-robot-transport.html" }
       ],
       "Machine Learning": [
-        { name: "TDS Plasma Cutting Monitoring", desc: "Threshold matching and ML-based classification of plasma cut sheet thickness", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" },
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Semantic segmentation for drivable vs. non-drivable terrain classification", link: "projects/terrain-path-planning.html", cat: "project" },
-        { name: "Deep Learning Classification (Lab 5)", desc: "CNN training and inference for autonomous robotic decision-making", link: "minor-projects/ie574-labs/lab5-deep-learning.html", cat: "ie574" }
+        { name: "TDS Plasma Cutting Monitoring", desc: "Threshold matching and ML-based classification of plasma cut sheet thickness", link: "industry-implemented-projects/tds-plasma-monitoring.html" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Semantic segmentation for drivable vs. non-drivable terrain classification", link: "projects/terrain-path-planning.html" },
+        { name: "Imitation Learning for Robot Manipulation", desc: "Imitation learning from teleoperation demonstrations for pick-and-place tasks", link: "minor-projects/ie574-labs/group-project-2.html" }
       ],
       "Object Tracking": [
-        { name: "Autonomous Drone Navigation", desc: "ByteTrack and BoT-SORT based multi-object tracking through heavy occlusions", link: "projects/drone-navigation.html", cat: "project" }
+        { name: "Autonomous Drone Navigation", desc: "ByteTrack and BoT-SORT based multi-object tracking through heavy occlusions", link: "projects/drone-navigation.html" }
       ],
       "Semantic Segmentation": [
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "DeepLabV3+ classifying drivable terrain from RGB-D data for costmap generation", link: "projects/terrain-path-planning.html", cat: "project" }
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "DeepLabV3+ classifying drivable terrain from RGB-D data for costmap generation", link: "projects/terrain-path-planning.html" }
       ],
       "Python": [
-        { name: "Autonomous Drone Navigation", desc: "Core CV pipeline for tracking and multi-agent communication", link: "projects/drone-navigation.html", cat: "project" },
-        { name: "TDS Plasma Cutting Monitoring", desc: "Sensor data collection, processing, and thickness classification", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" },
-        { name: "Cooperative Multi-Robot Transport", desc: "RL algorithm implementation and grid-world simulation", link: "projects/multi-robot-transport.html", cat: "project" },
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Segmentation inference and navigation stack integration", link: "projects/terrain-path-planning.html", cat: "project" },
-        { name: "Automatic Medicine Dispenser", desc: "Raspberry Pi control logic for dispensing mechanism", link: "projects/medicine-dispenser.html", cat: "project" },
-        { name: "ROS Implementation (Lab 1)", desc: "Publisher/subscriber nodes and service-client communication", link: "minor-projects/ece569-labs/ros-implementation.html", cat: "ece569" },
-        { name: "Curve Tracing (Lab 4)", desc: "End-effector path following with inverse kinematics", link: "minor-projects/ece569-labs/curve-tracing.html", cat: "ece569" }
+        { name: "Autonomous Drone Navigation", desc: "Core CV pipeline for tracking and multi-agent communication", link: "projects/drone-navigation.html" },
+        { name: "TDS Plasma Cutting Monitoring", desc: "Sensor data collection, processing, and thickness classification", link: "industry-implemented-projects/tds-plasma-monitoring.html" },
+        { name: "Cooperative Multi-Robot Transport", desc: "RL algorithm implementation and grid-world simulation", link: "projects/multi-robot-transport.html" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Segmentation inference and navigation stack integration", link: "projects/terrain-path-planning.html" },
+        { name: "Automatic Medicine Dispenser", desc: "Raspberry Pi control logic for dispensing mechanism", link: "projects/medicine-dispenser.html" }
       ],
-      "C++": [
-        { name: "Autonomous Drone Navigation", desc: "Performance-critical components of the real-time navigation stack", link: "projects/drone-navigation.html", cat: "project" }
-      ],
-      "MATLAB": [
-        { name: "Cooperative Multi-Robot Transport", desc: "Analysis and visualization of algorithm convergence metrics", link: "projects/multi-robot-transport.html", cat: "project" },
-        { name: "Trajectory Planning (Lab 3)", desc: "Joint-space interpolation and velocity profile computation", link: "minor-projects/ece569-labs/trajectory-planning.html", cat: "ece569" },
-        { name: "Curve Tracing (Lab 4)", desc: "Inverse kinematics solving for complex end-effector paths", link: "minor-projects/ece569-labs/curve-tracing.html", cat: "ece569" }
-      ],
+      "C++": [{ name: "Autonomous Drone Navigation", desc: "Performance-critical components of the real-time navigation stack", link: "projects/drone-navigation.html" }],
+      "MATLAB": [{ name: "Cooperative Multi-Robot Transport", desc: "Analysis and visualization of algorithm convergence metrics", link: "projects/multi-robot-transport.html" }],
       "OpenCV": [
-        { name: "Autonomous Drone Navigation", desc: "Image processing and feature extraction for tracking pipeline", link: "projects/drone-navigation.html", cat: "project" },
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Camera data preprocessing and costmap visualization", link: "projects/terrain-path-planning.html", cat: "project" }
+        { name: "Autonomous Drone Navigation", desc: "Image processing and feature extraction for tracking pipeline", link: "projects/drone-navigation.html" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Camera data preprocessing and costmap visualization", link: "projects/terrain-path-planning.html" }
       ],
       "NumPy": [
-        { name: "Cooperative Multi-Robot Transport", desc: "Grid-world representations and matrix operations for RL algorithms", link: "projects/multi-robot-transport.html", cat: "project" },
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Numerical processing of sensor data and costmap arrays", link: "projects/terrain-path-planning.html", cat: "project" }
+        { name: "Cooperative Multi-Robot Transport", desc: "Grid-world representations and matrix operations for RL algorithms", link: "projects/multi-robot-transport.html" },
+        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Numerical processing of sensor data and costmap arrays", link: "projects/terrain-path-planning.html" }
       ],
-      "Git": [
-        { name: "All Projects", desc: "Version control and collaborative development across all project work", link: "#projects", cat: "project" }
-      ],
-      "Grafana": [
-        { name: "TDS Plasma Cutting Monitoring", desc: "Real-time dashboards visualizing acoustic data, current readings, and thickness classification", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" }
-      ],
-      "Nvidia Isaac Sim": [
-        { name: "Autonomous Drone Navigation", desc: "Simulation environment for testing navigation algorithms", link: "projects/drone-navigation.html", cat: "project" }
-      ],
-      "Gazebo": [
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Full simulation environment for closed-loop navigation testing", link: "projects/terrain-path-planning.html", cat: "project" }
-      ],
-      "RViz": [
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Visualization of costmaps, trajectories, and sensor data", link: "projects/terrain-path-planning.html", cat: "project" },
-        { name: "RViz Implementation (Lab 2)", desc: "URDF robot models, TF trees, and interactive marker visualization", link: "minor-projects/ece569-labs/r-viz-implementation.html", cat: "ece569" }
-      ],
-      "MoveIt": [
-        { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Motion planning framework integration", link: "projects/terrain-path-planning.html", cat: "project" }
-      ],
-      "SolidWorks": [
-        { name: "Automatic Medicine Dispenser", desc: "Custom singulation mechanism design with iterative 3D modeling", link: "projects/medicine-dispenser.html", cat: "project" }
-      ],
+      "Git": [{ name: "All Projects", desc: "Version control and collaborative development across all project work", link: "#projects" }],
+      "Grafana": [{ name: "TDS Plasma Cutting Monitoring", desc: "Real-time dashboards visualizing acoustic data, current readings, and thickness classification", link: "industry-implemented-projects/tds-plasma-monitoring.html" }],
+      "Nvidia Isaac Sim": [{ name: "Autonomous Drone Navigation", desc: "Simulation environment for testing navigation algorithms", link: "projects/drone-navigation.html" }],
+      "Gazebo": [{ name: "Vision-Guided Terrain-Aware Path Planning", desc: "Full simulation environment for closed-loop navigation testing", link: "projects/terrain-path-planning.html" }],
+      "RViz": [{ name: "Vision-Guided Terrain-Aware Path Planning", desc: "Visualization of costmaps, trajectories, and sensor data", link: "projects/terrain-path-planning.html" }],
+      "MoveIt": [{ name: "Vision-Guided Terrain-Aware Path Planning", desc: "Motion planning framework integration", link: "projects/terrain-path-planning.html" }],
+      "SolidWorks": [{ name: "Automatic Medicine Dispenser", desc: "Custom singulation mechanism design with iterative 3D modeling", link: "projects/medicine-dispenser.html" }],
       "ANSYS": [],
       "Raspberry Pi": [
-        { name: "TDS Plasma Cutting Monitoring", desc: "Edge data collection from acoustic and current sensors", link: "industry-implemented-projects/tds-plasma-monitoring.html", cat: "industry" },
-        { name: "Automatic Medicine Dispenser", desc: "Hardware controller running Python-based dispensing logic", link: "projects/medicine-dispenser.html", cat: "project" }
+        { name: "TDS Plasma Cutting Monitoring", desc: "Edge data collection from acoustic and current sensors", link: "industry-implemented-projects/tds-plasma-monitoring.html" },
+        { name: "Automatic Medicine Dispenser", desc: "Hardware controller running Python-based dispensing logic", link: "projects/medicine-dispenser.html" }
       ],
-      "3D Printing": [
-        { name: "Automatic Medicine Dispenser", desc: "Additive manufacturing for rapid mechanical design iteration", link: "projects/medicine-dispenser.html", cat: "project" }
-      ],
+      "3D Printing": [{ name: "Automatic Medicine Dispenser", desc: "Additive manufacturing for rapid mechanical design iteration", link: "projects/medicine-dispenser.html" }],
       "Laser Cutting": [],
-      "DFM": [
-        { name: "Automatic Medicine Dispenser", desc: "Design for manufacturing considerations in singulation mechanism", link: "projects/medicine-dispenser.html", cat: "project" }
-      ],
+      "DFM": [{ name: "Automatic Medicine Dispenser", desc: "Design for manufacturing considerations in singulation mechanism", link: "projects/medicine-dispenser.html" }],
       "GD&T": [],
       "PLC Programming": []
-    };
-
-    const catLabels = {
-      project:  { text: "Project",          bg: "#EDF2F7", color: "#2B5C8A" },
-      industry: { text: "Industry",         bg: "#D4EDDA", color: "#1B6B4A" },
-      ie574:    { text: "IE 574 Lab",       bg: "#FFF3E0", color: "#E65100" },
-      ece569:   { text: "ECE 569 Lab",      bg: "#E8EAF6", color: "#283593" }
     };
 
     function openPopup(skill) {
@@ -393,11 +587,7 @@
       if (!projects || projects.length === 0) {
         projEl.innerHTML = '<p style="font-size:0.85rem;color:var(--text-secondary);">Foundation skill — applied across coursework and professional work.</p>';
       } else {
-        projEl.innerHTML = projects.map(p => {
-          const c = catLabels[p.cat] || catLabels.project;
-          const badge = '<span style="display:inline-block;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.12rem 0.4rem;border-radius:3px;background:' + c.bg + ';color:' + c.color + ';margin-bottom:0.25rem;">' + c.text + '</span>';
-          return '<div class="skill-popup-project">' + badge + '<br><a href="' + p.link + '">' + p.name + '</a><p>' + p.desc + '</p></div>';
-        }).join('');
+        projEl.innerHTML = projects.map(p => '<div class="skill-popup-project"><a href="' + p.link + '">' + p.name + '</a><p>' + p.desc + '</p></div>').join('');
       }
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -407,4 +597,15 @@
     document.getElementById('skillPopup').addEventListener('click', e => { if (e.target === e.currentTarget) closePopup(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
     window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10); });
-    const obs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { t
+    const obs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+    document.querySelectorAll('.nav-links a').forEach(a => { a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open')); });
+    // Video-on-hover for project cards
+    document.querySelectorAll('.project-img video').forEach(v => {
+      const card = v.closest('.project-card');
+      card.addEventListener('mouseenter', () => v.play && v.play());
+      card.addEventListener('mouseleave', () => { v.pause && v.pause(); v.currentTime = 0; });
+    });
+  </script>
+</body>
+</html>
