@@ -78,5 +78,21 @@
   </div>
 
   <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+  <script>
+    document.querySelectorAll('.proj-gallery').forEach(gallery => {
+      const imgs = gallery.querySelectorAll('img');
+      const dots = gallery.querySelectorAll('.dot');
+      let current = 0, timer;
+      function show(i) {
+        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
+        current = ((i % imgs.length) + imgs.length) % imgs.length;
+        imgs[current].classList.add('active'); dots[current].classList.add('active');
+      }
+      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
+      function stopTimer() { clearInterval(timer); }
+      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
+      startTimer();
+    });
+  </script>
 </body>
 </html>

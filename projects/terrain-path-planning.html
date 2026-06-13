@@ -36,7 +36,19 @@
   </header>
 
   <div class="project-img-hero">
-    <div class="img-container"><img src="" alt="Terrain-Aware Path Planning" /><div class="photo-placeholder">Project hero image here (760×360)</div></div>
+    <div class="img-container">
+      <div class="proj-gallery" data-interval="3000">
+        <img src="../media/terrain/1.png" alt="Terrain-Aware Path Planning" class="active" />
+        <img src="../media/terrain/2.png" alt="Terrain-Aware Path Planning" />
+        <img src="../media/terrain/3.png" alt="Terrain-Aware Path Planning" />
+        <img src="../media/terrain/4.png" alt="Terrain-Aware Path Planning" />
+        <img src="../media/terrain/5.png" alt="Terrain-Aware Path Planning" />
+        <div class="gallery-dots">
+          <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+          <span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <article>
@@ -74,11 +86,32 @@
     <p>The terrain-aware planners consistently chose safer, more efficient routes compared to binary-occupancy baselines — particularly in environments with deceptive terrain (areas that looked passable geometrically but were actually soft ground or dense vegetation). The semantic costmap added minimal computational overhead while significantly improving navigation quality.</p>
   </article>
 
+  <div class="project-nav" style="padding-bottom:0.75rem;">
+    <a href="../assets/downloads/vision-guided-terrain-aware-path-planning.pdf" download class="read-more">
+      Download Report <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </a>
+  </div>
   <div class="project-nav">
     <a href="multi-robot-transport.html">← Previous: Multi-Robot Transport</a>
     <a href="medicine-dispenser.html">Next: Medicine Dispenser →</a>
   </div>
 
   <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+  <script>
+    document.querySelectorAll('.proj-gallery').forEach(gallery => {
+      const imgs = gallery.querySelectorAll('img');
+      const dots = gallery.querySelectorAll('.dot');
+      let current = 0, timer;
+      function show(i) {
+        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
+        current = ((i % imgs.length) + imgs.length) % imgs.length;
+        imgs[current].classList.add('active'); dots[current].classList.add('active');
+      }
+      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
+      function stopTimer() { clearInterval(timer); }
+      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
+      startTimer();
+    });
+  </script>
 </body>
 </html>

@@ -130,6 +130,14 @@
     .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+    /* Gallery slider */
+    .proj-gallery { position: relative; width: 100%; height: 100%; }
+    .proj-gallery img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; transition: opacity 0.5s ease; opacity: 0; }
+    .proj-gallery img.active { opacity: 1; position: relative; }
+    .gallery-dots { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 10; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s; }
+    .dot.active { background: #fff; }
+
     @media (max-width: 768px) {
       .hero { padding-top: 6rem; }
       .hero h1 { font-size: 2rem; }
@@ -284,7 +292,7 @@
 
       <div class="project-card">
         <div class="project-img">
-          <img src="media/drone/cover.jpg" alt="Autonomous Drone Navigation" onerror="this.style.display='none'" />
+          <img src="media/drone/PXL_20260613_013100342.jpg" alt="Autonomous Drone Navigation" onerror="this.style.display='none'" />
           <video src="media/drone/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
           <div class="photo-placeholder">Project image here</div>
         </div>
@@ -301,7 +309,51 @@
 
       <div class="project-card">
         <div class="project-img">
-          <img src="media/multi-robot/cover.jpg" alt="Multi-Robot Transport" onerror="this.style.display='none'" />
+          <video src="media/warehouse-kitting/media4.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block'"></video>
+          <div class="photo-placeholder">Project image here</div>
+        </div>
+        <div class="project-body">
+          <h3>Multi-Robot Warehouse Kitting &amp; Fulfillment</h3>
+          <div class="project-meta">IE 574, Purdue • Spring 2026</div>
+          <p>Simulation-based multi-robot warehouse system in CoppeliaSim — five coordinated robots (UR10, PioneerP3DX+UR5, KUKA youBot, UR10 cobot) orchestrated by a centralized PLC-style coordinator using request-busy-done signaling.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag">CoppeliaSim</span><span class="tag">Lua</span><span class="tag">Multi-Robot</span><span class="tag">Coordination</span></div>
+            <a href="projects/ie574-warehouse-kitting.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img">
+          <div class="proj-gallery" data-interval="3000">
+            <img src="media/tds-plasma/Slide1.jpg" alt="TDS Plasma Monitoring" class="active" />
+            <img src="media/tds-plasma/Slide2.jpg" alt="TDS Plasma Monitoring" />
+            <img src="media/tds-plasma/Slide3.jpg" alt="TDS Plasma Monitoring" />
+            <img src="media/tds-plasma/Slide4.jpg" alt="TDS Plasma Monitoring" />
+            <img src="media/tds-plasma/Slide5.jpg" alt="TDS Plasma Monitoring" />
+            <img src="media/tds-plasma/Slide6.jpg" alt="TDS Plasma Monitoring" />
+            <img src="media/tds-plasma/Slide7.jpg" alt="TDS Plasma Monitoring" />
+            <img src="media/tds-plasma/Slide8.jpg" alt="TDS Plasma Monitoring" />
+            <div class="gallery-dots">
+              <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3>TDS In-House Plasma Cutting Monitoring System</h3>
+          <div class="project-meta">ME 597 IIoT, Purdue • Ongoing – Apr 2026</div>
+          <p>Real-time acoustic and current data monitoring on CNC plasma cutting machine to classify sheet thickness and validate material specifications via Grafana dashboards.</p>
+          <div class="project-footer">
+            <div class="tags"><span class="tag" data-skill="Python">Python</span><span class="tag" data-skill="Raspberry Pi">RPi</span><span class="tag" data-skill="Grafana">Grafana</span></div>
+            <a href="projects/tds-plasma-monitoring.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img">
+          <img src="media/multi-robot/6.png" alt="Multi-Robot Transport" onerror="this.style.display='none'" />
           <video src="media/multi-robot/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
           <div class="photo-placeholder">Project image here</div>
         </div>
@@ -318,9 +370,17 @@
 
       <div class="project-card">
         <div class="project-img">
-          <img src="media/terrain/cover.jpg" alt="Terrain-Aware Planning" onerror="this.style.display='none'" />
-          <video src="media/terrain/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
-          <div class="photo-placeholder">Project image here</div>
+          <div class="proj-gallery" data-interval="3000">
+            <img src="media/terrain/1.png" alt="Terrain-Aware Planning" class="active" />
+            <img src="media/terrain/2.png" alt="Terrain-Aware Planning" />
+            <img src="media/terrain/3.png" alt="Terrain-Aware Planning" />
+            <img src="media/terrain/4.png" alt="Terrain-Aware Planning" />
+            <img src="media/terrain/5.png" alt="Terrain-Aware Planning" />
+            <div class="gallery-dots">
+              <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+              <span class="dot"></span><span class="dot"></span>
+            </div>
+          </div>
         </div>
         <div class="project-body">
           <h3>Vision-Guided Terrain-Aware Path Planning</h3>
@@ -352,31 +412,6 @@
 
     </div>
 
-    <!-- Industry Collaboration -->
-    <div class="projects-subsection">
-      <div class="subsection-label">Industry Collaboration</div>
-      <div class="projects-grid">
-
-        <div class="project-card">
-          <div class="project-img">
-            <img src="media/tds-plasma/cover.jpg" alt="TDS Plasma Monitoring" onerror="this.style.display='none'" />
-            <video src="media/tds-plasma/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
-            <div class="photo-placeholder">Project image here</div>
-          </div>
-          <div class="project-body">
-            <h3>TDS In-House Plasma Cutting Monitoring System</h3>
-            <div class="project-meta">ME 597 IIoT, Purdue • Ongoing – Apr 2026</div>
-            <p>Real-time acoustic and current data monitoring on CNC plasma cutting machine to classify sheet thickness and validate material specifications via Grafana dashboards.</p>
-            <div class="project-footer">
-              <div class="tags"><span class="tag" data-skill="Python">Python</span><span class="tag" data-skill="Raspberry Pi">RPi</span><span class="tag" data-skill="Grafana">Grafana</span></div>
-              <a href="industry-implemented-projects/tds-plasma-monitoring.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
     <!-- IE 574 Industrial Robotics Group Projects -->
     <div class="projects-subsection">
       <div class="subsection-label">IE 574 Industrial Robotics — Group Projects</div>
@@ -384,8 +419,7 @@
 
         <div class="project-card">
           <div class="project-img">
-            <img src="media/ie574-gp1/cover.jpg" alt="Multi-Robot System Integration" onerror="this.style.display='none'" />
-            <video src="media/ie574-gp1/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+            <video src="media/ie574-gp1-multi-robot-integration/output_progressive_8c0946c4-ea91-44a0-9571-80a34085f90e.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block'"></video>
             <div class="photo-placeholder">Project image here</div>
           </div>
           <div class="project-body">
@@ -401,8 +435,7 @@
 
         <div class="project-card">
           <div class="project-img">
-            <img src="media/ie574-gp2/cover.jpg" alt="Imitation Learning with LeRobot" onerror="this.style.display='none'" />
-            <video src="media/ie574-gp2/demo.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block';this.previousElementSibling.style.display='none'"></video>
+            <video src="media/ie574-gp2-imitation-learning/output_progressive_096c6217-4cea-46b2-a8f2-1942c177a51b.mp4" muted loop playsinline style="display:none" onloadeddata="this.style.display='block'"></video>
             <div class="photo-placeholder">Project image here</div>
           </div>
           <div class="project-body">
@@ -412,22 +445,6 @@
             <div class="project-footer">
               <div class="tags"><span class="tag">Imitation Learning</span><span class="tag">LeRobot</span><span class="tag" data-skill="PyTorch">PyTorch</span><span class="tag">Real Robot</span></div>
               <a href="minor-projects/ie574-labs/group-project-2.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-img">
-            <img src="media/IE574_Group_Projects/warehouse-kitting/sim_overview.jpg" alt="Multi-Robot Warehouse Kitting Simulation" onerror="this.style.display='none'" />
-            <div class="photo-placeholder">Project image here</div>
-          </div>
-          <div class="project-body">
-            <h3>Multi-Robot Warehouse Kitting &amp; Fulfillment</h3>
-            <div class="project-meta">IE 574, Purdue • Spring 2026</div>
-            <p>Simulation-based multi-robot warehouse system in CoppeliaSim — five coordinated robots (UR10, PioneerP3DX+UR5, KUKA youBot, UR10 cobot) orchestrated by a centralized PLC-style coordinator using request-busy-done signaling.</p>
-            <div class="project-footer">
-              <div class="tags"><span class="tag">CoppeliaSim</span><span class="tag">Lua</span><span class="tag">Multi-Robot</span><span class="tag">Coordination</span></div>
-              <a href="minor-projects/ie574-labs/ie574-warehouse-kitting.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
             </div>
           </div>
         </div>
@@ -533,7 +550,7 @@
       ],
       "Real-time Systems": [
         { name: "Autonomous Drone Navigation", desc: "Real-time obstacle avoidance and target coordinate relay at flight speed", link: "projects/drone-navigation.html" },
-        { name: "TDS Plasma Cutting Monitoring", desc: "Continuous acoustic and current data acquisition during CNC plasma operations", link: "industry-implemented-projects/tds-plasma-monitoring.html" }
+        { name: "TDS Plasma Cutting Monitoring", desc: "Continuous acoustic and current data acquisition during CNC plasma operations", link: "projects/tds-plasma-monitoring.html" }
       ],
       "Multi-Agent Systems": [
         { name: "Autonomous Drone Navigation", desc: "Communication protocol relaying target coordinates from scout drone to parent UAS", link: "projects/drone-navigation.html" },
@@ -549,7 +566,7 @@
         { name: "Cooperative Multi-Robot Transport", desc: "Benchmarked Policy Iteration, Value Iteration, and Q-Learning for constrained navigation", link: "projects/multi-robot-transport.html" }
       ],
       "Machine Learning": [
-        { name: "TDS Plasma Cutting Monitoring", desc: "Threshold matching and ML-based classification of plasma cut sheet thickness", link: "industry-implemented-projects/tds-plasma-monitoring.html" },
+        { name: "TDS Plasma Cutting Monitoring", desc: "Threshold matching and ML-based classification of plasma cut sheet thickness", link: "projects/tds-plasma-monitoring.html" },
         { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Semantic segmentation for drivable vs. non-drivable terrain classification", link: "projects/terrain-path-planning.html" },
         { name: "Imitation Learning for Robot Manipulation", desc: "Imitation learning from teleoperation demonstrations for pick-and-place tasks", link: "minor-projects/ie574-labs/group-project-2.html" }
       ],
@@ -561,7 +578,7 @@
       ],
       "Python": [
         { name: "Autonomous Drone Navigation", desc: "Core CV pipeline for tracking and multi-agent communication", link: "projects/drone-navigation.html" },
-        { name: "TDS Plasma Cutting Monitoring", desc: "Sensor data collection, processing, and thickness classification", link: "industry-implemented-projects/tds-plasma-monitoring.html" },
+        { name: "TDS Plasma Cutting Monitoring", desc: "Sensor data collection, processing, and thickness classification", link: "projects/tds-plasma-monitoring.html" },
         { name: "Cooperative Multi-Robot Transport", desc: "RL algorithm implementation and grid-world simulation", link: "projects/multi-robot-transport.html" },
         { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Segmentation inference and navigation stack integration", link: "projects/terrain-path-planning.html" },
         { name: "Automatic Medicine Dispenser", desc: "Raspberry Pi control logic for dispensing mechanism", link: "projects/medicine-dispenser.html" }
@@ -577,7 +594,7 @@
         { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Numerical processing of sensor data and costmap arrays", link: "projects/terrain-path-planning.html" }
       ],
       "Git": [{ name: "All Projects", desc: "Version control and collaborative development across all project work", link: "#projects" }],
-      "Grafana": [{ name: "TDS Plasma Cutting Monitoring", desc: "Real-time dashboards visualizing acoustic data, current readings, and thickness classification", link: "industry-implemented-projects/tds-plasma-monitoring.html" }],
+      "Grafana": [{ name: "TDS Plasma Cutting Monitoring", desc: "Real-time dashboards visualizing acoustic data, current readings, and thickness classification", link: "projects/tds-plasma-monitoring.html" }],
       "Nvidia Isaac Sim": [{ name: "Autonomous Drone Navigation", desc: "Simulation environment for testing navigation algorithms", link: "projects/drone-navigation.html" }],
       "Gazebo": [{ name: "Vision-Guided Terrain-Aware Path Planning", desc: "Full simulation environment for closed-loop navigation testing", link: "projects/terrain-path-planning.html" }],
       "RViz": [{ name: "Vision-Guided Terrain-Aware Path Planning", desc: "Visualization of costmaps, trajectories, and sensor data", link: "projects/terrain-path-planning.html" }],
@@ -585,7 +602,7 @@
       "SolidWorks": [{ name: "Automatic Medicine Dispenser", desc: "Custom singulation mechanism design with iterative 3D modeling", link: "projects/medicine-dispenser.html" }],
       "ANSYS": [],
       "Raspberry Pi": [
-        { name: "TDS Plasma Cutting Monitoring", desc: "Edge data collection from acoustic and current sensors", link: "industry-implemented-projects/tds-plasma-monitoring.html" },
+        { name: "TDS Plasma Cutting Monitoring", desc: "Edge data collection from acoustic and current sensors", link: "projects/tds-plasma-monitoring.html" },
         { name: "Automatic Medicine Dispenser", desc: "Hardware controller running Python-based dispensing logic", link: "projects/medicine-dispenser.html" }
       ],
       "3D Printing": [{ name: "Automatic Medicine Dispenser", desc: "Additive manufacturing for rapid mechanical design iteration", link: "projects/medicine-dispenser.html" }],
@@ -616,11 +633,36 @@
     const obs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
     document.querySelectorAll('.nav-links a').forEach(a => { a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open')); });
-    // Video-on-hover for project cards
+    // Gallery auto-scroll + video-on-hover
+    document.querySelectorAll('.proj-gallery').forEach(gallery => {
+      const imgs = gallery.querySelectorAll('img');
+      const dots = gallery.querySelectorAll('.dot');
+      let current = 0, timer;
+      function show(i) {
+        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
+        current = ((i % imgs.length) + imgs.length) % imgs.length;
+        imgs[current].classList.add('active'); dots[current].classList.add('active');
+      }
+      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
+      function stopTimer() { clearInterval(timer); }
+      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
+      startTimer();
+      const card = gallery.closest('.project-card');
+      if (card) {
+        const video = card.querySelector('.project-img video');
+        if (video) {
+          card.addEventListener('mouseenter', () => { stopTimer(); gallery.style.display = 'none'; video.style.display = 'block'; video.play && video.play(); });
+          card.addEventListener('mouseleave', () => { video.pause && video.pause(); video.currentTime = 0; video.style.display = 'none'; gallery.style.display = ''; startTimer(); });
+        }
+      }
+    });
+    // Video-on-hover for cards without gallery
     document.querySelectorAll('.project-img video').forEach(v => {
       const card = v.closest('.project-card');
-      card.addEventListener('mouseenter', () => v.play && v.play());
-      card.addEventListener('mouseleave', () => { v.pause && v.pause(); v.currentTime = 0; });
+      if (!card.querySelector('.proj-gallery')) {
+        card.addEventListener('mouseenter', () => v.play && v.play());
+        card.addEventListener('mouseleave', () => { v.pause && v.pause(); v.currentTime = 0; });
+      }
     });
   </script>
 </body>

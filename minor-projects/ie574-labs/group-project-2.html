@@ -86,11 +86,9 @@
 
   <div class="project-img-hero">
     <div class="img-container">
-      <video src="../../media/ie574-gp2/demo.mp4" controls muted loop playsinline
-             onerror="this.style.display='none'"></video>
-      <img src="../../media/ie574-gp2/cover.jpg" alt="Imitation Learning — SO-ARM101"
-           onerror="this.style.display='none'" />
-      <div class="photo-placeholder">Add media/ie574-gp2/cover.jpg or demo.mp4<br>Video or image — 760×360 recommended</div>
+      <video src="../../media/ie574-gp2-imitation-learning/output_progressive_096c6217-4cea-46b2-a8f2-1942c177a51b.mp4" controls muted loop playsinline
+             onerror="this.style.display='none'" style="display:block"></video>
+      <div class="photo-placeholder" style="display:none">Video — 760×360 recommended</div>
     </div>
   </div>
 
@@ -146,5 +144,21 @@
   </div>
 
   <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+  <script>
+    document.querySelectorAll('.proj-gallery').forEach(gallery => {
+      const imgs = gallery.querySelectorAll('img');
+      const dots = gallery.querySelectorAll('.dot');
+      let current = 0, timer;
+      function show(i) {
+        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
+        current = ((i % imgs.length) + imgs.length) % imgs.length;
+        imgs[current].classList.add('active'); dots[current].classList.add('active');
+      }
+      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
+      function stopTimer() { clearInterval(timer); }
+      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
+      startTimer();
+    });
+  </script>
 </body>
 </html>

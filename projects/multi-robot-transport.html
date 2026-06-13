@@ -33,7 +33,7 @@
   </header>
 
   <div class="project-img-hero">
-    <div class="img-container"><img src="" alt="Multi-Robot Transport" /><div class="photo-placeholder">Project hero image here (760×360)</div></div>
+    <div class="img-container"><img src="../media/multi-robot/6.png" alt="Multi-Robot Transport" style="display:block" /><div class="photo-placeholder" style="display:none">Project hero image here (760×360)</div></div>
   </div>
 
   <article>
@@ -74,11 +74,32 @@
     <p>The analysis demonstrated that model-based approaches (Policy and Value Iteration) consistently found optimal or near-optimal paths but required full environment knowledge and significant computation. Q-Learning produced reasonable but suboptimal paths with much less environment knowledge, highlighting the classic exploration-exploitation trade-off in constrained multi-agent settings.</p>
   </article>
 
+  <div class="project-nav" style="padding-bottom:0.75rem;">
+    <a href="../assets/downloads/cooperative-multi-robot-transport-planning.pdf" download class="read-more">
+      Download Report <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </a>
+  </div>
   <div class="project-nav">
-    <a href="../industry-implemented-projects/tds-plasma-monitoring.html">← Previous: TDS Plasma Monitoring</a>
+    <a href="tds-plasma-monitoring.html">← Previous: TDS Plasma Monitoring</a>
     <a href="terrain-path-planning.html">Next: Terrain Path Planning →</a>
   </div>
 
   <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+  <script>
+    document.querySelectorAll('.proj-gallery').forEach(gallery => {
+      const imgs = gallery.querySelectorAll('img');
+      const dots = gallery.querySelectorAll('.dot');
+      let current = 0, timer;
+      function show(i) {
+        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
+        current = ((i % imgs.length) + imgs.length) % imgs.length;
+        imgs[current].classList.add('active'); dots[current].classList.add('active');
+      }
+      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
+      function stopTimer() { clearInterval(timer); }
+      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
+      startTimer();
+    });
+  </script>
 </body>
 </html>

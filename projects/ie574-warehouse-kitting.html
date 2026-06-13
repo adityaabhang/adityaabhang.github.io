@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Robot Warehouse Kitting &amp; Fulfillment — IE 574 | Aditya Abhang</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fff;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-name { font-weight: 700; font-size: 1rem; color: #1a1a1a; text-decoration: none; }
+    .nav-name:hover { color: #0066cc; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { font-size: 0.875rem; color: #555; text-decoration: none; }
+    .nav-links a:hover { color: #0066cc; }
+    .back-btn { font-size: 0.85rem; font-weight: 500; color: #0066cc; text-decoration: none; }
+    .back-btn:hover { text-decoration: underline; }
+
+    /* ── Page container ── */
+    .container {
+      max-width: 900px; margin: 0 auto;
+      padding: 5rem 1.5rem 4rem;
+    }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb { font-size: 0.875rem; color: #666; margin-bottom: 1.75rem; }
+    .breadcrumb a { color: #0066cc; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { color: #bbb; margin: 0 0.35rem; }
+
+    /* ── Hero ── */
+    h1 { font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem; }
+    .subtitle { font-size: 1rem; color: #555; margin-bottom: 1rem; }
+    .meta-line { font-size: 0.9rem; color: #555; margin-bottom: 1.5rem; }
+
+    /* ── Tech tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2.5rem; }
+    .tag { font-size: 0.775rem; padding: 0.2rem 0.6rem; background: #f0f0f0; border-radius: 3px; color: #444; }
+
+    /* ── Carousel ── */
+    .carousel {
+      position: relative; width: 100%;
+      padding-bottom: 56.25%;
+      background: #111; overflow: hidden;
+    }
+    .carousel-item {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0; transition: opacity 0.8s ease;
+    }
+    .carousel-item.active { opacity: 1; }
+    .carousel-item img,
+    .carousel-item video { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 7px;
+      padding: 10px 0 2.5rem;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #ccc; cursor: pointer; transition: background 0.2s;
+      border: none; padding: 0;
+    }
+    .dot.active { background: #555; }
+
+    /* ── Article ── */
+    article h2 {
+      font-size: 1.25rem; font-weight: 700;
+      margin: 2.5rem 0 0.7rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #e8e8e8;
+    }
+    article h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+    article h3 { font-size: 1rem; font-weight: 600; margin: 1.75rem 0 0.5rem; }
+    article h4 { font-size: 0.95rem; font-weight: 600; margin: 1.25rem 0 0.4rem; }
+    article p { color: #333; margin-bottom: 1rem; }
+    article ul, article ol { padding-left: 1.3rem; margin-bottom: 1rem; }
+    article li { color: #333; margin-bottom: 0.4rem; line-height: 1.55; }
+
+    code {
+      background: #f5f5f5; padding: 2px 5px; border-radius: 3px;
+      font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+      font-size: 0.875rem; color: #c7254e;
+    }
+
+    /* ── Team grid ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0; margin-top: 0.75rem;
+    }
+    .team-member { padding: 0.75rem 0; border-bottom: 1px solid #e8e8e8; }
+    .team-member strong { display: block; margin-bottom: 0.15rem; font-size: 0.95rem; }
+    .team-member span { font-size: 0.85rem; color: #666; }
+
+    /* ── Related links ── */
+    .related { margin-top: 0.75rem; }
+    .related a {
+      display: block; font-size: 0.9rem; color: #0066cc; text-decoration: none;
+      padding: 0.4rem 0; border-bottom: 1px solid #e8e8e8;
+    }
+    .related a:last-child { border-bottom: none; }
+    .related a:hover { text-decoration: underline; }
+
+    /* ── Page nav ── */
+    .page-nav {
+      display: flex; justify-content: space-between; gap: 1rem;
+      flex-wrap: wrap; margin: 3rem 0 2rem;
+      padding-top: 1.5rem; border-top: 1px solid #e8e8e8;
+      font-size: 0.875rem;
+    }
+    .page-nav a { color: #0066cc; text-decoration: none; }
+    .page-nav a:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center; font-size: 0.8rem; color: #888;
+      padding: 2rem 1.5rem; border-top: 1px solid #e8e8e8;
+    }
+
+    .read-more { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.82rem; font-weight: 600; color: #0066cc; text-decoration: none; padding: 0.4rem 0.85rem; border: 1px solid #0066cc; border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
+    .read-more:hover { background: #0066cc; color: #fff; }
+    .read-more svg { transition: transform 0.2s; }
+    .read-more:hover svg { transform: translateY(2px); }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 1.55rem; }
+      .nav-links { display: none; }
+      .container { padding-top: 4rem; }
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-name">Aditya Abhang</a>
+    <div class="nav-links">
+      <a href="../index.html#skills">Skills</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="https://github.com/adityaabhang">GitHub</a>
+    </div>
+    <a href="../minor-projects/ie574-labs/index-ie574.html" class="back-btn">← IE 574 Labs</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Aditya Abhang</a>
+    <span>/</span>
+    <a href="../minor-projects/ie574-labs/index-ie574.html">IE 574</a>
+    <span>/</span>
+    Group Project 3
+  </div>
+
+  <h1>Multi-Robot Warehouse Kitting &amp; Fulfillment</h1>
+  <p class="subtitle">Simulation-based design of an autonomous multi-robot system for warehouse coordination and material handling</p>
+  <p class="meta-line">📅 Spring 2026 &nbsp;•&nbsp; 🏫 Purdue University &nbsp;•&nbsp; 🤖 IE 574 — Industrial Robotics &nbsp;•&nbsp; 👥 Group 7 (6 members)</p>
+
+  <div class="tags">
+    <span class="tag">CoppeliaSim</span>
+    <span class="tag">Lua Scripting</span>
+    <span class="tag">Multi-Robot Coordination</span>
+    <span class="tag">Signal-Based Control</span>
+    <span class="tag">System Architecture</span>
+    <span class="tag">Industrial Control</span>
+    <span class="tag">Material Handling</span>
+    <span class="tag">Simulation &amp; Validation</span>
+  </div>
+
+  <!-- ── Media Carousel ── -->
+  <div class="carousel" id="carousel">
+    <div class="carousel-item active" data-type="video">
+      <video src="../media/warehouse-kitting/media4.mp4" muted playsinline></video>
+    </div>
+  </div>
+  <div class="carousel-dots" id="carouselDots"></div>
+
+  <!-- ── Main Content ── -->
+  <article>
+
+    <h2>What Did I Do?</h2>
+    <p>I was responsible for the <strong>Pick-and-Place Robot (UR10)</strong> workflow — the upstream station that inspects incoming parts via color vision and sorts them into the correct producer bins. This involved designing the full state machine for the robot: detecting part color using a CoppeliaSim vision sensor, computing bin placement coordinates, executing the pick-and-place motion sequence, and signaling completion back to the central coordinator.</p>
+    <p>Beyond my individual robot, I contributed to system-level architecture decisions: the coordinator design, the request-busy-done signal protocol, and the order tracking logic that ensures fulfillment counts are only incremented at the final tray unloading stage — not at intermediate transport steps.</p>
+
+    <h2>Problem Statement</h2>
+    <p>Modern warehouse kitting and fulfillment systems face increasing pressure to respond to changing demand, shorter delivery expectations, and stricter accuracy requirements. Traditional kitting processes often rely on fixed workflows, manual handling, or isolated automation that becomes inefficient when demand shifts suddenly or disruptions occur.</p>
+    <p>This project addresses a clear gap: <strong>the need for a validated system-level framework</strong> that links upstream part generation, intermediate pick-and-place actions, bin transport, final tray loading, and fault recovery within one integrated operating environment. Rather than evaluating each subsystem in isolation, the project models the complete end-to-end workflow from order entry through delivery preparation.</p>
+
+    <h2>System Architecture</h2>
+    <p>The simulated system uses a <strong>coordinator-based control structure</strong> that resembles real PLC-based industrial systems. Five robotic subsystems operate under a single supervisory coordinator:</p>
+    <ul>
+      <li><strong>Parts Producer</strong> — Demand-driven part generation with spawn area validation</li>
+      <li><strong>Pick-and-Place Robot (UR10)</strong> — Vision-based color inspection and sorting into producer bins</li>
+      <li><strong>Mobile Robot 1 (PioneerP3DX + UR5)</strong> — Upstream bin transport from producer to kitting station</li>
+      <li><strong>Mobile Robot 2 (KUKA youBot)</strong> — Downstream bin transport from kitting to delivery preparation</li>
+      <li><strong>Cobot (UR10)</strong> — Final part unloading into shipping trays and empty bin removal</li>
+    </ul>
+    <p>The central <strong>Coordinator</strong> manages system state, assigns work, monitors robot status, and ensures reliable handoffs between stations. No robot communicates directly with another — all sequencing flows through the coordinator.</p>
+
+    <h2>Control Architecture</h2>
+    <p>System integration relies on a disciplined <strong>request-busy-done signal protocol</strong>:</p>
+    <ul>
+      <li>Coordinator issues <code>req_*</code> request signals to a robot with task data</li>
+      <li>Robot sets <code>*_busy = 1</code> when task is accepted and actively executing</li>
+      <li>Robot sets <code>*_done = 1</code> upon task completion</li>
+    </ul>
+    <p>This three-phase handshake prevents overlapping claims on work items and provides reliable feedback. Each robot implements a local state machine that responds only to coordinator-issued requests, reducing local autonomy in favor of traceability.</p>
+
+    <h3>Order Tracking &amp; Completion Logic</h3>
+    <p>Order progress is managed exclusively by the supervisory layer. Original order quantities are preserved while active remaining quantities are decremented during fulfillment. Completion is defined only at the point of final tray unloading — not at earlier transport stages — preventing false completion states where parts have been produced or moved but not yet delivered.</p>
+
+    <h2>Key Contributions</h2>
+    <ul>
+      <li><strong>Centralized supervisory control:</strong> Demonstrated how a PLC-style coordinator can effectively manage multi-stage robotic workflows without direct robot-to-robot communication</li>
+      <li><strong>Demand-driven production:</strong> Showed the importance of tying upstream part generation to actual order signals rather than uncontrolled random spawning</li>
+      <li><strong>Signal-based coordination:</strong> Validated the request-busy-done handshake pattern for reliable inter-station task sequencing</li>
+      <li><strong>System-level integration:</strong> Exposed integration complexity across six subsystems (producer, conveyor, camera, pick-and-place, mobile robots, cobot)</li>
+      <li><strong>Resilience testing:</strong> Included disruption scenarios (pickup failures, material-flow interruptions, transfer delays) to evaluate safe recovery behavior</li>
+    </ul>
+
+    <h2>Design Highlights</h2>
+
+    <h3>Coordinator-Based Architecture</h3>
+    <p>The architecture separates system-level decision-making from robot-level execution. The coordinator maintains shared system state and tracks bin status throughout the workflow. This structure improves traceability, simplifies debugging, and ensures consistency across the full process by giving one authoritative source of truth for work assignments and robot availability.</p>
+
+    <h3>Demand-Driven Part Generation</h3>
+    <p>The Parts Producer generates parts only when active orders exist and the spawn area is confirmed clear. This avoids inventory buildup and keeps the simulation aligned with the downstream fulfillment rate. Simpler part geometries (cuboids, cylinders) were used instead of complex polygonal shapes after finding that intricate geometry caused unstable physics behavior in CoppeliaSim.</p>
+
+    <h3>Mobile Robot 2 Grasping</h3>
+    <p>Downstream transport with the KUKA youBot required precise coordination between the mobile base, arm, gripper, and station geometry. Tuning involved iterating on gripper opening range, approach poses, stopping distance, and staging height until reliable grasps were achieved. This subsystem represented the highest implementation effort of the project.</p>
+
+    <h2>Performance Metrics</h2>
+    <p>System behavior was assessed using practical production measures:</p>
+    <ul>
+      <li><strong>Throughput:</strong> Number of fulfilled parts and completed kits per simulation run</li>
+      <li><strong>Cycle time:</strong> Elapsed time from order submission to final tray unloading</li>
+      <li><strong>Utilization:</strong> Proportion of time each robot spends actively executing tasks</li>
+      <li><strong>Availability:</strong> Proportion of time the system remains able to execute required tasks</li>
+      <li><strong>Mean time to recovery:</strong> Average time to restore workflow after a fault condition</li>
+    </ul>
+
+    <h2>Key Findings</h2>
+    <ul>
+      <li>The supervisory control concept provided a <strong>workable method for coordinating the full order-fulfillment process</strong> in a way that mirrors real industrial PLC-based systems</li>
+      <li><strong>Demand-driven production</strong> proved more realistic and better aligned with the fulfillment sequence than uncontrolled random spawning</li>
+      <li><strong>System success depends on coordinated timing and signal discipline</strong> across all interacting subsystems, not isolated task execution</li>
+      <li>The <strong>request-busy-done structure is sufficient</strong> for reliable inter-station handoffs without direct robot-to-robot communication</li>
+      <li><strong>Downstream transport</strong> (Mobile Robot 2) requires precise interaction between mobile base, arm, gripper, and station geometry — repeatability depends on well-defined physical interfaces and disciplined operating conditions</li>
+      <li><strong>Centralized order tracking</strong> improved consistency and preserved system state integrity across the full workflow</li>
+    </ul>
+
+    <h2>Implementation Insights</h2>
+    <ul>
+      <li>Spawn area validation before part generation was required to prevent collision at the producer station</li>
+      <li>Complex polygonal part shapes caused unstable physics; simpler cuboid and cylinder geometries improved simulation reliability</li>
+      <li>Mobile Robot 2 grasping required iterative tuning of gripper range, approach vectors, stopping distance, and staging height</li>
+      <li>The hardest implementation work was not high-level sequencing but matching robot motion, object geometry, and station interfaces precisely enough to achieve repeatable execution</li>
+      <li>Signal naming conventions required strict team-wide agreement — even minor mismatches in naming or timing broke inter-station handoffs</li>
+    </ul>
+
+    <h3>Scope &amp; Assumptions</h3>
+    <p>To keep the study focused on system coordination, several simplifying assumptions were used:</p>
+    <ul>
+      <li>Producer bins have a maximum capacity of one part at a time</li>
+      <li>Single active system-level controller (not distributed negotiation)</li>
+      <li>Robots execute only coordinator-issued requests (reduced local autonomy for traceability)</li>
+      <li>Order completion is defined at final tray unloading, not at earlier stages</li>
+      <li>Empty bins logically reset to producer location rather than being physically returned</li>
+    </ul>
+    <p>These assumptions are appropriate for a proof-of-concept study but define the limits of generalization to real-world deployment.</p>
+
+    <h2>Team Members</h2>
+    <p>Group 7 — IE 574 Industrial Robotics, Spring 2026, Purdue University</p>
+    <div class="team-grid">
+      <div class="team-member">
+        <strong>Aditya Abhang</strong>
+        <span>Pick-and-Place Robot workflow, part inspection, and bin placement logic</span>
+      </div>
+      <div class="team-member">
+        <strong>Harshada Prasad Kulkarni</strong>
+        <span>Mobile Robot 1 workflow for upstream bin transport</span>
+      </div>
+      <div class="team-member">
+        <strong>Lawrence Farhat</strong>
+        <span>Mobile Robot 2 workflow for downstream transport</span>
+      </div>
+      <div class="team-member">
+        <strong>Marx I. Bertrand</strong>
+        <span>Architecture design and Cobot workflow development</span>
+      </div>
+      <div class="team-member">
+        <strong>Shlok Vijaykumar Ashtekar</strong>
+        <span>Parts producer workflow and conveyor control</span>
+      </div>
+      <div class="team-member">
+        <strong>Juan Ernesto Rodriguez</strong>
+        <span>System integration, control logic, and validation approach</span>
+      </div>
+    </div>
+
+    <h2>Related Projects</h2>
+    <div class="related">
+      <a href="../minor-projects/ie574-labs/group-project-1.html">Group Project 1: Multi-Robot System Integration (Techman + Fetch AMR)</a>
+      <a href="../minor-projects/ie574-labs/group-project-2.html">Group Project 2: Imitation Learning with LeRobot</a>
+      <a href="../minor-projects/ie574-labs/index-ie574.html">IE 574 Labs Index: All simulation labs and projects</a>
+    </div>
+
+  </article>
+
+  <div class="page-nav" style="padding-bottom:0.75rem;">
+    <a href="../assets/downloads/multi-robot-warehouse-kitting-fulfillment.pdf" download class="read-more">
+      Download Report <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </a>
+  </div>
+  <div class="page-nav">
+    <a href="../minor-projects/ie574-labs/index-ie574.html">← IE 574 Labs</a>
+    <a href="../index.html#projects">All Projects</a>
+  </div>
+
+</div>
+
+<footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+
+<script>
+  (function () {
+    var carousel = document.getElementById('carousel');
+    var dotsWrap = document.getElementById('carouselDots');
+    var items = Array.prototype.slice.call(carousel.querySelectorAll('.carousel-item'));
+
+    if (items.length <= 1) {
+      var solo = items[0] && items[0].querySelector('video');
+      if (solo) { solo.play().catch(function () {}); }
+      return;
+    }
+
+    var current = 0;
+    var timer = null;
+    var IMAGE_MS = 3500;
+
+    items.forEach(function (_, i) {
+      var btn = document.createElement('button');
+      btn.className = 'dot' + (i === 0 ? ' active' : '');
+      btn.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      btn.addEventListener('click', function () { goTo(i); });
+      dotsWrap.appendChild(btn);
+    });
+
+    function goTo(index) {
+      clearTimeout(timer);
+      items[current].classList.remove('active');
+      dotsWrap.children[current].classList.remove('active');
+      var oldVideo = items[current].querySelector('video');
+      if (oldVideo) { oldVideo.pause(); oldVideo.onended = null; }
+
+      current = ((index % items.length) + items.length) % items.length;
+      items[current].classList.add('active');
+      dotsWrap.children[current].classList.add('active');
+
+      var video = items[current].querySelector('video');
+      if (video) {
+        video.currentTime = 0;
+        video.play().catch(function () {});
+        video.onended = function () {
+          timer = setTimeout(function () { goTo(current + 1); }, 500);
+        };
+      } else {
+        timer = setTimeout(function () { goTo(current + 1); }, IMAGE_MS);
+      }
+    }
+
+    var firstVideo = items[0].querySelector('video');
+    if (firstVideo) {
+      firstVideo.play().catch(function () {});
+      firstVideo.onended = function () {
+        timer = setTimeout(function () { goTo(1); }, 500);
+      };
+    } else {
+      timer = setTimeout(function () { goTo(1); }, IMAGE_MS);
+    }
+  }());
+</script>
+
+  <script>
+    document.querySelectorAll('.proj-gallery').forEach(gallery => {
+      const imgs = gallery.querySelectorAll('img');
+      const dots = gallery.querySelectorAll('.dot');
+      let current = 0, timer;
+      function show(i) {
+        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
+        current = ((i % imgs.length) + imgs.length) % imgs.length;
+        imgs[current].classList.add('active'); dots[current].classList.add('active');
+      }
+      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
+      function stopTimer() { clearInterval(timer); }
+      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
+      startTimer();
+    });
+  </script>
+</body>
+</html>
