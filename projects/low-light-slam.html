@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Low-Light Dense SLAM on Jetson — Aditya Abhang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Aditya Abhang</a>
+      <div class="nav-links"><a href="../index.html#skills">Skills</a><a href="../index.html#experience">Experience</a><a href="../index.html#projects">Projects</a><a href="../index.html#contact">Contact</a></div>
+      <a href="../index.html#projects" class="back-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg> All Projects</a>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <div class="label">IDEAS Lab, Purdue — Low-Light Perception</div>
+    <h1>Low-Light Dense Monocular SLAM on Jetson</h1>
+    <div class="meta">Jul – Sep 2026 • West Lafayette, IN • with Mihir Chauhan • Ongoing</div>
+    <div class="tags">
+      <span class="tag">MASt3R-SLAM</span>
+      <span class="tag">Dark3R</span>
+      <span class="tag">PyTorch</span>
+      <span class="tag">Jetson AGX Orin</span>
+      <span class="tag">CUDA</span>
+      <span class="tag">LibRaw</span>
+      <span class="tag">evo</span>
+      <span class="tag">Open3D</span>
+    </div>
+  </header>
+
+  <div class="project-img-hero">
+    <div class="img-container">
+      <div class="proj-gallery" data-interval="3000">
+        <img src="../media/lowlight-slam/1.jpg" alt="Clean long-exposure dense reconstruction" class="active" />
+        <img src="../media/lowlight-slam/2.jpg" alt="Clean reconstruction, corridor view" />
+        <img src="../media/lowlight-slam/3.jpg" alt="Reconstruction from short-exposure noisy input" />
+        <img src="../media/lowlight-slam/4.jpg" alt="Reconstruction from near-black input, height-coloured" />
+        <div class="gallery-dots">
+          <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <article>
+    <h2>Overview</h2>
+    <p>Classical feature-based SLAM collapses in extreme low light. At ISO 102400 there is not enough photon signal for repeatable corner features, and a stock matcher spends more than half of every sequence in relocalization. This project takes a learned <em>dense</em> SLAM stack &mdash; MASt3R-SLAM, paired with Dark3R, a low-light fine-tune of its neural matcher &mdash; and makes it run in real time on an NVIDIA Jetson AGX Orin, the class of compute a small aerial platform can actually carry, while measuring exactly how far into the dark it still holds a trajectory.</p>
+    <p>The project has two strands. Mihir Chauhan works on distilling the 689&nbsp;M-parameter teacher into a Jetson-sized student. My half is the deployment and the low-light robustness toolchain: bringing the pipeline up on the Jetson &mdash; where almost every desktop assumption about device memory, allocators, and inter-process CUDA breaks on the AGX's unified memory &mdash; and building the raw-domain sensor-noise degradation dataset, the exposure-confidence preprocessing stage, and the metric trajectory-error harness used to benchmark the system against clean-image references at controlled noise and exposure levels.</p>
+
+    <h2>Methodology</h2>
+    <p><strong>1. Jetson bring-up:</strong> On the AGX's 64&nbsp;GB unified memory, spawning the SLAM backend as a separate process crashes while mapping CUDA IPC handles, and the desktop's <code>expandable_segments</code> allocator relies on virtual-memory APIs the integrated GPU does not expose &mdash; a fatal out-of-memory with 57&nbsp;GB free. The fixes: run the backend as a thread that shares one model instance and one semaphore with the frontend, drop the expandable-segments configuration, eliminate a double checkpoint read that stalled startup for minutes on the older Torch build, and add a CPU Cholesky fallback for the pose solve when the on-device factorization fails.</p>
+    <p><strong>2. Dark3R integration:</strong> Dark3R ships as LoRA adapters over the MASt3R ViT-L base. Merging the adapters back into the base weights yields a plain checkpoint the SLAM stack consumes without code changes. I validated the merged checkpoint against both the stock model and the adapter-applied model to confirm the merge itself introduces no regression before it went into the deployment builds.</p>
+    <p><strong>3. Exposure-confidence preprocessing:</strong> A per-frame estimate of under-exposure from the 90th-percentile luma. Frames the estimator is confident are well exposed pass through bit-for-bit unchanged; only under-exposed frames are gained toward a target luma, capped at 8&times;, with the correction scaled down as confidence rises. It sits behind a config flag so baseline runs stay reproducible. Unlike a global mean/standard-deviation normalization, it never rewrites a well-exposed frame and does not break photometric consistency between neighbouring frames.</p>
+    <p><strong>4. Raw-domain degradation sweep:</strong> To measure noise sensitivity independent of scene content, a per-photosite Poisson&ndash;Gaussian sensor-noise model is applied on normalized linear sensor data and demosaiced back through LibRaw, producing seven matched signal-to-noise levels from +3&nbsp;dB down to &minus;10&nbsp;dB. A calibration loop tunes the noise scale until each level lands within 0.4&nbsp;dB of target. A power-matched additive-white-Gaussian variant isolates how much of the tracking loss comes from the demosaic's spatial and chroma correlation rather than white noise alone.</p>
+    <p><strong>5. Metric evaluation:</strong> Absolute and relative pose error (computed with <code>evo</code>) against a clean-image reference trajectory, alongside keyframe count, map-point count, Sim(3) scale drift, relocalization count, and on-device frame rate. On real ISO-102400 footage the reference is Dark3R's COLMAP long-exposure poses.</p>
+
+    <h2>Tech Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-item"><strong>MASt3R-SLAM</strong><span>Dense monocular SLAM backbone</span></div>
+      <div class="tech-item"><strong>Dark3R</strong><span>Low-light LoRA fine-tune of the neural matcher</span></div>
+      <div class="tech-item"><strong>PyTorch</strong><span>Inference, LoRA merge, checkpoint tooling</span></div>
+      <div class="tech-item"><strong>Jetson AGX Orin</strong><span>On-device target &mdash; unified memory, CUDA 11.4</span></div>
+      <div class="tech-item"><strong>LibRaw / rawpy</strong><span>Raw-domain noise synthesis and demosaic</span></div>
+      <div class="tech-item"><strong>evo</strong><span>ATE / RPE trajectory metrics</span></div>
+      <div class="tech-item"><strong>COLMAP</strong><span>Long-exposure ground-truth poses</span></div>
+      <div class="tech-item"><strong>Open3D</strong><span>Point-cloud reconstruction &amp; rendering</span></div>
+    </div>
+
+    <h2>Challenges</h2>
+    <p><strong>Unified-memory CUDA:</strong> The failure modes on the integrated GPU were opaque and rarely pointed at their cause &mdash; out-of-memory with tens of gigabytes free, cuDNN execution failures caused by day-old orphaned processes still holding device memory, ssh connections timing out because a run had saturated the CPU. Each had to be isolated from an unrelated-looking symptom and pinned to a specific unified-memory or older-Torch constraint.</p>
+    <p><strong>Noise inflates the map instead of degrading it visibly:</strong> As signal-to-noise drops, the matcher's match fraction falls, so the tracker inserts keyframes more aggressively and bakes sensor noise into the map as spurious geometry. The noisiest runs produced roughly 40% more keyframes and points than the clean run. A denser-looking cloud was actually a degradation signature, so the evaluation had to weight trajectory error over raw map size.</p>
+    <p><strong>Under-exposure and noise are separate axes:</strong> The SNR-sweep frames are digitally re-gained during synthesis, so they sit at normal brightness and the exposure stage is correctly a no-op on them. Exercising the exposure stage meant building a separately de-gained variant of the same sequence. Reporting that the stage does nothing on the noise sweep, rather than tuning it until it appeared to help, kept the two axes cleanly separated.</p>
+
+    <h2>Outcomes</h2>
+    <div class="outcomes-grid">
+      <div class="outcome-card"><div class="stat">4.75 FPS</div><div class="stat-label">Full dense SLAM on the Jetson AGX Orin on real ISO-102400 footage, versus 2.45 FPS and ~55% of frames lost to relocalization for the stock model</div></div>
+      <div class="outcome-card"><div class="stat">&minus;46% ATE</div><div class="stat-label">1.27&nbsp;m trajectory error vs 2.35&nbsp;m for stock MASt3R on a 500-frame real low-light sequence; relocalization failures cut from 273 to 58</div></div>
+      <div class="outcome-card"><div class="stat">7 levels</div><div class="stat-label">Matched raw-domain SNR degradation dataset, +3&nbsp;dB to &minus;10&nbsp;dB within 0.4&nbsp;dB per level, plus a power-matched white-noise control</div></div>
+    </div>
+    <p>On a paired-burst indoor dataset &mdash; 47 fixed camera positions, each captured as a clean long exposure, two short noisy exposures, and a motion-blurred frame &mdash; the reconstructions tracked end to end at every degradation level with zero relocalization. Trajectory error against the clean reference rose from 0.16&nbsp;m at mean scene luma 0.03 to 0.32&nbsp;m (about 2.7% of path length) at mean luma 0.007, with a 9% depth-scale contraction in the darkest case and the lowest per-step rotation drift on the motion-blurred run. The backend runs deterministically in single-thread mode, producing bit-identical maps across repeated runs &mdash; the property that makes controlled A/B comparison possible on a learned SLAM stack.</p>
+  </article>
+
+  <div class="project-nav" style="padding-bottom:0.75rem;">
+    <a href="../assets/downloads/low-light-dense-slam.pdf" download class="read-more">
+      Download Report <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </a>
+  </div>
+  <div class="project-nav">
+    <a href="../index.html#projects">&larr; All Projects</a>
+    <a href="drone-navigation.html">Next: Autonomous Drone Navigation &rarr;</a>
+  </div>
+
+  <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
+  <script>
+    document.querySelectorAll('.proj-gallery').forEach(gallery => {
+      const imgs = gallery.querySelectorAll('img');
+      const dots = gallery.querySelectorAll('.dot');
+      let current = 0, timer;
+      function show(i) {
+        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
+        current = ((i % imgs.length) + imgs.length) % imgs.length;
+        imgs[current].classList.add('active'); dots[current].classList.add('active');
+      }
+      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
+      function stopTimer() { clearInterval(timer); }
+      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
+      startTimer();
+    });
+  </script>
+</body>
+</html>
