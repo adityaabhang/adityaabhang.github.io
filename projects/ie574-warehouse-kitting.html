@@ -196,8 +196,8 @@
   <!-- ── Plain-language flow ── -->
   <style>
     .wf { margin: 2rem 0 0.5rem; }
-    .wf-cap { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.7rem;
-      letter-spacing: 0.16em; text-transform: uppercase; color: #0066cc; display: flex; align-items: center;
+    .wf-cap { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.78rem;
+      letter-spacing: 0.02em; font-weight: 600; color: #0066cc; display: flex; align-items: center;
       gap: 0.55rem; margin-bottom: 0.6rem; }
     .wf-cap::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: #C77D2E; }
     .wf-sub { font-size: 0.9rem; color: #555; margin: 0 0 1rem; }
@@ -207,7 +207,7 @@
       transition: border-color .2s, box-shadow .25s, transform .2s; }
     .wf-node:hover { border-color: #0066cc; box-shadow: 0 8px 22px -12px rgba(17,20,26,0.16); transform: translateY(-2px); }
     .wf-node::before { counter-increment: wstep; content: counter(wstep, decimal-leading-zero);
-      font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.62rem; letter-spacing: 0.1em; color: #0066cc; opacity: 0.65; }
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.62rem; letter-spacing: 0.1em; color: #666; opacity: 0.85; }
     .wf-node b { font-size: 0.82rem; font-weight: 700; color: #1a1a1a; line-height: 1.28; }
     .wf-node span { font-size: 0.76rem; color: #555; line-height: 1.45; }
     .wf-node.io { background: #EAF2FB; border-color: #C9DEF4; }

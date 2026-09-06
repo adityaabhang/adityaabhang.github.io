@@ -1,0 +1,53 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "buried-raster",
+        "value": "*",
+        "files": [
+          "projects/*.html"
+        ],
+        "createdAt": "2026-09-06T08:04:45.476Z",
+        "reason": "Crossfade slideshow: inactive .proj-gallery slides sit at opacity 0 by design and cycle in via JS"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-06T08:04:45.496Z",
+        "reason": "Card thumbnail images fill their .project-img frame edge-to-edge (object-fit:cover); an inset would look worse"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "projects/*.html"
+        ],
+        "createdAt": "2026-09-06T08:04:45.514Z",
+        "reason": "Hero image fills .img-container edge-to-edge by design (object-fit:cover)"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "style.css"
+        ],
+        "createdAt": "2026-09-06T08:04:58.198Z",
+        "reason": "Only remaining hit is .timeline-item border-left: a vertical timeline rail in neutral --border, not a card accent tab. .highlight and .industry accent stripes were removed."
+      },
+      {
+        "rule": "buried-raster",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-06T08:05:28.526Z",
+        "reason": "Home project cards use the same crossfade .proj-gallery: inactive slides at opacity 0 by design"
+      }
+    ]
+  }
+}

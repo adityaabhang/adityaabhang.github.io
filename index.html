@@ -49,7 +49,7 @@
     .hero-links a:hover { border-color: var(--accent); color: var(--accent); background: rgba(43,92,138,0.04); }
 
     section { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem var(--section-gap); }
-    .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.5rem; }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 0.5rem; }
     .section-title { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem; line-height: 1.25; }
     .divider { width: 48px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 2.5rem; }
 
@@ -111,7 +111,7 @@
 
     /* Sub-section divider within projects */
     .projects-subsection { margin-top: 2.5rem; }
-    .subsection-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .subsection-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; color: var(--text-secondary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
 
     /* Education */
     .edu-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
@@ -191,7 +191,7 @@
     .edu-right .date, .subsection-label, .skill-popup-label {
       font-family: var(--mono); font-feature-settings: "tnum" 1; letter-spacing: 0.02em;
     }
-    .section-label, .subsection-label { letter-spacing: 0.16em; }
+    .section-label, .subsection-label { letter-spacing: 0.04em; }
     .edu-right .gpa, .hero .kicker { font-family: var(--mono); font-feature-settings: "tnum" 1; }
     .hero h1, .section-title, .skill-popup-header h3 { color: var(--ink); letter-spacing: -0.02em; }
     h1, h2, h3 { text-wrap: balance; }  p { text-wrap: pretty; }
@@ -209,8 +209,10 @@
 
     /* scroll progress rule under the nav */
     nav#nav::after {
-      content: ""; position: absolute; left: 0; bottom: -1px; height: 2px;
-      width: var(--scroll, 0%); background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      transform: scaleX(var(--scroll, 0)); transform-origin: left;
+      transition: transform .12s linear;
     }
     .nav-links a.active { color: var(--accent); }
 
@@ -218,7 +220,7 @@
     .hero { position: relative; overflow: hidden; }
     .hero > *:not(.hero-motif) { position: relative; z-index: 1; }
     .hero .kicker {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em;
       color: var(--accent); margin-bottom: 0.8rem;
     }
     .hero .subtitle .rotator {
@@ -238,9 +240,7 @@
     .telemetry .tstat { display: inline-flex; align-items: center; gap: 0.4rem; }
     .telemetry .tstat i {
       width: 7px; height: 7px; border-radius: 50%; background: var(--signal);
-      animation: blink 2.4s steps(1, end) infinite;
     }
-    @keyframes blink { 0%, 62% { opacity: 1; } 63%, 100% { opacity: 0.28; } }
     .hero-motif { position: absolute; top: 3.2rem; right: -3rem; width: min(44%, 430px); z-index: 0; opacity: 0.55; }
     .hero-motif path.track { stroke-dasharray: 6 7; animation: dash 9s linear infinite; }
     @keyframes dash { to { stroke-dashoffset: -260; } }
@@ -833,7 +833,7 @@
     function scrollProgress() {
       var h = document.documentElement;
       var p = h.scrollHeight - h.clientHeight;
-      navEl.style.setProperty('--scroll', (p > 0 ? (h.scrollTop / p) * 100 : 0) + '%');
+      navEl.style.setProperty('--scroll', p > 0 ? (h.scrollTop / p).toFixed(4) : 0);
     }
     window.addEventListener('scroll', scrollProgress, { passive: true });
     scrollProgress();
