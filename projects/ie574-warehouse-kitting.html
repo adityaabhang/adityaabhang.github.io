@@ -129,7 +129,7 @@
     .page-nav a:hover { text-decoration: underline; }
 
     footer {
-      text-align: center; font-size: 0.8rem; color: #888;
+      text-align: center; font-size: 0.8rem; color: #666;
       padding: 2rem 1.5rem; border-top: 1px solid #e8e8e8;
     }
 
@@ -192,6 +192,44 @@
     </div>
   </div>
   <div class="carousel-dots" id="carouselDots"></div>
+
+  <!-- ── Plain-language flow ── -->
+  <style>
+    .wf { margin: 2rem 0 0.5rem; }
+    .wf-cap { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.7rem;
+      letter-spacing: 0.16em; text-transform: uppercase; color: #0066cc; display: flex; align-items: center;
+      gap: 0.55rem; margin-bottom: 0.6rem; }
+    .wf-cap::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: #C77D2E; }
+    .wf-sub { font-size: 0.9rem; color: #555; margin: 0 0 1rem; }
+    .wf-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0.5rem; counter-reset: wstep; }
+    .wf-node { flex: 1 1 150px; min-width: 138px; background: #fff; border: 1px solid #e2e2e2;
+      border-radius: 11px; padding: 0.9rem 0.95rem; display: flex; flex-direction: column; gap: 0.28rem;
+      transition: border-color .2s, box-shadow .25s, transform .2s; }
+    .wf-node:hover { border-color: #0066cc; box-shadow: 0 8px 22px -12px rgba(17,20,26,0.16); transform: translateY(-2px); }
+    .wf-node::before { counter-increment: wstep; content: counter(wstep, decimal-leading-zero);
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.62rem; letter-spacing: 0.1em; color: #0066cc; opacity: 0.65; }
+    .wf-node b { font-size: 0.82rem; font-weight: 700; color: #1a1a1a; line-height: 1.28; }
+    .wf-node span { font-size: 0.76rem; color: #555; line-height: 1.45; }
+    .wf-node.io { background: #EAF2FB; border-color: #C9DEF4; }
+    .wf-node.out { background: #E9F5EE; border-color: #C4E1D0; }
+    .wf-arrow { align-self: center; flex: 0 0 auto; color: #0066cc; opacity: 0.66; }
+    @media (max-width: 640px) { .wf-row { flex-direction: column; } .wf-arrow { transform: rotate(90deg); align-self: flex-start; margin-left: 1.1rem; } .wf-node { min-width: 0; flex: 0 0 auto; } }
+  </style>
+  <div class="wf">
+    <div class="wf-cap">How it works — the big picture</div>
+    <p class="wf-sub">Five robots and one coordinator turn a kit list into a packed tray, with no human in the loop.</p>
+    <div class="wf-row">
+      <div class="wf-node io"><b>Order in</b><span>A kit list says which parts each tray needs.</span></div>
+      <span class="wf-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="wf-node"><b>Coordinator assigns</b><span>A PLC-style controller hands each step to the right robot.</span></div>
+      <span class="wf-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="wf-node"><b>Robots signal</b><span>Each robot reports request, busy, or done so work never overlaps.</span></div>
+      <span class="wf-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="wf-node"><b>Pick, sort &amp; carry</b><span>The UR10 sorts by colour; mobile robots move bins down the line.</span></div>
+      <span class="wf-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="wf-node out"><b>Kit out</b><span>The tray is counted as fulfilled only when it leaves fully loaded.</span></div>
+    </div>
+  </div>
 
   <!-- ── Main Content ── -->
   <article>

@@ -6,9 +6,10 @@
   <title>Cooperative Multi-Robot Transport — Aditya Abhang</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
   <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+  <script defer src="../assets/site.js"></script>
 </head>
 <body>
 <nav>
@@ -33,8 +34,24 @@
   </header>
 
   <div class="project-img-hero">
-    <div class="img-container"><img src="../media/multi-robot/6.png" alt="Multi-Robot Transport" style="display:block" /><div class="photo-placeholder" style="display:none">Project hero image here (760×360)</div></div>
+    <div class="img-container"><img src="../media/multi-robot/6.png" alt="Multi-Robot Transport" style="display:block" data-parallax="0.14" /><div class="photo-placeholder" style="display:none">Project hero image here (760×360)</div></div>
   </div>
+
+  <section class="flow-wrap" data-reveal>
+    <div class="flow-cap">How it works — the big picture</div>
+    <p class="flow-sub">Two robots carry one object through a house while staying locked a fixed distance apart.</p>
+    <div class="flow" data-reveal-stagger>
+      <div class="flow-node io"><b>Read the map</b><span>Turn a house floor plan into a grid of open and blocked cells.</span></div>
+      <span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="flow-node"><b>Link the robots</b><span>Both robots must hold an exact distance apart at all times.</span></div>
+      <span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="flow-node"><b>Allow only legal moves</b><span>Any joint move that breaks the spacing is thrown out.</span></div>
+      <span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="flow-node"><b>Try three methods</b><span>Policy Iteration, Value Iteration, and Q-Learning each plan a route.</span></div>
+      <span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="flow-node out"><b>Compare</b><span>Which finds the shortest safe path, and how much compute it costs.</span></div>
+    </div>
+  </section>
 
   <article>
     <h2>Overview</h2>

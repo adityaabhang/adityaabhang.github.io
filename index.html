@@ -4,10 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aditya Abhang - Robotics Engineering Student at Purdue University</title>
-  <meta name="description" content="Portfolio of Aditya Uday Abhang — MS Robotics at Purdue University. Computer Vision, Autonomous Navigation, RL, Robotics." />
+  <meta name="description" content="Portfolio of Aditya Uday Abhang — MS Robotics at Purdue University, graduating May 2027 and seeking full-time roles. Computer Vision, Autonomous Navigation, RL, Robotics." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <meta property="og:title" content="Aditya Uday Abhang — Robotics Engineer" />
+  <meta property="og:description" content="MS Robotics at Purdue. Perception, autonomous navigation, and reinforcement learning for real robots. Graduating May 2027, open to full-time roles." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="media/lowlight-slam/cover.jpg" />
+  <meta name="theme-color" content="#0F1620" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F1620'/%3E%3Cpath d='M8 21V11l8 5 8-5v10' fill='none' stroke='%233A7BBF' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='2.3' fill='%23C77D2E'/%3E%3C/svg%3E" />
+  <script defer src="assets/site.js"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -49,7 +56,7 @@
     /* Skills */
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
     .skill-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; transition: border-color 0.2s, box-shadow 0.2s; }
-    .skill-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(43,92,138,0.08); }
+    .skill-card:hover { border-color: var(--accent); box-shadow: 0 8px 20px -10px rgba(17,20,26,0.14); }
     .skill-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
     .skill-card .icon { width: 28px; height: 28px; border-radius: 6px; background: var(--tag-bg); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
     .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -87,7 +94,7 @@
     /* Projects grid */
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1.25rem; }
     .project-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
-    .project-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(43,92,138,0.08); }
+    .project-card:hover { border-color: var(--accent); box-shadow: 0 12px 28px -12px rgba(17,20,26,0.14); }
     .project-img { width: 100%; height: 200px; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); overflow: hidden; position: relative; }
     .project-img img { width: 100%; height: 100%; object-fit: cover; }
     .project-img video { width: 100%; height: 100%; object-fit: cover; }
@@ -151,6 +158,121 @@
       .section-title { font-size: 1.5rem; }
       :root { --section-gap: 3.5rem; }
     }
+
+    /* ============================================================
+       ROBOTICS UPGRADE v2 — engineering identity + motion
+       ============================================================ */
+    :root {
+      --ink: #0F1620;
+      --text-secondary: #565452;
+      --accent-light: #37709F;
+      --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      --grid-line: rgba(43, 92, 138, 0.055);
+      --signal: #C77D2E;
+      --shadow-tint: rgba(17, 20, 26, 0.13);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    body { position: relative; }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 46px 46px;
+      -webkit-mask-image: radial-gradient(150% 85% at 50% -10%, #000 42%, transparent 78%);
+              mask-image: radial-gradient(150% 85% at 50% -10%, #000 42%, transparent 78%);
+    }
+    body::after {
+      content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .section-label, .hero .tagline, .project-meta, .timeline-date, .timeline-sub,
+    .edu-right .date, .subsection-label, .skill-popup-label {
+      font-family: var(--mono); font-feature-settings: "tnum" 1; letter-spacing: 0.02em;
+    }
+    .section-label, .subsection-label { letter-spacing: 0.16em; }
+    .edu-right .gpa, .hero .kicker { font-family: var(--mono); font-feature-settings: "tnum" 1; }
+    .hero h1, .section-title, .skill-popup-header h3 { color: var(--ink); letter-spacing: -0.02em; }
+    h1, h2, h3 { text-wrap: balance; }  p { text-wrap: pretty; }
+
+    a, button, .tag, .read-more, .skill-card, .project-card, .contact-grid a, .hero-links a {
+      transition: color .2s var(--ease-out), background .2s var(--ease-out),
+        border-color .2s var(--ease-out), box-shadow .25s var(--ease-out), transform .18s var(--ease-out);
+    }
+    .tag:active, .read-more:active, .contact-grid a:active, .hero-links a:active,
+    .nav-links .cta-link:active { transform: translateY(1px) scale(0.985); }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    .project-card:hover { box-shadow: 0 14px 34px -12px var(--shadow-tint); }
+    .skill-card { align-self: start; }
+    .skill-card:hover { box-shadow: 0 10px 26px -12px var(--shadow-tint); }
+
+    /* scroll progress rule under the nav */
+    nav#nav::after {
+      content: ""; position: absolute; left: 0; bottom: -1px; height: 2px;
+      width: var(--scroll, 0%); background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    }
+    .nav-links a.active { color: var(--accent); }
+
+    /* hero: kicker, rotator, telemetry, waypoint motif */
+    .hero { position: relative; overflow: hidden; }
+    .hero > *:not(.hero-motif) { position: relative; z-index: 1; }
+    .hero .kicker {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.8rem;
+    }
+    .hero .subtitle .rotator {
+      display: inline-block; color: var(--accent); font-weight: 700;
+      border-bottom: 2px solid rgba(43, 92, 138, 0.35); min-width: 4.5ch;
+      transition: opacity .28s var(--ease-out), transform .28s var(--ease-out);
+    }
+    .hero .subtitle .rotator.swap { opacity: 0; transform: translateY(-6px); }
+    .telemetry {
+      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem;
+      margin-top: 1.6rem; padding: 0.5rem 0.85rem; border: 1px solid var(--border);
+      border-radius: 8px; background: rgba(255,255,255,0.6); backdrop-filter: blur(4px);
+      font-family: var(--mono); font-size: 0.72rem; color: var(--text-secondary);
+    }
+    .telemetry .tk { color: var(--accent); font-weight: 600; letter-spacing: 0.12em; }
+    .telemetry b { color: var(--ink); font-weight: 600; }
+    .telemetry .tstat { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .telemetry .tstat i {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--signal);
+      animation: blink 2.4s steps(1, end) infinite;
+    }
+    @keyframes blink { 0%, 62% { opacity: 1; } 63%, 100% { opacity: 0.28; } }
+    .hero-motif { position: absolute; top: 3.2rem; right: -3rem; width: min(44%, 430px); z-index: 0; opacity: 0.55; }
+    .hero-motif path.track { stroke-dasharray: 6 7; animation: dash 9s linear infinite; }
+    @keyframes dash { to { stroke-dashoffset: -260; } }
+
+    /* reveal + parallax */
+    [data-reveal] { opacity: 0; transform: translateY(20px); }
+    [data-reveal].in { opacity: 1; transform: none; transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }
+    [data-reveal-stagger] > * { opacity: 0; transform: translateY(16px); }
+    [data-reveal-stagger].in > * { opacity: 1; transform: none; transition: opacity .55s var(--ease-out), transform .55s var(--ease-out); }
+    [data-reveal-stagger].in > *:nth-child(1){transition-delay:.00s}
+    [data-reveal-stagger].in > *:nth-child(2){transition-delay:.06s}
+    [data-reveal-stagger].in > *:nth-child(3){transition-delay:.12s}
+    [data-reveal-stagger].in > *:nth-child(4){transition-delay:.18s}
+    [data-reveal-stagger].in > *:nth-child(5){transition-delay:.24s}
+    [data-reveal-stagger].in > *:nth-child(6){transition-delay:.30s}
+    [data-reveal-stagger].in > *:nth-child(7){transition-delay:.36s}
+    [data-reveal-stagger].in > *:nth-child(n+8){transition-delay:.42s}
+    [data-reveal-stagger] > .hero-motif { opacity: 0; transform: none; }
+    [data-reveal-stagger].in > .hero-motif { opacity: 0.5; transition: opacity 1s var(--ease-out); }
+    .is-parallax { will-change: transform; }
+    .project-img .is-parallax { display: block; width: 100%; height: 116%; }
+
+    @media (max-width: 768px) { .hero-motif { display: none; } }
+    @media (scripting: none) {
+      [data-reveal], [data-reveal-stagger] > * { opacity: 1 !important; transform: none !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+      [data-reveal], [data-reveal-stagger] > * { opacity: 1 !important; transform: none !important; }
+      .is-parallax { transform: none !important; }
+      .hero-motif path.track { animation: none; }
+    }
   </style>
 </head>
 <body>
@@ -181,16 +303,39 @@
     </div>
   </nav>
 
-  <header class="hero">
+  <header class="hero" data-reveal>
+    <svg class="hero-motif" viewBox="0 0 420 300" fill="none" aria-hidden="true">
+      <path d="M12 250 C 90 250 90 90 170 90 S 270 210 330 150 400 60 408 40"
+            stroke="#3A7BBF" stroke-width="2" opacity="0.35"/>
+      <path class="track" d="M12 250 C 90 250 90 90 170 90 S 270 210 330 150 400 60 408 40"
+            stroke="#2B5C8A" stroke-width="2.5" stroke-linecap="round"/>
+      <g fill="#2B5C8A" opacity="0.6">
+        <circle cx="12" cy="250" r="3.4"/><circle cx="170" cy="90" r="3.4"/>
+        <circle cx="330" cy="150" r="3.4"/><circle cx="408" cy="40" r="3.4"/>
+      </g>
+      <circle r="5.5" fill="#C77D2E">
+        <animateMotion dur="9s" repeatCount="indefinite" rotate="auto"
+          path="M12 250 C 90 250 90 90 170 90 S 270 210 330 150 400 60 408 40"/>
+      </circle>
+    </svg>
+    <div class="kicker">Robotics Engineer &nbsp;·&nbsp; Perception &amp; Autonomy</div>
     <h1>Aditya Uday Abhang</h1>
-    <div class="subtitle">Computer Vision &amp; Autonomous Navigation</div>
-    <div class="tagline">MS Robotics @Purdue University, Main Campus</div>
-    <p>Robotics engineer building autonomous systems that see, navigate, and act. Currently developing drone navigation and industrial monitoring systems at Purdue. Seeking Summer 2026 internships in robotics, computer vision, and physical AI.</p>
+    <div class="subtitle">Building robots that
+      <span class="rotator" data-words="see,map,navigate,decide,act">see</span></div>
+    <div class="tagline">MS Robotics @ Purdue University &nbsp;·&nbsp; West Lafayette, IN</div>
+    <p>Robotics engineer building autonomous systems that see, navigate, and act. Currently developing drone navigation and industrial monitoring systems at Purdue. Graduating May 2027 and seeking full-time roles in robotics, computer vision, and physical AI.</p>
     <div class="hero-links">
       <a href="mailto:aabhang@purdue.edu"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Email</a>
       <a href="https://github.com/adityaabhang" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"/></svg> GitHub</a>
       <a href="https://linkedin.com/in/adityaabhang" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a>
       <a href="tel:+14084225068"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg> +1-408-422-5068</a>
+    </div>
+    <div class="telemetry" aria-hidden="true">
+      <span class="tk">TELEMETRY</span>
+      <span>x&nbsp;<b data-t="x">4.12</b></span>
+      <span>y&nbsp;<b data-t="y">&minus;1.08</b></span>
+      <span>&theta;&nbsp;<b data-t="th">27&deg;</b></span>
+      <span class="tstat"><i></i> tracking</span>
     </div>
   </header>
 
@@ -198,7 +343,7 @@
     <div class="section-label">What I Work With</div>
     <h2 class="section-title">Skills &amp; Technologies</h2>
     <div class="divider"></div>
-    <div class="skills-grid">
+    <div class="skills-grid" data-reveal-stagger>
       <div class="skill-card">
         <h3><span class="icon">🤖</span> Robotics &amp; Autonomy</h3>
         <div class="tags">
@@ -261,7 +406,7 @@
     <div class="section-label">Where I've Worked</div>
     <h2 class="section-title">Experience</h2>
     <div class="divider"></div>
-    <div class="timeline-item">
+    <div class="timeline-item" data-reveal>
       <div class="timeline-header"><h3>IDEAS Lab — Purdue University</h3><span class="timeline-date">Feb 2026 – Present</span></div>
       <div class="timeline-sub">Graduate Research • West Lafayette, IN</div>
       <ul>
@@ -271,7 +416,7 @@
         <li>Designed multi-agent communication protocol for real-time target relay between scouting drone and parent UAS</li>
       </ul>
     </div>
-    <div class="timeline-item">
+    <div class="timeline-item" data-reveal>
       <div class="timeline-header"><h3>Maharajashree Industrial Solutions</h3><span class="timeline-date">Jul 2023 – Jan 2024</span></div>
       <div class="timeline-sub">Automation Engineering Intern • Pune, India</div>
       <ul>
@@ -288,7 +433,7 @@
     <div class="divider"></div>
 
     <!-- Main Research & Personal Projects -->
-    <div class="projects-grid">
+    <div class="projects-grid" data-reveal-stagger>
 
       <div class="project-card">
         <div class="project-img">
@@ -430,7 +575,7 @@
     <!-- IE 574 Industrial Robotics Group Projects -->
     <div class="projects-subsection">
       <div class="subsection-label">IE 574 Industrial Robotics — Group Projects</div>
-      <div class="projects-grid">
+      <div class="projects-grid" data-reveal-stagger>
 
         <div class="project-card">
           <div class="project-img">
@@ -470,7 +615,7 @@
     <!-- IE 574 Simulation Labs -->
     <div class="projects-subsection">
       <div class="subsection-label">IE 574 Industrial Robotics — Simulation Labs</div>
-      <div class="projects-grid">
+      <div class="projects-grid" data-reveal-stagger>
 
         <div class="project-card">
           <div class="project-img">
@@ -494,7 +639,7 @@
     <!-- ECE-569 Intro to Robotics Labs -->
     <div class="projects-subsection">
       <div class="subsection-label">ECE 569 Intro to Robotics — Simulation Labs</div>
-      <div class="projects-grid">
+      <div class="projects-grid" data-reveal-stagger>
 
         <div class="project-card">
           <div class="project-img">
@@ -520,11 +665,11 @@
     <div class="section-label">Where I've Studied</div>
     <h2 class="section-title">Education</h2>
     <div class="divider"></div>
-    <div class="edu-card">
+    <div class="edu-card" data-reveal>
       <div><h3>Purdue University</h3><div class="degree">MS in Engineering — Robotics / Interdisciplinary Engineering</div><div class="coursework">Motion Planning · Reinforcement Learning · Industrial Robotics · IoT Integration · Intro to Robotics</div></div>
       <div class="edu-right"><div class="date">Aug 2025 – May 2027</div><div class="gpa">GPA: 3.67 / 4.0</div></div>
     </div>
-    <div class="edu-card">
+    <div class="edu-card" data-reveal>
       <div><h3>Govt College of Engineering, Pune</h3><div class="degree">BE Mechanical Engineering — Honors in System Engineering</div></div>
       <div class="edu-right"><div class="date">Aug 2020 – May 2024</div><div class="gpa">GPA: 3.2 / 4.0</div></div>
     </div>
@@ -533,8 +678,8 @@
   <section id="contact" class="fade-in">
     <div class="contact-section">
       <div class="section-label">Let's Connect</div>
-      <h2 class="section-title" style="margin-bottom: 0.75rem;">Open to Summer 2026 Opportunities</h2>
-      <p>Actively seeking internship and co-op roles in robotics, computer vision, reinforcement learning, and physical AI. Let's talk.</p>
+      <h2 class="section-title" style="margin-bottom: 0.75rem;">Open to Full-Time Opportunities</h2>
+      <p>Graduating from Purdue in May 2027 and actively seeking full-time roles in robotics, computer vision, reinforcement learning, and physical AI. Let's talk.</p>
       <div class="contact-grid">
         <a href="mailto:aabhang@purdue.edu" class="contact-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> aabhang@purdue.edu</a>
         <a href="https://github.com/adityaabhang" target="_blank" class="contact-secondary">GitHub</a>
@@ -679,6 +824,63 @@
         card.addEventListener('mouseleave', () => { v.pause && v.pause(); v.currentTime = 0; });
       }
     });
+
+    /* ---- robotics upgrade: motion + identity ---- */
+    var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // scroll progress rule under the nav
+    var navEl = document.getElementById('nav');
+    function scrollProgress() {
+      var h = document.documentElement;
+      var p = h.scrollHeight - h.clientHeight;
+      navEl.style.setProperty('--scroll', (p > 0 ? (h.scrollTop / p) * 100 : 0) + '%');
+    }
+    window.addEventListener('scroll', scrollProgress, { passive: true });
+    scrollProgress();
+
+    // scroll-spy: mark the active nav link
+    var spy = [].map.call(document.querySelectorAll('.nav-links a[href^="#"]'), function (a) {
+      var id = a.getAttribute('href').slice(1);
+      return { a: a, sec: id ? document.getElementById(id) : null };
+    }).filter(function (x) { return x.sec; });
+    if ('IntersectionObserver' in window && spy.length) {
+      var spyObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          spy.forEach(function (x) { x.a.classList.toggle('active', x.sec === e.target); });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      spy.forEach(function (x) { spyObs.observe(x.sec); });
+    }
+
+    // hero role rotator
+    var rot = document.querySelector('.hero .rotator');
+    if (rot && !RM) {
+      var words = (rot.dataset.words || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+      var wi = 0;
+      setInterval(function () {
+        wi = (wi + 1) % words.length;
+        rot.classList.add('swap');
+        setTimeout(function () { rot.textContent = words[wi]; rot.classList.remove('swap'); }, 280);
+      }, 2400);
+    }
+
+    // hero telemetry drift
+    var tX = document.querySelector('[data-t="x"]'), tY = document.querySelector('[data-t="y"]'), tTh = document.querySelector('[data-t="th"]');
+    if (tX && !RM) {
+      var bx = 4.12, by = -1.08, bth = 27;
+      setInterval(function () {
+        bx += (Math.random() - 0.5) * 0.14; by += (Math.random() - 0.5) * 0.12; bth += (Math.random() - 0.5) * 1.6;
+        tX.textContent = bx.toFixed(2);
+        tY.textContent = (by < 0 ? '−' : '') + Math.abs(by).toFixed(2);
+        tTh.textContent = Math.round(((bth % 360) + 360) % 360) + '°';
+      }, 1400);
+    }
+
+    // give static project-card media a subtle parallax (site.js applies the transform;
+    // galleries are skipped so their dots stay inside the frame)
+    document.querySelectorAll('#projects .project-img > img, #projects .project-img > video')
+      .forEach(function (el) { el.setAttribute('data-parallax', '0.05'); });
   </script>
 </body>
 </html>

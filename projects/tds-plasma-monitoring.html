@@ -6,9 +6,10 @@
   <title>TDS Plasma Cutting Monitoring — Aditya Abhang</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
   <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
+  <script defer src="../assets/site.js"></script>
 </head>
 <body>
 <nav>
@@ -56,6 +57,22 @@
       </div>
     </div>
   </div>
+
+  <section class="flow-wrap" data-reveal>
+    <div class="flow-cap">How it works — the big picture</div>
+    <p class="flow-sub">Microphones and current sensors tell operators, live, how thick the metal on the plasma cutter is.</p>
+    <div class="flow" data-reveal-stagger>
+      <div class="flow-node io"><b>Listen &amp; measure</b><span>Mics catch the plasma arc's sound; sensors read the current draw.</span></div>
+      <span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="flow-node"><b>Log on the edge</b><span>A Raspberry Pi records both signals with timestamps.</span></div>
+      <span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="flow-node"><b>Match to thickness</b><span>Rules map the sound and current pattern to a sheet thickness.</span></div>
+      <span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="flow-node"><b>Show it live</b><span>A Grafana dashboard displays thickness and flags odd readings.</span></div>
+      <span class="flow-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <div class="flow-node out"><b>Catch mix-ups</b><span>The operator sees at once if the wrong material is loaded.</span></div>
+    </div>
+  </section>
 
   <article>
     <h2>Overview</h2>
