@@ -69,36 +69,40 @@
   <article>
     <h2>Overview</h2>
     <p>At Purdue's IDEAS Lab, I'm developing a fully autonomous drone system capable of navigating through dense forest canopies while tracking human subjects in real-time. The project addresses a critical gap in search-and-rescue and environmental monitoring: most existing drone systems fail in heavily occluded, GPS-denied environments where tree cover disrupts both navigation and target visibility.</p>
-    <p>The system combines a robust computer vision pipeline with LiDAR-based obstacle avoidance, multi-object tracking, and a multi-agent communication protocol that relays live target coordinates from a scouting drone to a parent UAS for continuous situational awareness.</p>
+    <p>The system pairs a human detection, tracking, and trajectory-prediction pipeline with a safety-assured LiDAR planner, joined by a bridge I built that turns "where the person is going" into flight goals without ever letting the follower override obstacle avoidance. A multi-agent communication layer relays live target coordinates from the scout to a parent UAS so coverage continues when the scout loses line-of-sight.</p>
 
     <h2>Methodology</h2>
     <p>The pipeline is built around three core subsystems that work in concert:</p>
-    <p><strong>1. Perception &amp; Obstacle Avoidance:</strong> The drone fuses LiDAR point cloud data with RGB camera feeds to build a real-time 3D map of the environment. LiDAR handles structural obstacles (trees, branches, terrain changes) while the RGB stream provides texture-level detail for gap detection and path validation. The obstacle avoidance module processes this fused data to generate safe flight corridors through the canopy.</p>
-    <p><strong>2. Human Tracking Pipeline:</strong> For target tracking, I evaluated multiple multi-object tracking (MOT) approaches including ByteTrack and BoT-SORT with camera motion compensation (CMC). The tracking system needs to handle frequent full occlusions as subjects move behind trees, variable lighting from canopy filtering, and appearance changes. ReID-capable tracking ensures re-identification after prolonged occlusion events, which is critical in forest scenarios where a subject can disappear behind cover for several seconds.</p>
-    <p><strong>3. Multi-Agent Communication:</strong> The scouting drone transmits real-time target coordinates, confidence scores, and trajectory predictions to a parent UAS operating at a higher altitude. This layered approach ensures continuous coverage even when the scout loses line-of-sight, and allows the parent to coordinate broader area search patterns.</p>
+    <p><strong>1. Perception &amp; Obstacle Avoidance:</strong> LiDAR-inertial odometry (FAST-LIO2) provides a light-independent state estimate, and an incrementally-inflated occupancy grid (ROG-Map) turns each LiDAR scan into the free/occupied volume the planner reasons over. Planning and collision avoidance are handled by the SUPER planner (HKU MaRS, <em>Science Robotics</em> 2025), used unmodified: it builds IRIS/CIRI safe flight corridors through the canopy, optimises a MINCO trajectory inside those hard constraints, replans at 15&nbsp;Hz against the live map, and falls back to an emergency-stop trajectory if a replan fails.</p>
+    <p><strong>2. Human Tracking &amp; Trajectory Prediction:</strong> A YOLO detector (TensorRT on the onboard GPU) feeds BoT-SORT multi-object tracking with camera-motion compensation and ReID, so an identity survives the multi-second full occlusions that happen every time a subject passes behind a trunk. An EigenTrajectory model predicts each person's next ~1.5&nbsp;s as a 20-point path, which is what lets the system keep moving toward a target it currently cannot see.</p>
+    <p><strong>3. Bridge to the Planner:</strong> I built a ROS&nbsp;2 package, <code>dtp_super_bridge</code>, that converts the tracker/predictor output into a single goal pose for SUPER &mdash; the programmatic equivalent of a map click. The bridge never plans a path; SUPER keeps full authority over obstacle avoidance. A four-state behaviour machine decides the goal: <strong>FOLLOW</strong> (hold a 2&nbsp;m standoff behind the predicted position, placed opposite the person's travel direction so it can't run away on overshoot), <strong>HOLD&nbsp;&amp;&nbsp;EXTRAPOLATE</strong> then <strong>HOLD&nbsp;POSITION</strong> (advance the goal along the last heading for 1.2&nbsp;s when the track drops, then freeze and hover), and <strong>BACK&nbsp;OFF</strong> (retreat when the person comes within 1.5&nbsp;m, with hysteresis on exit). Priority is BACK&nbsp;OFF&nbsp;&gt;&nbsp;HOLD&nbsp;&gt;&nbsp;FOLLOW, and safety transitions bypass the goal-jitter deadband.</p>
+    <p>The upstream detector/predictor and the planner each still run standalone; every repo-crossing name, remap, and coordinate transform lives in the one bridge node.</p>
 
     <h2>Tech Stack</h2>
     <div class="tech-grid">
-      <div class="tech-item"><strong>Python / C++</strong><span>Core pipeline &amp; real-time components</span></div>
-      <div class="tech-item"><strong>ROS2</strong><span>Communication &amp; node architecture</span></div>
-      <div class="tech-item"><strong>PyTorch</strong><span>Detection &amp; tracking models</span></div>
-      <div class="tech-item"><strong>OpenCV</strong><span>Image processing &amp; feature extraction</span></div>
-      <div class="tech-item"><strong>LiDAR Processing</strong><span>Point cloud to obstacle map</span></div>
-      <div class="tech-item"><strong>ByteTrack / BoT-SORT</strong><span>Multi-object tracking with ReID</span></div>
+      <div class="tech-item"><strong>Python / C++</strong><span>Bridge node, behaviour machine, real-time planner</span></div>
+      <div class="tech-item"><strong>ROS2</strong><span>Node architecture, QoS-matched topic wiring</span></div>
+      <div class="tech-item"><strong>SUPER + ROG-Map</strong><span>Safety-assured planning on a LiDAR occupancy grid</span></div>
+      <div class="tech-item"><strong>FAST-LIO2</strong><span>LiDAR-inertial odometry (light-independent)</span></div>
+      <div class="tech-item"><strong>YOLO + BoT-SORT</strong><span>Detection and multi-object tracking with ReID</span></div>
+      <div class="tech-item"><strong>EigenTrajectory</strong><span>1.5&nbsp;s human trajectory prediction</span></div>
+      <div class="tech-item"><strong>ZeroMQ</strong><span>Transport between the vision app and the bridge</span></div>
+      <div class="tech-item"><strong>MARSIM / perfect_drone_sim</strong><span>Point-realistic LiDAR simulation for closed-loop tests</span></div>
     </div>
 
     <h2>Challenges</h2>
     <p><strong>Dense occlusion handling:</strong> Forest environments create persistent, unpredictable occlusions. A target can be fully visible one frame and completely hidden the next as they move behind a tree trunk. Standard trackers lose identity quickly in these conditions. We addressed this by integrating ReID features that maintain identity across multi-second occlusion gaps, and by using trajectory prediction to estimate target position during blind periods.</p>
     <p><strong>Variable lighting conditions:</strong> Canopy-filtered sunlight creates extreme dynamic range — bright patches of direct light next to deep shadow. This wreaks havoc on both detection confidence and appearance-based ReID. We implemented adaptive exposure management and lighting-invariant feature representations to maintain tracking consistency.</p>
-    <p><strong>Real-time constraint on embedded hardware:</strong> The entire pipeline needs to run on drone-mounted compute (Jetson platform) with strict latency requirements. Teammate Ayush Kumar is running a parallel YOLO + BoT-SORT + Eigen Trajectories pipeline on a Jetson, and we're benchmarking throughput vs. accuracy tradeoffs to find the optimal operating point for real-time flight.</p>
+    <p><strong>Keeping obstacle avoidance above target-following:</strong> A follower that chases a noisy position estimate will eventually chase it into a tree. The architecture makes avoidance structurally dominant rather than relying on tuning &mdash; the bridge only ever proposes a goal, and the planner projects every goal onto the nearest free cell of the live occupancy map, rejects goals that are deeply inside an obstacle, and brakes if it cannot find a safe trajectory.</p>
+    <p><strong>Real-time constraint on embedded hardware:</strong> The whole loop has to run on drone-mounted compute with a fixed latency budget. Teammate Ayush Kumar runs a parallel YOLO&nbsp;+&nbsp;BoT-SORT&nbsp;+&nbsp;EigenTrajectory pipeline on a Jetson; we benchmark throughput against accuracy to pick the operating point for flight.</p>
 
     <h2>Outcomes</h2>
     <div class="outcomes-grid">
-      <div class="outcome-card"><div class="stat">85%</div><div class="stat-label">Tracking accuracy across 100+ simulated trials in dense vegetation</div></div>
-      <div class="outcome-card"><div class="stat">100+</div><div class="stat-label">Simulated trials completed in varied forest density scenarios</div></div>
-      <div class="outcome-card"><div class="stat">Real-time</div><div class="stat-label">Multi-agent coordinate relay maintaining continuous situational awareness</div></div>
+      <div class="outcome-card"><div class="stat">3 / 3</div><div class="stat-label">Follow, occlusion-hold, and safety back-off behaviours validated in closed-loop LiDAR simulation</div></div>
+      <div class="outcome-card"><div class="stat">~800</div><div class="stat-label">Planner replans per run against the live map &mdash; zero collisions across every scenario</div></div>
+      <div class="outcome-card"><div class="stat">21</div><div class="stat-label">Unit tests on the wire decoder and behaviour state machine, plus recorded bags and video for each run</div></div>
     </div>
-    <p>The project is ongoing, with current work focused on improving tracking robustness in the densest canopy scenarios and optimizing the pipeline for deployment on Jetson hardware for field testing.</p>
+    <p>The integration is validated in SUPER's point-realistic LiDAR simulator with a moving point target. Current work: extracting separation and clearance metrics from the recorded runs, closing the real detector/tracker into the loop, and hardware bring-up (camera&ndash;body&ndash;odom transform chain, then a lit outdoor follow, then a low-light one). A companion effort ports a feed-forward low-light SLAM front end to the Jetson AGX Orin so the same follower can fly under canopy and at dusk &mdash; see the Low-Light Dense SLAM project.</p>
   </article>
 
   <div class="project-nav">

@@ -241,9 +241,10 @@
     .telemetry .tstat i {
       width: 7px; height: 7px; border-radius: 50%; background: var(--signal);
     }
-    .hero-motif { position: absolute; top: 3.2rem; right: -3rem; width: min(44%, 430px); z-index: 0; opacity: 0.55; }
-    .hero-motif path.track { stroke-dasharray: 6 7; animation: dash 9s linear infinite; }
-    @keyframes dash { to { stroke-dashoffset: -260; } }
+    .hero-motif { position: absolute; top: 3.5rem; right: -1rem; width: min(50%, 500px); z-index: 0; opacity: 0.62; overflow: visible; }
+    .hero-motif .track { stroke-dasharray: 6 9; animation: dash 13s linear infinite; }
+    @keyframes dash { to { stroke-dashoffset: -560; } }
+    .hero-motif .motif-trees { opacity: 0.9; }
 
     /* reveal + parallax */
     [data-reveal] { opacity: 0; transform: translateY(20px); }
@@ -271,7 +272,7 @@
       *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
       [data-reveal], [data-reveal-stagger] > * { opacity: 1 !important; transform: none !important; }
       .is-parallax { transform: none !important; }
-      .hero-motif path.track { animation: none; }
+      .hero-motif .track { animation: none; stroke-dashoffset: 0; }
     }
   </style>
 </head>
@@ -304,19 +305,54 @@
   </nav>
 
   <header class="hero" data-reveal>
-    <svg class="hero-motif" viewBox="0 0 420 300" fill="none" aria-hidden="true">
-      <path d="M12 250 C 90 250 90 90 170 90 S 270 210 330 150 400 60 408 40"
-            stroke="#3A7BBF" stroke-width="2" opacity="0.35"/>
-      <path class="track" d="M12 250 C 90 250 90 90 170 90 S 270 210 330 150 400 60 408 40"
-            stroke="#2B5C8A" stroke-width="2.5" stroke-linecap="round"/>
-      <g fill="#2B5C8A" opacity="0.6">
-        <circle cx="12" cy="250" r="3.4"/><circle cx="170" cy="90" r="3.4"/>
-        <circle cx="330" cy="150" r="3.4"/><circle cx="408" cy="40" r="3.4"/>
+    <svg class="hero-motif" viewBox="0 0 440 250" fill="none" aria-hidden="true">
+      <defs>
+        <g id="motifPine">
+          <polygon points="0,-84 18,-52 12,-52 24,-27 15,-27 20,-10 -20,-10 -15,-27 -24,-27 -12,-52 -18,-52" fill="#88A87A"/>
+          <polygon points="0,-84 -18,-52 -12,-52 -24,-27 -15,-27 -20,-10 0,-10" fill="#7A9A6C"/>
+          <rect x="-3" y="-10" width="6" height="12" rx="1" fill="#8B7A5C"/>
+        </g>
+      </defs>
+      <!-- ground -->
+      <line x1="0" y1="228" x2="440" y2="228" stroke="#2B5C8A" stroke-width="1" stroke-dasharray="2 7" opacity="0.16"/>
+      <!-- obstacles the drone weaves around -->
+      <g class="motif-trees">
+        <use href="#motifPine" transform="translate(100 228) scale(0.8)"/>
+        <use href="#motifPine" transform="translate(220 228) scale(0.95)"/>
+        <use href="#motifPine" transform="translate(335 228) scale(1.2)"/>
       </g>
-      <circle r="5.5" fill="#C77D2E">
-        <animateMotion dur="9s" repeatCount="indefinite" rotate="auto"
-          path="M12 250 C 90 250 90 90 170 90 S 270 210 330 150 400 60 408 40"/>
-      </circle>
+      <!-- route: flies in from the left, hugs around each tree (up the near
+           side, over the shoulder, down the far side), then climbs out of frame -->
+      <path id="motifRoute" d="M-30 214 C 8 214 42 212 62 206 C 72 203 74 156 98 150 C 122 144 126 202 138 209 C 156 214 176 214 192 209 C 202 205 204 142 222 136 C 242 130 248 202 260 209 C 280 214 300 214 316 208 C 326 202 326 122 342 116 C 360 110 372 96 392 74 C 420 42 476 -26 560 -120"
+            stroke="#3A7BBF" stroke-width="2" opacity="0.24"/>
+      <path class="track" d="M-30 214 C 8 214 42 212 62 206 C 72 203 74 156 98 150 C 122 144 126 202 138 209 C 156 214 176 214 192 209 C 202 205 204 142 222 136 C 242 130 248 202 260 209 C 280 214 300 214 316 208 C 326 202 326 122 342 116 C 360 110 372 96 392 74 C 420 42 476 -26 560 -120"
+            stroke="#2B5C8A" stroke-width="2.4" stroke-linecap="round"/>
+      <!-- waypoints: entry, one beside each tree, one before the fly-out -->
+      <g fill="#2B5C8A" opacity="0.5">
+        <circle cx="62" cy="206" r="2.8"/>
+        <circle cx="98" cy="150" r="2.8"/>
+        <circle cx="222" cy="136" r="2.8"/>
+        <circle cx="342" cy="116" r="2.8"/>
+        <circle cx="392" cy="74" r="2.8"/>
+      </g>
+      <!-- the drone: level base, banks hard into each go-around -->
+      <g class="motif-drone">
+        <ellipse cx="-12" cy="-6" rx="9.5" ry="3.3" fill="#2B5C8A" opacity="0.2"/>
+        <ellipse cx="12" cy="-6" rx="9.5" ry="3.3" fill="#2B5C8A" opacity="0.2"/>
+        <ellipse cx="-12" cy="-6" rx="9.5" ry="3.3" fill="none" stroke="#2B5C8A" stroke-width="0.8" opacity="0.55"/>
+        <ellipse cx="12" cy="-6" rx="9.5" ry="3.3" fill="none" stroke="#2B5C8A" stroke-width="0.8" opacity="0.55"/>
+        <path d="M-12 -6 L-4 -1.5 L4 -1.5 L12 -6" stroke="#5A5A5A" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+        <rect x="-10" y="-3.6" width="20" height="6.6" rx="2.8" fill="#C77D2E"/>
+        <circle cx="0" cy="4" r="1.8" fill="#0F1620"/>
+        <circle cx="0" cy="4.3" r="0.85" fill="#3A7BBF"/>
+        <animateMotion dur="14s" repeatCount="indefinite" rotate="0" calcMode="linear">
+          <mpath href="#motifRoute"/>
+        </animateMotion>
+        <animateTransform attributeName="transform" type="rotate" additive="sum"
+          values="0;-15;11;-15;11;-17;-6" keyTimes="0;0.12;0.23;0.4;0.51;0.68;1"
+          dur="14s" repeatCount="indefinite" calcMode="spline"
+          keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </g>
     </svg>
     <div class="kicker">Robotics Engineer &nbsp;·&nbsp; Perception &amp; Autonomy</div>
     <h1>Aditya Uday Abhang</h1>
@@ -410,9 +446,9 @@
       <div class="timeline-header"><h3>IDEAS Lab — Purdue University</h3><span class="timeline-date">Feb 2026 – Present</span></div>
       <div class="timeline-sub">Graduate Research • West Lafayette, IN</div>
       <ul>
-        <li>Developing a computer vision pipeline for human tracking in dense forest environments with frequent occlusions</li>
-        <li>Engineered LiDAR + RGB obstacle avoidance for real-time autonomous drone navigation in unstructured terrain</li>
-        <li>Achieved 85% accuracy across 100+ simulated trials in dense vegetation scenarios</li>
+        <li>Developing a human detection, tracking, and trajectory-prediction pipeline (YOLO + BoT-SORT + EigenTrajectory) for dense forest environments with frequent full occlusions</li>
+        <li>Built a ROS 2 bridge integrating the human predictor with the SUPER LiDAR planner, keeping obstacle avoidance strictly above target-following</li>
+        <li>Validated follow, occlusion-hold, and safety back-off behaviours in closed-loop LiDAR simulation — ~800 planner replans per run, zero collisions</li>
         <li>Designed multi-agent communication protocol for real-time target relay between scouting drone and parent UAS</li>
       </ul>
     </div>
@@ -459,7 +495,7 @@
         <div class="project-body">
           <h3>Autonomous Drone Navigation &amp; Human Tracking</h3>
           <div class="project-meta">IDEAS Lab, Purdue • Feb 2026 – Present</div>
-          <p>Building a robust CV pipeline for autonomous drone navigation and human tracking in dense forest canopies using LiDAR, RGB, and multi-object tracking.</p>
+          <p>A human tracking and trajectory-prediction pipeline bridged to the SUPER LiDAR planner so a drone follows a person through dense forest — holding a standoff, extrapolating through occlusions, and backing off when too close — without ever overriding obstacle avoidance.</p>
           <div class="project-footer">
             <div class="tags"><span class="tag" data-skill="Computer Vision">CV</span><span class="tag" data-skill="ROS / ROS2">ROS2</span><span class="tag" data-skill="Multi-Agent Systems">Multi-Agent</span></div>
             <a href="projects/drone-navigation.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
