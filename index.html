@@ -395,6 +395,8 @@
       <div class="timeline-sub">Graduate Research • West Lafayette, IN</div>
       <ul>
         <li>Classical feature-based SLAM collapses in extreme low light, so I deployed a learned dense monocular SLAM stack (MASt3R-SLAM + Dark3R) on a Jetson AGX Orin for real-time inference, re-tuning it for a Boston Dynamics Spot's fixed, basic-exposure camera to hold 0.5&nbsp;m ATE at 9&nbsp;FPS</li>
+        <li>The Jetson's unified memory broke nearly every desktop assumption about allocators and inter-process CUDA — out-of-memory crashes with tens of gigabytes still free — so I re-architected the SLAM backend to run as a shared-memory thread instead of a separate process, fixing the crash and cutting a multi-minute startup stall</li>
+        <li>Under-exposed frames could derail tracking outright, so I built a confidence-scaled exposure-preprocessing stage that gains only the frames it's confident are under-exposed (capped at 8&times;) while leaving well-exposed frames bit-for-bit unchanged</li>
         <li>To quantify exactly where that SLAM stack broke down, I built a raw-domain SNR degradation dataset and an ATE/RPE evaluation harness measuring how far into the dark it holds a trajectory</li>
         <li>Dense forest canopies caused frequent full occlusions that broke conventional trackers, so I built a human detection, tracking, and trajectory-prediction pipeline (YOLO + BoT-SORT + EigenTrajectory) that reconstructs trajectories through those occlusions</li>
         <li>The tracker alone couldn't guarantee flight safety, so I engineered a ROS 2 bridge between the human predictor and the SUPER LiDAR planner that keeps obstacle avoidance strictly above target-following</li>
