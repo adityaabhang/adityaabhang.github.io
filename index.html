@@ -394,12 +394,12 @@
       <div class="timeline-header"><h3>IDEAS Lab — Purdue University</h3><span class="timeline-date">Feb 2026 – Present</span></div>
       <div class="timeline-sub">Graduate Research • West Lafayette, IN</div>
       <ul>
+        <li>Classical feature-based SLAM collapses in extreme low light, so I deployed a learned dense monocular SLAM stack (MASt3R-SLAM + Dark3R) on a Jetson AGX Orin for real-time inference, re-tuning it for a Boston Dynamics Spot's fixed, basic-exposure camera to hold 0.5&nbsp;m ATE at 9&nbsp;FPS</li>
+        <li>To quantify exactly where that SLAM stack broke down, I built a raw-domain SNR degradation dataset and an ATE/RPE evaluation harness measuring how far into the dark it holds a trajectory</li>
         <li>Dense forest canopies caused frequent full occlusions that broke conventional trackers, so I built a human detection, tracking, and trajectory-prediction pipeline (YOLO + BoT-SORT + EigenTrajectory) that reconstructs trajectories through those occlusions</li>
         <li>The tracker alone couldn't guarantee flight safety, so I engineered a ROS 2 bridge between the human predictor and the SUPER LiDAR planner that keeps obstacle avoidance strictly above target-following</li>
         <li>To validate the integrated system before flight testing, I ran closed-loop LiDAR simulations across follow, occlusion-hold, and safety back-off scenarios, achieving zero collisions over ~800 planner replans per run</li>
         <li>Tracking a target from a scouting drone was only useful if the parent UAS could act on it, so I designed a multi-agent communication protocol for real-time target relay between the two</li>
-        <li>Extending operations into low-light forest conditions required onboard low-light perception, so I ported a learned dense monocular SLAM stack (MASt3R-SLAM + Dark3R) to the Jetson AGX Orin for real-time inference</li>
-        <li>To quantify exactly where that SLAM stack broke down, I built a raw-domain SNR degradation dataset and an ATE/RPE evaluation harness measuring how far into the dark it holds a trajectory</li>
       </ul>
     </div>
     <div class="timeline-item" data-reveal>
