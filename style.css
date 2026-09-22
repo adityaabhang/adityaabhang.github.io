@@ -379,6 +379,39 @@ a:focus-visible, button:focus-visible, .tag:focus-visible {
   .flow-node { min-width: 0; flex: 0 0 auto; }
 }
 
+.pc-viewer { margin-top: 0.5rem; }
+.pc-canvas-wrap {
+  position: relative; width: 100%; height: 440px;
+  background: #12151A; border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden;
+}
+.pc-canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+.pc-canvas:active { cursor: grabbing; }
+.pc-status {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #C9CDD3; font-size: 0.85rem; font-family: var(--sans);
+  background: rgba(18,21,26,0.7); transition: opacity 0.2s var(--ease-out);
+  pointer-events: none;
+}
+.pc-status.hidden { opacity: 0; }
+.pc-controls { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.85rem; flex-wrap: wrap; }
+.pc-controls label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+.pc-select {
+  font-family: var(--sans); font-size: 0.85rem; padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border); border-radius: 6px; background: var(--card-bg); color: var(--text);
+}
+.pc-reset {
+  font-family: var(--sans); font-size: 0.8rem; font-weight: 600; color: var(--accent);
+  background: #EEF3F8; border: 1px solid #C7D6E4; border-radius: 6px;
+  padding: 0.4rem 0.85rem; cursor: pointer; transition: all 0.2s var(--ease-out);
+}
+.pc-reset:hover { background: var(--accent); color: #fff; }
+.pc-hint { font-size: 0.76rem; color: var(--text-secondary); margin-top: 0.5rem; opacity: 0.8; }
+@media (max-width: 640px) {
+  .pc-canvas-wrap { height: 300px; }
+  .pc-controls { gap: 0.5rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;

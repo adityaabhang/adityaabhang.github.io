@@ -109,6 +109,32 @@
     <p>On a paired-burst indoor dataset &mdash; 47 fixed camera positions, each captured as a clean long exposure, two short noisy exposures, and a motion-blurred frame &mdash; the reconstructions tracked end to end at every degradation level with zero relocalization. Trajectory error against the clean reference rose from 0.16&nbsp;m at mean scene luma 0.03 to 0.32&nbsp;m (about 2.7% of path length) at mean luma 0.007, with a 9% depth-scale contraction in the darkest case and the lowest per-step rotation drift on the motion-blurred run. The backend runs deterministically in single-thread mode, producing bit-identical maps across repeated runs &mdash; the property that makes controlled A/B comparison possible on a learned SLAM stack.</p>
   </article>
 
+  <section class="flow-wrap" data-reveal>
+    <div class="flow-cap">Explore the Open3D reconstruction yourself</div>
+    <p class="flow-sub">This is the actual dense point cloud, not a screenshot &mdash; drag to orbit, scroll to zoom, and switch noise levels below to see where the map degrades.</p>
+    <div class="pc-viewer" data-default="reference" data-clouds='[
+        {"key":"reference","label":"Reference — standard exposure","file":"../media/lowlight-slam/pointclouds/reference.ply"},
+        {"key":"p3","label":"+3 dB SNR","file":"../media/lowlight-slam/pointclouds/snr_p3.ply"},
+        {"key":"0","label":"0 dB SNR","file":"../media/lowlight-slam/pointclouds/snr_0.ply"},
+        {"key":"m2","label":"−2 dB SNR","file":"../media/lowlight-slam/pointclouds/snr_m2.ply"},
+        {"key":"m4","label":"−4 dB SNR","file":"../media/lowlight-slam/pointclouds/snr_m4.ply"},
+        {"key":"m6","label":"−6 dB SNR","file":"../media/lowlight-slam/pointclouds/snr_m6.ply"},
+        {"key":"m8","label":"−8 dB SNR","file":"../media/lowlight-slam/pointclouds/snr_m8.ply"},
+        {"key":"m10","label":"−10 dB SNR (darkest)","file":"../media/lowlight-slam/pointclouds/snr_m10.ply"}
+      ]'>
+      <div class="pc-canvas-wrap">
+        <canvas class="pc-canvas"></canvas>
+        <div class="pc-status">Loading reconstruction&hellip;</div>
+      </div>
+      <div class="pc-controls">
+        <label for="slam-pc-select">Noise level</label>
+        <select id="slam-pc-select" class="pc-select"></select>
+        <button type="button" class="pc-reset">Reset view</button>
+      </div>
+      <p class="pc-hint">Point cloud exported directly from the Open3D reconstruction used in this project; rendered in-browser with Three.js.</p>
+    </div>
+  </section>
+
   <div class="project-nav" style="padding-bottom:0.75rem;">
     <a href="../assets/downloads/low-light-dense-slam.pdf" download class="read-more">
       Download Report <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -136,5 +162,12 @@
       startTimer();
     });
   </script>
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+  <script type="module" src="../assets/pointcloud-viewer.js"></script>
 </body>
 </html>
