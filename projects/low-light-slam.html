@@ -39,15 +39,32 @@
 
   <div class="project-img-hero">
     <div class="img-container">
-      <div class="proj-gallery" data-interval="4500">
-        <img src="../media/lowlight-slam/1.jpg" alt="A scene synthesized to SNR minus 10 dB, the darkest level of the noise sweep, used as SLAM input" class="active" />
-        <img src="../media/lowlight-slam/2.jpg" alt="Reconstruction from the SNR minus 10 dB input: the trajectory holds while sensor noise inflates the map" />
-        <img src="../media/lowlight-slam/3.jpg" alt="One frame of the low-exposure, noisy PMU ballroom sequence used as SLAM input" />
-        <img src="../media/lowlight-slam/4.jpg" alt="Dense reconstruction of the PMU ballroom from the short-exposure sequence: walls and floor recovered, edges noisy" />
-        <img src="../media/lowlight-slam/5.jpg" alt="One frame of the motion-blurred PMU ballroom sequence used as SLAM input" />
-        <img src="../media/lowlight-slam/6.jpg" alt="Reconstruction of the PMU ballroom from the motion-blurred sequence: tracked end to end, geometry smears with the blur" />
-        <div class="gallery-dots">
-          <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <div class="compare-slider" data-pairs='[
+          {"before":"../media/lowlight-slam/1.jpg","after":"../media/lowlight-slam/2.jpg",
+           "beforeAlt":"A scene synthesized to SNR minus 10 dB, the darkest level of the noise sweep, used as SLAM input",
+           "afterAlt":"Reconstruction from the SNR minus 10 dB input: the trajectory holds while sensor noise inflates the map",
+           "label":"SNR −10 dB (darkest)"},
+          {"before":"../media/lowlight-slam/3.jpg","after":"../media/lowlight-slam/4.jpg",
+           "beforeAlt":"One frame of the low-exposure, noisy PMU ballroom sequence used as SLAM input",
+           "afterAlt":"Dense reconstruction of the PMU ballroom from the short-exposure sequence: walls and floor recovered, edges noisy",
+           "label":"Short-exposure sequence"},
+          {"before":"../media/lowlight-slam/5.jpg","after":"../media/lowlight-slam/6.jpg",
+           "beforeAlt":"One frame of the motion-blurred PMU ballroom sequence used as SLAM input",
+           "afterAlt":"Reconstruction of the PMU ballroom from the motion-blurred sequence: tracked end to end, geometry smears with the blur",
+           "label":"Motion-blurred sequence"}
+        ]'>
+        <div class="compare-stage">
+          <img class="compare-img compare-after" alt="" />
+          <div class="compare-clip"><img class="compare-img compare-before" alt="" /></div>
+          <div class="compare-handle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 7-5 5 5 5"/><path d="m15 7 5 5-5 5"/></svg>
+          </div>
+          <div class="compare-tag compare-tag-before">Dark input</div>
+          <div class="compare-tag compare-tag-after">3D reconstruction</div>
+          <div class="compare-tag compare-tag-caption"></div>
+          <div class="gallery-dots">
+            <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -146,22 +163,7 @@
   </div>
 
   <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
-  <script>
-    document.querySelectorAll('.proj-gallery').forEach(gallery => {
-      const imgs = gallery.querySelectorAll('img');
-      const dots = gallery.querySelectorAll('.dot');
-      let current = 0, timer;
-      function show(i) {
-        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
-        current = ((i % imgs.length) + imgs.length) % imgs.length;
-        imgs[current].classList.add('active'); dots[current].classList.add('active');
-      }
-      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
-      function stopTimer() { clearInterval(timer); }
-      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
-      startTimer();
-    });
-  </script>
+  <script src="../assets/compare-slider.js"></script>
   <script type="importmap">
     { "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",

@@ -228,6 +228,46 @@ nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
 .project-img-hero .img-container .gallery-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 10; }
 .project-img-hero .img-container .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s; }
 .project-img-hero .img-container .dot.active { background: #fff; }
+.project-img-hero .img-container .gallery-pause {
+  position: absolute; top: 10px; right: 10px; z-index: 10;
+  width: 28px; height: 28px; border-radius: 50%; border: none;
+  background: rgba(0,0,0,0.45); color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.project-img-hero .img-container .gallery-pause:hover { background: rgba(0,0,0,0.68); }
+.project-img-hero .img-container .gallery-pause svg { width: 12px; height: 12px; display: block; }
+.project-img-hero .img-container .gallery-pause .icon-play { display: none; }
+.project-img-hero .img-container .gallery-pause.is-paused .icon-pause { display: none; }
+.project-img-hero .img-container .gallery-pause.is-paused .icon-play { display: block; }
+
+.project-img-hero .img-container .compare-slider { position: relative; width: 100%; height: 100%; }
+.compare-stage { position: relative; width: 100%; height: 100%; overflow: hidden; cursor: ew-resize; touch-action: none; }
+.project-img-hero .img-container .compare-stage img.compare-img { position: absolute; top: 0; left: 0; height: 100%; width: 100%; object-fit: cover; display: block; user-select: none; -webkit-user-drag: none; }
+.compare-clip { position: absolute; top: 0; left: 0; height: 100%; width: 50%; overflow: hidden; }
+.project-img-hero .img-container .compare-clip img.compare-img { width: var(--stage-w, 100%); max-width: none; }
+.compare-handle {
+  position: absolute; top: 0; left: 50%; height: 100%; width: 3px;
+  background: #fff; transform: translateX(-50%);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4); pointer-events: none;
+}
+.compare-handle svg {
+  width: 30px; height: 30px; padding: 4px; border-radius: 50%;
+  background: #fff; color: #1A1A1A; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+.compare-tag {
+  position: absolute; top: 10px; font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+  padding: 0.3rem 0.6rem; border-radius: 5px; background: rgba(0,0,0,0.55); color: #fff;
+  letter-spacing: 0.02em; pointer-events: none;
+}
+.compare-tag-before { left: 10px; }
+.compare-tag-after { right: 10px; }
+.compare-tag-caption {
+  top: auto; bottom: 32px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+}
+.project-img-hero .img-container .compare-stage .gallery-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 5; }
 
 @media (max-width: 768px) {
   .mobile-toggle { display: block; }

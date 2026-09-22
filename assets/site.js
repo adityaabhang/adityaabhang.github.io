@@ -87,11 +87,59 @@
     stats.forEach(function (s) { io.observe(s); });
   }
 
+  /* ---------- project image galleries (crossfade + dots + pause) ---------- */
+  function initGalleries() {
+    document.querySelectorAll(".proj-gallery").forEach(function (gallery) {
+      var imgs = [].slice.call(gallery.children).filter(function (el) {
+        return el.tagName === "IMG";
+      });
+      if (!imgs.length) return;
+      var dots = gallery.querySelectorAll(".gallery-dots .dot");
+      var pauseBtn = gallery.parentElement && gallery.parentElement.querySelector(".gallery-pause");
+      var interval = parseInt(gallery.dataset.interval, 10) || 3500;
+      var current = 0, timer = null, paused = false;
+
+      function show(i) {
+        imgs[current].classList.remove("active");
+        if (dots[current]) dots[current].classList.remove("active");
+        current = ((i % imgs.length) + imgs.length) % imgs.length;
+        imgs[current].classList.add("active");
+        if (dots[current]) dots[current].classList.add("active");
+      }
+      function startTimer() {
+        if (paused || imgs.length < 2 || REDUCED) return;
+        timer = setInterval(function () { show(current + 1); }, interval);
+      }
+      function stopTimer() { clearInterval(timer); timer = null; }
+
+      dots.forEach(function (d, i) {
+        d.addEventListener("click", function () { show(i); stopTimer(); startTimer(); });
+      });
+
+      if (pauseBtn) {
+        if (imgs.length < 2) {
+          pauseBtn.style.display = "none";
+        } else {
+          if (REDUCED) { paused = true; pauseBtn.classList.add("is-paused"); }
+          pauseBtn.setAttribute("aria-label", paused ? "Play image slideshow" : "Pause image slideshow");
+          pauseBtn.addEventListener("click", function () {
+            paused = !paused;
+            pauseBtn.classList.toggle("is-paused", paused);
+            pauseBtn.setAttribute("aria-label", paused ? "Play image slideshow" : "Pause image slideshow");
+            if (paused) stopTimer(); else startTimer();
+          });
+        }
+      }
+      startTimer();
+    });
+  }
+
   function boot() {
     markArticleReveals();
     initReveal();
     initParallax();
     initCountUp();
+    initGalleries();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot);

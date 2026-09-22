@@ -47,6 +47,15 @@
         ],
         "createdAt": "2026-09-06T08:05:28.526Z",
         "reason": "Home project cards use the same crossfade .proj-gallery: inactive slides at opacity 0 by design"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "projects/low-light-slam.html"
+        ],
+        "createdAt": "2026-09-22T21:28:16.621Z",
+        "reason": "compare-slider images are populated by JS from data-pairs JSON; empty src in markup is intentional, not a broken image"
       }
     ]
   }

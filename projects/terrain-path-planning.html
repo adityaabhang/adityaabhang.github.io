@@ -44,11 +44,16 @@
         <img src="../media/terrain/3.png" alt="Terrain-Aware Path Planning" />
         <img src="../media/terrain/4.png" alt="Terrain-Aware Path Planning" />
         <img src="../media/terrain/5.png" alt="Terrain-Aware Path Planning" />
+        <img src="../media/terrain/flowchart.gif" alt="How the terrain-aware path planner works, step by step" />
         <div class="gallery-dots">
           <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
-          <span class="dot"></span><span class="dot"></span>
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
         </div>
       </div>
+      <button type="button" class="gallery-pause" aria-label="Pause image slideshow">
+        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+      </button>
     </div>
   </div>
 
@@ -114,21 +119,5 @@
   </div>
 
   <footer><p>&copy; 2026 Aditya Uday Abhang</p></footer>
-  <script>
-    document.querySelectorAll('.proj-gallery').forEach(gallery => {
-      const imgs = gallery.querySelectorAll('img');
-      const dots = gallery.querySelectorAll('.dot');
-      let current = 0, timer;
-      function show(i) {
-        imgs[current].classList.remove('active'); dots[current].classList.remove('active');
-        current = ((i % imgs.length) + imgs.length) % imgs.length;
-        imgs[current].classList.add('active'); dots[current].classList.add('active');
-      }
-      function startTimer() { timer = setInterval(() => show(current + 1), parseInt(gallery.dataset.interval) || 3000); }
-      function stopTimer() { clearInterval(timer); }
-      dots.forEach((d, i) => d.addEventListener('click', () => { show(i); stopTimer(); startTimer(); }));
-      startTimer();
-    });
-  </script>
 </body>
 </html>
