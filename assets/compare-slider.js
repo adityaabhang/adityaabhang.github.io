@@ -14,6 +14,8 @@
     var handle = root.querySelector(".compare-handle");
     var captionTag = root.querySelector(".compare-tag-caption");
     var dots = root.querySelectorAll(".gallery-dots .dot");
+    var prevBtn = root.querySelector(".compare-arrow-prev");
+    var nextBtn = root.querySelector(".compare-arrow-next");
 
     var current = 0;
     var percent = 50;
@@ -50,6 +52,7 @@
     }
 
     function onPointerDown(e) {
+      if (e.target.closest(".gallery-arrow")) return;
       dragging = true;
       stage.setPointerCapture(e.pointerId);
       setPercent(percentFromClientX(e.clientX));
@@ -71,6 +74,8 @@
     dots.forEach(function (d, i) {
       d.addEventListener("click", function () { loadPair(i); });
     });
+    if (prevBtn) prevBtn.addEventListener("click", function () { loadPair(current - 1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { loadPair(current + 1); });
 
     new ResizeObserver(layout).observe(stage);
     loadPair(0);

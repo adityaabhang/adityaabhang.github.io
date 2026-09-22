@@ -96,6 +96,8 @@
       if (!imgs.length) return;
       var dots = gallery.querySelectorAll(".gallery-dots .dot");
       var pauseBtn = gallery.parentElement && gallery.parentElement.querySelector(".gallery-pause");
+      var prevBtn = gallery.parentElement && gallery.parentElement.querySelector(".gallery-arrow-prev");
+      var nextBtn = gallery.parentElement && gallery.parentElement.querySelector(".gallery-arrow-next");
       var interval = parseInt(gallery.dataset.interval, 10) || 3500;
       var current = 0, timer = null, paused = false;
 
@@ -114,6 +116,16 @@
 
       dots.forEach(function (d, i) {
         d.addEventListener("click", function () { show(i); stopTimer(); startTimer(); });
+      });
+
+      [prevBtn, nextBtn].forEach(function (btn) {
+        if (!btn) return;
+        if (imgs.length < 2) { btn.style.display = "none"; return; }
+        btn.addEventListener("click", function () {
+          show(current + (btn === prevBtn ? -1 : 1));
+          stopTimer();
+          startTimer();
+        });
       });
 
       if (pauseBtn) {

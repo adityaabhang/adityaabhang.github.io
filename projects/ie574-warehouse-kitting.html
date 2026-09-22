@@ -90,6 +90,17 @@
     .carousel-pause .icon-play { display: none; }
     .carousel-pause.is-paused .icon-pause { display: none; }
     .carousel-pause.is-paused .icon-play { display: block; }
+    .carousel-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
+      width: 34px; height: 34px; border-radius: 50%; border: none;
+      background: rgba(0,0,0,0.4); color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .carousel-arrow:hover { background: rgba(0,0,0,0.65); }
+    .carousel-arrow svg { width: 16px; height: 16px; display: block; }
+    .carousel-arrow-prev { left: 10px; }
+    .carousel-arrow-next { right: 10px; }
 
     /* ── Article ── */
     article h2 {
@@ -205,6 +216,12 @@
     <div class="carousel-item" data-type="image">
       <img src="../media/warehouse-kitting/flowchart.gif" alt="How the warehouse kitting system works, step by step" />
     </div>
+    <button type="button" class="carousel-arrow carousel-arrow-prev" id="carouselPrev" aria-label="Previous slide" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 6-6 6 6 6"/></svg>
+    </button>
+    <button type="button" class="carousel-arrow carousel-arrow-next" id="carouselNext" aria-label="Next slide" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 6 6 6-6 6"/></svg>
+    </button>
     <button type="button" class="carousel-pause" id="carouselPause" aria-label="Pause slideshow" style="display:none">
       <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
       <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
@@ -401,6 +418,8 @@
     var carousel = document.getElementById('carousel');
     var dotsWrap = document.getElementById('carouselDots');
     var pauseBtn = document.getElementById('carouselPause');
+    var prevBtn = document.getElementById('carouselPrev');
+    var nextBtn = document.getElementById('carouselNext');
     var items = Array.prototype.slice.call(carousel.querySelectorAll('.carousel-item'));
 
     if (items.length <= 1) {
@@ -449,6 +468,11 @@
         timer = setTimeout(function () { goTo(current + 1); }, IMAGE_MS);
       }
     }
+
+    prevBtn.style.display = '';
+    nextBtn.style.display = '';
+    prevBtn.addEventListener('click', function () { goTo(current - 1); });
+    nextBtn.addEventListener('click', function () { goTo(current + 1); });
 
     pauseBtn.style.display = '';
     pauseBtn.addEventListener('click', function () {
