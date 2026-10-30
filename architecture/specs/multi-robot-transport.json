@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Cooperative Multi-Robot Transport: system architecture",
+    "locale": "en",
+    "output": "multi-robot-transport.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": {
+          "label": "Interface"
+        },
+        "backend": {
+          "label": "Core component"
+        },
+        "database": {
+          "label": "Data / map"
+        },
+        "security": {
+          "label": "Safety-critical"
+        },
+        "messagebus": {
+          "label": "Supervisor"
+        },
+        "external": {
+          "label": "Hardware / external"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "dxf",
+      "type": "external",
+      "label": "DXF Floor Plan",
+      "sublabel": "architectural drawing",
+      "pos": [
+        35,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "grid",
+      "type": "database",
+      "label": "Occupancy Grid",
+      "sublabel": "walls, furniture, doors",
+      "pos": [
+        280,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "env",
+      "type": "backend",
+      "label": "Joint Environment",
+      "sublabel": "fixed separation, masks",
+      "pos": [
+        525,
+        210
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "pi",
+      "type": "backend",
+      "label": "Policy Iteration",
+      "sublabel": "model-based DP",
+      "pos": [
+        780,
+        50
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "vi",
+      "type": "backend",
+      "label": "Value Iteration",
+      "sublabel": "model-based DP",
+      "pos": [
+        780,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "ql",
+      "type": "backend",
+      "label": "Q-Learning",
+      "sublabel": "model-free RL",
+      "pos": [
+        785,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "bench",
+      "type": "backend",
+      "label": "Benchmark",
+      "sublabel": "speed, optimality, cost",
+      "pos": [
+        1030,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "dxf-grid",
+      "from": "dxf",
+      "to": "grid",
+      "label": "parse"
+    },
+    {
+      "id": "grid-env",
+      "from": "grid",
+      "to": "env",
+      "label": "states"
+    },
+    {
+      "id": "env-pi",
+      "from": "env",
+      "to": "pi",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "env-vi",
+      "from": "env",
+      "to": "vi"
+    },
+    {
+      "id": "env-ql",
+      "from": "env",
+      "to": "ql",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "pi-bench",
+      "from": "pi",
+      "to": "bench",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "vi-bench",
+      "from": "vi",
+      "to": "bench"
+    },
+    {
+      "id": "ql-bench",
+      "from": "ql",
+      "to": "bench",
+      "fromSide": "right",
+      "toSide": "left"
+    }
+  ]
+}

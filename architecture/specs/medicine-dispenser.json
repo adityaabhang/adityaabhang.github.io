@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Automatic Medicine Dispenser: system architecture",
+    "locale": "en",
+    "output": "medicine-dispenser.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": {
+          "label": "Interface"
+        },
+        "backend": {
+          "label": "Core component"
+        },
+        "database": {
+          "label": "Data / map"
+        },
+        "security": {
+          "label": "Safety-critical"
+        },
+        "messagebus": {
+          "label": "Supervisor"
+        },
+        "external": {
+          "label": "Hardware / external"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "hopper",
+      "type": "external",
+      "label": "Hopper Sensor",
+      "sublabel": "hopper level",
+      "pos": [
+        35,
+        50
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "jam",
+      "type": "external",
+      "label": "Jam Detection",
+      "sublabel": "motor current monitoring",
+      "pos": [
+        25,
+        210
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "pi",
+      "type": "backend",
+      "label": "Raspberry Pi",
+      "sublabel": "schedule, motor control",
+      "pos": [
+        280,
+        130
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "motor",
+      "type": "backend",
+      "label": "Motor + Driver",
+      "sublabel": "drives the drum",
+      "pos": [
+        535,
+        50
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "drum",
+      "type": "backend",
+      "label": "Singulation Drum",
+      "sublabel": "pocketed drum, cam gate",
+      "pos": [
+        780,
+        50
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "patient",
+      "type": "external",
+      "label": "Patient",
+      "sublabel": "one pill at dose time",
+      "pos": [
+        785,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "audio",
+      "type": "frontend",
+      "label": "Audio Alert",
+      "sublabel": "missed medication",
+      "pos": [
+        535,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "lcd",
+      "type": "frontend",
+      "label": "LCD Display",
+      "sublabel": "next scheduled dose",
+      "pos": [
+        285,
+        290
+      ],
+      "size": [
+        150,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "hopper-pi",
+      "from": "hopper",
+      "to": "pi",
+      "label": "level"
+    },
+    {
+      "id": "jam-pi",
+      "from": "jam",
+      "to": "pi",
+      "label": "current"
+    },
+    {
+      "id": "pi-motor",
+      "from": "pi",
+      "to": "motor",
+      "label": "drive",
+      "variant": "emphasis"
+    },
+    {
+      "id": "motor-drum",
+      "from": "motor",
+      "to": "drum",
+      "label": "rotate"
+    },
+    {
+      "id": "drum-patient",
+      "from": "drum",
+      "to": "patient",
+      "label": "dispense",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 26
+    },
+    {
+      "id": "pi-audio",
+      "from": "pi",
+      "to": "audio",
+      "label": "alert"
+    },
+    {
+      "id": "pi-lcd",
+      "from": "pi",
+      "to": "lcd",
+      "label": "next dose",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 26
+    }
+  ]
+}

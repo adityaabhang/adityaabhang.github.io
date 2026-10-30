@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Terrain-Aware Path Planning: system architecture",
+    "locale": "en",
+    "output": "terrain-path-planning.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": {
+          "label": "Interface"
+        },
+        "backend": {
+          "label": "Core component"
+        },
+        "database": {
+          "label": "Data / map"
+        },
+        "security": {
+          "label": "Safety-critical"
+        },
+        "messagebus": {
+          "label": "Supervisor"
+        },
+        "external": {
+          "label": "Hardware / external"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "lidar",
+      "type": "external",
+      "label": "LiDAR",
+      "sublabel": "geometric obstacles",
+      "pos": [
+        35,
+        130
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "rgbd",
+      "type": "external",
+      "label": "RGB-D Camera",
+      "sublabel": "color + depth",
+      "pos": [
+        35,
+        290
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "fusion",
+      "type": "backend",
+      "label": "Sensor Fusion",
+      "sublabel": "synchronized streams",
+      "pos": [
+        285,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "seg",
+      "type": "backend",
+      "label": "DeepLabV3+",
+      "sublabel": "3 terrain classes",
+      "pos": [
+        535,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "costmap",
+      "type": "database",
+      "label": "Semantic Costmap",
+      "sublabel": "ROS2, smoothed",
+      "pos": [
+        780,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "planner",
+      "type": "backend",
+      "label": "A* and RRT*",
+      "sublabel": "terrain-aware planners",
+      "pos": [
+        1030,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "baseline",
+      "type": "backend",
+      "label": "Binary Baseline",
+      "sublabel": "obstacle or free only",
+      "pos": [
+        1030,
+        50
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "robot",
+      "type": "external",
+      "label": "Gazebo Robot",
+      "sublabel": "closes the loop",
+      "pos": [
+        1035,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "lidar-fusion",
+      "from": "lidar",
+      "to": "fusion",
+      "label": "range"
+    },
+    {
+      "id": "rgbd-fusion",
+      "from": "rgbd",
+      "to": "fusion",
+      "label": "RGB-D"
+    },
+    {
+      "id": "fusion-seg",
+      "from": "fusion",
+      "to": "seg",
+      "label": "frames"
+    },
+    {
+      "id": "seg-costmap",
+      "from": "seg",
+      "to": "costmap",
+      "label": "classes"
+    },
+    {
+      "id": "costmap-planner",
+      "from": "costmap",
+      "to": "planner",
+      "label": "costs"
+    },
+    {
+      "id": "baseline-planner",
+      "from": "baseline",
+      "to": "planner",
+      "label": "compared",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 26
+    },
+    {
+      "id": "planner-robot",
+      "from": "planner",
+      "to": "robot",
+      "label": "path",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 26
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "TDS Plasma Cutting Monitoring: system architecture",
+    "locale": "en",
+    "output": "tds-plasma-monitoring.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": {
+          "label": "Interface"
+        },
+        "backend": {
+          "label": "Core component"
+        },
+        "database": {
+          "label": "Data / map"
+        },
+        "security": {
+          "label": "Safety-critical"
+        },
+        "messagebus": {
+          "label": "Supervisor"
+        },
+        "external": {
+          "label": "Hardware / external"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "acoustic",
+      "type": "external",
+      "label": "Acoustic Sensor",
+      "sublabel": "plasma-arc sound",
+      "pos": [
+        30,
+        130
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "current",
+      "type": "external",
+      "label": "Current Sensor",
+      "sublabel": "cutting-head power draw",
+      "pos": [
+        30,
+        290
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "pi",
+      "type": "backend",
+      "label": "Raspberry Pi 4",
+      "sublabel": "sample, buffer, preprocess",
+      "pos": [
+        270,
+        210
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "ml",
+      "type": "backend",
+      "label": "ML Model",
+      "sublabel": "backup if thresholds fail",
+      "pos": [
+        520,
+        50
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "classifier",
+      "type": "backend",
+      "label": "Classifier",
+      "sublabel": "thickness thresholds",
+      "pos": [
+        535,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "mysql",
+      "type": "database",
+      "label": "MySQL",
+      "sublabel": "time-series storage",
+      "pos": [
+        785,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "grafana",
+      "type": "frontend",
+      "label": "Grafana",
+      "sublabel": "dashboards + alerts",
+      "pos": [
+        785,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "operator",
+      "type": "external",
+      "label": "Operator",
+      "sublabel": "live material check",
+      "pos": [
+        535,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "acoustic-pi",
+      "from": "acoustic",
+      "to": "pi",
+      "label": "audio",
+      "labelDy": -24
+    },
+    {
+      "id": "current-pi",
+      "from": "current",
+      "to": "pi",
+      "label": "current"
+    },
+    {
+      "id": "pi-classifier",
+      "from": "pi",
+      "to": "classifier",
+      "label": "features"
+    },
+    {
+      "id": "ml-classifier",
+      "from": "ml",
+      "to": "classifier",
+      "variant": "dashed"
+    },
+    {
+      "id": "classifier-mysql",
+      "from": "classifier",
+      "to": "mysql",
+      "label": "results"
+    },
+    {
+      "id": "mysql-grafana",
+      "from": "mysql",
+      "to": "grafana",
+      "label": "query",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 26
+    },
+    {
+      "id": "grafana-operator",
+      "from": "grafana",
+      "to": "operator",
+      "label": "alerts"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Client site: Raspberry Pi 4",
+      "wraps": [
+        "pi",
+        "classifier"
+      ]
+    }
+  ]
+}

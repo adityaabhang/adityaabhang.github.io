@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../assets/architecture.css" />
   <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script>
   <script defer src="../assets/site.js"></script>
 </head>
@@ -45,12 +46,12 @@
            "afterAlt":"Reconstruction from the SNR minus 10 dB input: the trajectory holds while sensor noise inflates the map",
            "label":"SNR −10 dB (darkest)"},
           {"before":"../media/lowlight-slam/3.jpg","after":"../media/lowlight-slam/4.jpg",
-           "beforeAlt":"One frame of the low-exposure, noisy PMU ballroom sequence used as SLAM input",
-           "afterAlt":"Dense reconstruction of the PMU ballroom from the short-exposure sequence: walls and floor recovered, edges noisy",
+           "beforeAlt":"One frame of the low-exposure, noisy indoor sequence used as SLAM input",
+           "afterAlt":"Dense reconstruction of the indoor scene from the short-exposure sequence: walls and floor recovered, edges noisy",
            "label":"Short-exposure sequence"},
           {"before":"../media/lowlight-slam/5.jpg","after":"../media/lowlight-slam/6.jpg",
-           "beforeAlt":"One frame of the motion-blurred PMU ballroom sequence used as SLAM input",
-           "afterAlt":"Reconstruction of the PMU ballroom from the motion-blurred sequence: tracked end to end, geometry smears with the blur",
+           "beforeAlt":"One frame of the motion-blurred indoor sequence used as SLAM input",
+           "afterAlt":"Reconstruction of the indoor scene from the motion-blurred sequence: tracked end to end, geometry smears with the blur",
            "label":"Motion-blurred sequence"}
         ]'>
         <div class="compare-stage">
@@ -95,8 +96,8 @@
   <article>
     <h2>Overview</h2>
     <p>Classical feature-based SLAM collapses in extreme low light. At ISO 102400 there is not enough photon signal for repeatable corner features, and a stock matcher spends more than half of every sequence in relocalization. This project takes a learned <em>dense</em> SLAM stack &mdash; MASt3R-SLAM, paired with Dark3R, a low-light fine-tune of its neural matcher &mdash; and makes it run in real time on an NVIDIA Jetson AGX Orin, the class of compute a small aerial platform can actually carry, while measuring exactly how far into the dark it still holds a trajectory.</p>
-    <p>The project has two strands. Mihir Chauhan works on distilling the 689&nbsp;M-parameter teacher into a Jetson-sized student. My half is the deployment and the low-light robustness toolchain: bringing the pipeline up on the Jetson &mdash; where almost every desktop assumption about device memory, allocators, and inter-process CUDA breaks on the AGX's unified memory &mdash; and building the raw-domain sensor-noise degradation dataset, the exposure-confidence preprocessing stage, and the metric trajectory-error harness used to benchmark the system against clean-image references at controlled noise and exposure levels.</p>
-    <p>The target platform is a Boston Dynamics Spot carrying a fixed, basic-exposure camera &mdash; no auto-exposure to lean on, unlike the phone and desktop captures used earlier in development. I re-tuned the pipeline specifically for that camera's fixed exposure characteristics rather than assuming a general-purpose auto-exposed input, and running on the Jetson AGX Orin with this setup the system holds 0.5&nbsp;m ATE at 9&nbsp;FPS.</p>
+    <p>My part of the project is the deployment and the low-light robustness toolchain: bringing the pipeline up on the Jetson &mdash; where almost every desktop assumption about device memory, allocators, and inter-process CUDA breaks on the AGX's unified memory &mdash; and building the raw-domain sensor-noise degradation dataset, the exposure-confidence preprocessing stage, and the metric trajectory-error harness used to benchmark the system against clean-image references at controlled noise and exposure levels.</p>
+    <p>The target platform is a Boston Dynamics Spot carrying a fixed, basic-exposure camera &mdash; no auto-exposure to lean on. I re-tuned the pipeline specifically for that camera's fixed exposure characteristics rather than assuming a general-purpose auto-exposed input, and running on the Jetson AGX Orin with this setup the system holds 0.5&nbsp;m ATE at 9&nbsp;FPS.</p>
 
     <h2>Methodology</h2>
     <p><strong>1. Jetson bring-up:</strong> On the AGX's 64&nbsp;GB unified memory, spawning the SLAM backend as a separate process crashes while mapping CUDA IPC handles, and the desktop's <code>expandable_segments</code> allocator relies on virtual-memory APIs the integrated GPU does not expose &mdash; a fatal out-of-memory with 57&nbsp;GB free. The fixes: run the backend as a thread that shares one model instance and one semaphore with the frontend, drop the expandable-segments configuration, eliminate a double checkpoint read that stalled startup for minutes on the older Torch build, and add a CPU Cholesky fallback for the pose solve when the on-device factorization fails.</p>
@@ -104,6 +105,206 @@
     <p><strong>3. Exposure-confidence preprocessing:</strong> A per-frame estimate of under-exposure from the 90th-percentile luma. Frames the estimator is confident are well exposed pass through bit-for-bit unchanged; only under-exposed frames are gained toward a target luma, capped at 8&times;, with the correction scaled down as confidence rises. It sits behind a config flag so baseline runs stay reproducible. Unlike a global mean/standard-deviation normalization, it never rewrites a well-exposed frame and does not break photometric consistency between neighbouring frames.</p>
     <p><strong>4. Raw-domain degradation sweep:</strong> To measure noise sensitivity independent of scene content, a per-photosite Poisson&ndash;Gaussian sensor-noise model is applied on normalized linear sensor data and demosaiced back through LibRaw, producing seven matched signal-to-noise levels from +3&nbsp;dB down to &minus;10&nbsp;dB. A calibration loop tunes the noise scale until each level lands within 0.4&nbsp;dB of target. A power-matched additive-white-Gaussian variant isolates how much of the tracking loss comes from the demosaic's spatial and chroma correlation rather than white noise alone.</p>
     <p><strong>5. Metric evaluation:</strong> Absolute and relative pose error (computed with <code>evo</code>) against a clean-image reference trajectory, alongside keyframe count, map-point count, Sim(3) scale drift, relocalization count, and on-device frame rate. On real ISO-102400 footage the reference is Dark3R's COLMAP long-exposure poses.</p>
+<!-- arch:start -->
+<div class="arch-wrap" data-reveal role="group" aria-labelledby="low-light-slam-arch-cap">
+  <div class="arch-cap" id="low-light-slam-arch-cap">System architecture</div>
+  <p class="arch-sub">How a dark frame becomes a trajectory on the Jetson, and how the noise sweep and metric harness measure it.</p>
+  <figure class="arch-fig">
+    <p class="arch-hint">Swipe sideways to see the whole diagram.</p>
+    <div class="arch-scroll" tabindex="0" role="region" aria-label="Architecture diagram, scrolls sideways on small screens">
+<svg viewBox="0 0 1230 502" role="img" lang="en" aria-labelledby="low-light-slam-archify-diagram-title low-light-slam-archify-diagram-description" data-preset="classic" data-quality-profile="showcase">
+        <title id="low-light-slam-archify-diagram-title">Low-Light Dense SLAM on Jetson: system architecture</title>
+        <desc id="low-light-slam-archify-diagram-description">Low-Light Dense SLAM on Jetson: system architecture. Boxes are components and arrows show what flows between them.</desc>
+        <defs>
+          <marker id="low-light-slam-arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" class="m-default" />
+          </marker>
+          <marker id="low-light-slam-arrowhead-emphasis" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" class="m-emphasis" />
+          </marker>
+          <marker id="low-light-slam-arrowhead-security" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" class="m-security" />
+          </marker>
+          <marker id="low-light-slam-arrowhead-dashed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" class="m-dashed" />
+          </marker>
+          <pattern id="low-light-slam-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" class="c-grid" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#low-light-slam-grid)" />
+        <path data-edge-from="camera" data-edge-to="expo" data-edge-label="raw" data-edge-key="0" data-edge-id="camera-expo" d="M 185 242 L 280 242" class="a-default" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead)"/>
+        <path data-edge-from="expo" data-edge-to="frontend" data-edge-label="corrected" data-edge-key="1" data-edge-id="expo-frontend" d="M 440 242 L 530 242" class="a-default" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead)"/>
+        <path data-edge-from="frontend" data-edge-to="backend" data-edge-label="keyframes" data-edge-key="2" data-edge-id="frontend-backend" d="M 690 242 L 785 242" class="a-default" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead)"/>
+        <path data-edge-from="backend" data-edge-to="map" data-edge-label="poses" data-edge-key="3" data-edge-id="backend-map" d="M 935 242 L 1030 242" class="a-default" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead)"/>
+        <path data-edge-from="ckpt" data-edge-to="frontend" data-edge-label="load" data-edge-key="4" data-edge-id="ckpt-frontend" d="M 610 370 L 610 274" class="a-default" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead)"/>
+        <path data-edge-from="backend" data-edge-to="chol" data-edge-label="if it fails" data-edge-key="5" data-edge-id="backend-chol" d="M 860 274 L 860 370" class="a-dashed" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead-dashed)"/>
+        <path data-edge-from="sweep" data-edge-to="expo" data-edge-label="degraded frames" data-edge-key="6" data-edge-id="sweep-expo" d="M 360 114 L 360 210" class="a-dashed" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead-dashed)"/>
+        <path data-edge-from="ref" data-edge-to="eval" data-edge-label="reference" data-edge-key="7" data-edge-id="ref-eval" d="M 940 82 L 1030 82" class="a-default" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead)"/>
+        <path data-edge-from="map" data-edge-to="eval" data-edge-label="trajectory" data-edge-key="8" data-edge-id="map-eval" d="M 1110 210 L 1110 114" class="a-default" stroke-width="1.5" marker-end="url(#low-light-slam-arrowhead)"/>
+        <g id="node-camera" data-node-id="camera" data-node-label="Spot Camera" data-node-kind="external" data-node-sublabel="fixed basic exposure" data-node-context="Architecture component">
+          <title>Spot Camera · fixed basic exposure · Architecture component</title>
+          <rect x="35" y="210" width="150" height="64" rx="6" class="c-mask"/>
+          <rect x="35" y="210" width="150" height="64" rx="6" class="c-external" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(41 216) scale(0.6875)">
+            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
+            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
+          </g>
+          <text data-node-label="" x="110" y="240" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Spot Camera</text>
+        <text data-detail="context" x="110" y="256" class="t-muted" font-size="9" text-anchor="middle">fixed basic exposure</text>
+        </g>
+        <g id="node-expo" data-node-id="expo" data-node-label="Exposure Gain" data-node-kind="backend" data-node-sublabel="p90 luma, capped at 8x" data-node-context="Architecture component">
+          <title>Exposure Gain · p90 luma, capped at 8x · Architecture component</title>
+          <rect x="280" y="210" width="160" height="64" rx="6" class="c-mask"/>
+          <rect x="280" y="210" width="160" height="64" rx="6" class="c-backend" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(286 216) scale(0.6875)">
+            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
+          </g>
+          <text data-node-label="" x="360" y="240" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Exposure Gain</text>
+        <text data-detail="context" x="360" y="256" class="t-muted" font-size="9" text-anchor="middle">p90 luma, capped at 8x</text>
+        </g>
+        <g id="node-frontend" data-node-id="frontend" data-node-label="SLAM Frontend" data-node-kind="backend" data-node-sublabel="MASt3R + Dark3R matcher" data-node-context="Architecture component">
+          <title>SLAM Frontend · MASt3R + Dark3R matcher · Architecture component</title>
+          <rect x="530" y="210" width="160" height="64" rx="6" class="c-mask"/>
+          <rect x="530" y="210" width="160" height="64" rx="6" class="c-backend" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(536 216) scale(0.6875)">
+            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
+          </g>
+          <text data-node-label="" x="610" y="240" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SLAM Frontend</text>
+        <text data-detail="context" x="610" y="256" class="t-muted" font-size="9" text-anchor="middle">MASt3R + Dark3R matcher</text>
+        </g>
+        <g id="node-backend" data-node-id="backend" data-node-label="SLAM Backend" data-node-kind="backend" data-node-sublabel="thread, shared model" data-node-context="Architecture component">
+          <title>SLAM Backend · thread, shared model · Architecture component</title>
+          <rect x="785" y="210" width="150" height="64" rx="6" class="c-mask"/>
+          <rect x="785" y="210" width="150" height="64" rx="6" class="c-backend" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(791 216) scale(0.6875)">
+            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
+          </g>
+          <text data-node-label="" x="860" y="240" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">SLAM Backend</text>
+        <text data-detail="context" x="860" y="256" class="t-muted" font-size="9" text-anchor="middle">thread, shared model</text>
+        </g>
+        <g id="node-map" data-node-id="map" data-node-label="Trajectory + Map" data-node-kind="database" data-node-sublabel="Open3D rendering" data-node-context="Architecture component">
+          <title>Trajectory + Map · Open3D rendering · Architecture component</title>
+          <rect x="1030" y="210" width="160" height="64" rx="6" class="c-mask"/>
+          <rect x="1030" y="210" width="160" height="64" rx="6" class="c-database" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(1036 216) scale(0.6875)">
+            <ellipse cx="8" cy="4" rx="5" ry="2"/>
+            <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
+          </g>
+          <text data-node-label="" x="1110" y="240" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Trajectory + Map</text>
+        <text data-detail="context" x="1110" y="256" class="t-muted" font-size="9" text-anchor="middle">Open3D rendering</text>
+        </g>
+        <g id="node-ckpt" data-node-id="ckpt" data-node-label="Dark3R Weights" data-node-kind="database" data-node-sublabel="LoRA merged into ViT-L" data-node-context="Architecture component">
+          <title>Dark3R Weights · LoRA merged into ViT-L · Architecture component</title>
+          <rect x="530" y="370" width="160" height="64" rx="6" class="c-mask"/>
+          <rect x="530" y="370" width="160" height="64" rx="6" class="c-database" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="database" class="semantic-sigil s-database" transform="translate(536 376) scale(0.6875)">
+            <ellipse cx="8" cy="4" rx="5" ry="2"/>
+            <path d="M3 4v8c0 1.1 2.2 2 5 2s5-.9 5-2V4M3 8c0 1.1 2.2 2 5 2s5-.9 5-2"/>
+          </g>
+          <text data-node-label="" x="610" y="400" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Dark3R Weights</text>
+        <text data-detail="context" x="610" y="416" class="t-muted" font-size="9" text-anchor="middle">LoRA merged into ViT-L</text>
+        </g>
+        <g id="node-chol" data-node-id="chol" data-node-label="CPU Cholesky" data-node-kind="backend" data-node-sublabel="fallback pose solve" data-node-context="Architecture component">
+          <title>CPU Cholesky · fallback pose solve · Architecture component</title>
+          <rect x="785" y="370" width="150" height="64" rx="6" class="c-mask"/>
+          <rect x="785" y="370" width="150" height="64" rx="6" class="c-backend" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(791 376) scale(0.6875)">
+            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
+          </g>
+          <text data-node-label="" x="860" y="400" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">CPU Cholesky</text>
+        <text data-detail="context" x="860" y="416" class="t-muted" font-size="9" text-anchor="middle">fallback pose solve</text>
+        </g>
+        <g id="node-sweep" data-node-id="sweep" data-node-label="Noise Sweep" data-node-kind="external" data-node-sublabel="raw-domain, +3 to -10 dB" data-node-context="Architecture component">
+          <title>Noise Sweep · raw-domain, +3 to -10 dB · Architecture component</title>
+          <rect x="275" y="50" width="170" height="64" rx="6" class="c-mask"/>
+          <rect x="275" y="50" width="170" height="64" rx="6" class="c-external" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(281 56) scale(0.6875)">
+            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
+            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
+          </g>
+          <text data-node-label="" x="360" y="80" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Noise Sweep</text>
+        <text data-detail="context" x="360" y="96" class="t-muted" font-size="9" text-anchor="middle">raw-domain, +3 to -10 dB</text>
+        </g>
+        <g id="node-ref" data-node-id="ref" data-node-label="Reference Poses" data-node-kind="external" data-node-sublabel="clean run / COLMAP" data-node-context="Architecture component">
+          <title>Reference Poses · clean run / COLMAP · Architecture component</title>
+          <rect x="780" y="50" width="160" height="64" rx="6" class="c-mask"/>
+          <rect x="780" y="50" width="160" height="64" rx="6" class="c-external" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="external" class="semantic-sigil s-external" transform="translate(786 56) scale(0.6875)">
+            <rect x="2.5" y="5" width="8.5" height="8" rx="1.5"/>
+            <path d="M8 2.5h5.5V8M13.5 2.5 7.5 8.5"/>
+          </g>
+          <text data-node-label="" x="860" y="80" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Reference Poses</text>
+        <text data-detail="context" x="860" y="96" class="t-muted" font-size="9" text-anchor="middle">clean run / COLMAP</text>
+        </g>
+        <g id="node-eval" data-node-id="eval" data-node-label="Metric Harness" data-node-kind="backend" data-node-sublabel="ATE, RPE, drift, reloc" data-node-context="Architecture component">
+          <title>Metric Harness · ATE, RPE, drift, reloc · Architecture component</title>
+          <rect x="1030" y="50" width="160" height="64" rx="6" class="c-mask"/>
+          <rect x="1030" y="50" width="160" height="64" rx="6" class="c-backend" stroke-width="1.5"/>
+          <g aria-hidden="true" data-semantic-sigil="backend" class="semantic-sigil s-backend" transform="translate(1036 56) scale(0.6875)">
+            <path d="M6 3 3 8l3 5M10 3l3 5-3 5"/>
+          </g>
+          <text data-node-label="" x="1110" y="80" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Metric Harness</text>
+        <text data-detail="context" x="1110" y="96" class="t-muted" font-size="9" text-anchor="middle">ATE, RPE, drift, reloc</text>
+        </g>
+        <g data-detail="context" data-edge-from="camera" data-edge-to="expo" data-edge-label="raw" data-edge-key="0" data-edge-id="camera-expo">
+          <rect x="217.5" y="222" width="30" height="14" rx="3" class="c-mask"/>
+          <text x="232.5" y="232" class="t-muted" font-size="8" text-anchor="middle">raw</text>
+        </g>
+        <g data-detail="context" data-edge-from="expo" data-edge-to="frontend" data-edge-label="corrected" data-edge-key="1" data-edge-id="expo-frontend">
+          <rect x="458.4" y="222" width="53.199999999999996" height="14" rx="3" class="c-mask"/>
+          <text x="485" y="232" class="t-muted" font-size="8" text-anchor="middle">corrected</text>
+        </g>
+        <g data-detail="context" data-edge-from="frontend" data-edge-to="backend" data-edge-label="keyframes" data-edge-key="2" data-edge-id="frontend-backend">
+          <rect x="710.9" y="222" width="53.199999999999996" height="14" rx="3" class="c-mask"/>
+          <text x="737.5" y="232" class="t-muted" font-size="8" text-anchor="middle">keyframes</text>
+        </g>
+        <g data-detail="context" data-edge-from="backend" data-edge-to="map" data-edge-label="poses" data-edge-key="3" data-edge-id="backend-map">
+          <rect x="965.5" y="222" width="34" height="14" rx="3" class="c-mask"/>
+          <text x="982.5" y="232" class="t-muted" font-size="8" text-anchor="middle">poses</text>
+        </g>
+        <g data-detail="context" data-edge-from="ckpt" data-edge-to="frontend" data-edge-label="load" data-edge-key="4" data-edge-id="ckpt-frontend">
+          <rect x="595" y="350" width="30" height="14" rx="3" class="c-mask"/>
+          <text x="610" y="360" class="t-muted" font-size="8" text-anchor="middle">load</text>
+        </g>
+        <g data-detail="context" data-edge-from="backend" data-edge-to="chol" data-edge-label="if it fails" data-edge-key="5" data-edge-id="backend-chol">
+          <rect x="828.6" y="280" width="62.8" height="14" rx="3" class="c-mask"/>
+          <text x="860" y="290" class="t-messagebus" font-size="8" text-anchor="middle">if it fails</text>
+        </g>
+        <g data-detail="context" data-edge-from="sweep" data-edge-to="expo" data-edge-label="degraded frames" data-edge-key="6" data-edge-id="sweep-expo">
+          <rect x="319" y="120" width="82" height="14" rx="3" class="c-mask"/>
+          <text x="360" y="130" class="t-messagebus" font-size="8" text-anchor="middle">degraded frames</text>
+        </g>
+        <g data-detail="context" data-edge-from="ref" data-edge-to="eval" data-edge-label="reference" data-edge-key="7" data-edge-id="ref-eval">
+          <rect x="958.4" y="62" width="53.199999999999996" height="14" rx="3" class="c-mask"/>
+          <text x="985" y="72" class="t-muted" font-size="8" text-anchor="middle">reference</text>
+        </g>
+        <g data-detail="context" data-edge-from="map" data-edge-to="eval" data-edge-label="trajectory" data-edge-key="8" data-edge-id="map-eval">
+          <rect x="1081" y="190" width="58" height="14" rx="3" class="c-mask"/>
+          <text x="1110" y="200" class="t-muted" font-size="8" text-anchor="middle">trajectory</text>
+        </g>
+        <g data-legend="" data-legend-bridge="">
+          <text x="40" y="466" class="t-primary" font-size="12" font-weight="650">Legend</text>
+          <g data-legend-semantic-kind="backend" data-legend-kind="backend" data-legend-label="Core component" data-legend-x="40" data-legend-baseline="486" data-legend-width="113">
+            <rect x="40" y="477" width="16" height="10" rx="2.5" class="c-backend" stroke-width="1"/>
+            <text x="62" y="486" class="t-muted" font-size="10" font-weight="500">Core component</text>
+          </g>
+          <g data-legend-semantic-kind="database" data-legend-kind="database" data-legend-label="Data / map" data-legend-x="175" data-legend-baseline="486" data-legend-width="93">
+            <rect x="175" y="477" width="16" height="10" rx="2.5" class="c-database" stroke-width="1"/>
+            <text x="197" y="486" class="t-muted" font-size="10" font-weight="500">Data / map</text>
+          </g>
+          <g data-legend-semantic-kind="external" data-legend-kind="external" data-legend-label="Hardware / external" data-legend-x="290" data-legend-baseline="486" data-legend-width="138">
+            <rect x="290" y="477" width="16" height="10" rx="2.5" class="c-external" stroke-width="1"/>
+            <text x="312" y="486" class="t-muted" font-size="10" font-weight="500">Hardware / external</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <figcaption><b>Solid</b> arrows are the live pipeline on the Jetson AGX Orin carried by Spot. <b>Dashed</b> arrows are the offline noise-sweep path and the CPU fallback for the pose solve.</figcaption>
+  </figure>
+</div>
+<!-- arch:end -->
+
 
     <h2>Tech Stack</h2>
     <div class="tech-grid">

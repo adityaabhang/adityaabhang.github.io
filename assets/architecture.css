@@ -1,0 +1,104 @@
+/* System-architecture figures.
+   The SVGs are rendered by Archify from architecture/specs/*.json and re-skinned
+   here with the site's own tokens (style.css), so they read as part of the page
+   rather than an embedded tool. Light theme only, like the rest of the site. */
+
+.arch-wrap {
+  --a-card: #FFFFFF; --a-border: #E0DDD8; --a-ink: #0F1620; --a-muted: #555350;
+  --a-accent: #2B5C8A; --a-signal: #C77D2E; --a-shadow: rgba(17, 20, 26, 0.13);
+  --a-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --a-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --a-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-family: var(--a-sans); color: var(--a-ink); line-height: 1.6;
+}
+.arch-wrap { margin: 2.25rem 0 1.5rem; }
+.arch-cap {
+  font-family: var(--a-mono); font-size: 0.78rem; letter-spacing: 0.02em;
+  font-weight: 600; color: var(--a-accent);
+  display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.6rem;
+}
+.arch-cap::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--a-signal); }
+.arch-sub { font-size: 0.9rem; color: var(--a-muted); margin: 0 0 1rem; max-width: 620px; }
+
+/* the figure breaks out of the 760px reading column so labels stay legible */
+.arch-fig {
+  --arch-ink: var(--a-ink);
+  --arch-muted: var(--a-muted);
+  --arch-line: #7C8794;
+  --arch-accent: var(--a-accent);
+  --arch-signal: var(--a-signal);
+  width: min(1240px, calc(100vw - 3rem));
+  margin: 0; position: relative; left: 50%; translate: -50% 0;
+  background: var(--a-card); border: 1px solid var(--a-border);
+  border-radius: 12px; padding: 0.6rem 0.75rem 0.4rem;
+  transition: box-shadow .25s var(--a-ease);
+}
+.arch-fig:hover { box-shadow: 0 14px 34px -14px var(--a-shadow); }
+.arch-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.arch-scroll svg { display: block; width: 100%; height: auto; min-width: 680px; }
+.arch-fig figcaption {
+  font-size: 0.78rem; line-height: 1.55; color: var(--a-muted);
+  padding: 0.55rem 0.25rem 0.35rem; border-top: 1px solid var(--a-border); margin-top: 0.35rem;
+}
+.arch-fig figcaption b { color: var(--a-ink); font-weight: 600; }
+
+/* ---- surfaces: one restrained tint per role, drawn from the site palette ---- */
+.arch-fig .c-grid       { stroke: rgba(43, 92, 138, 0.075); fill: none; }
+.arch-fig .c-mask       { fill: var(--a-card); stroke: none; }
+.arch-fig .c-frontend   { fill: #EDF2F7; stroke: #7FA3C4; }              /* interface: the site's .flow-node.io tint */
+.arch-fig .c-backend    { fill: #FFFFFF; stroke: var(--arch-accent); }   /* core component */
+.arch-fig .c-database   { fill: #F1EFEB; stroke: #8C8577; }              /* data / map: warm neutral */
+.arch-fig .c-cloud      { fill: #E9F5EE; stroke: #1B6B4A; }              /* the site's .flow-node.out tint */
+.arch-fig .c-security   { fill: #FBF1E3; stroke: var(--arch-signal); }   /* safety-critical: the amber signal */
+.arch-fig .c-messagebus { fill: #E3ECF5; stroke: #1F4468; }              /* supervisor / hub */
+.arch-fig .c-external   { fill: #FAF9F7; stroke: #9A958D; }              /* hardware / outside the system */
+.arch-fig .c-region     { fill: rgba(43, 92, 138, 0.045); stroke: #9DB6CE; stroke-dasharray: 6 4; }   /* boundary: where something physically lives */
+.arch-fig .c-lane, .arch-fig .c-security-group { fill: rgba(241, 239, 235, 0.55); stroke: #CFCAC2; }
+
+/* ---- type ---- */
+.arch-fig text { font-family: var(--a-mono); font-size: 9.5px; }
+.arch-fig text[data-node-label] { font-family: var(--a-sans); font-size: 12.5px; letter-spacing: -0.005em; }
+.arch-fig rect[class^="c-"]:not(.c-mask):not(.c-grid), .arch-fig rect.c-mask { rx: 9px; }
+.arch-fig .t-primary   { fill: var(--arch-ink); }
+.arch-fig .t-muted     { fill: var(--arch-muted); }
+.arch-fig .t-backend   { fill: var(--arch-accent); }
+.arch-fig .t-security  { fill: #94570F; }
+.arch-fig .t-messagebus{ fill: var(--arch-muted); }
+.arch-fig .t-cloud     { fill: var(--arch-accent); }
+.arch-fig text[data-boundary-label] { font-size: 9px; }
+
+/* ---- connections ---- */
+.arch-fig .a-default   { stroke: var(--arch-line); fill: none; }
+.arch-fig .a-emphasis  { stroke: var(--arch-accent); fill: none; }
+.arch-fig .a-security  { stroke: var(--arch-signal); fill: none; }
+.arch-fig .a-dashed    { stroke: var(--arch-line); fill: none; stroke-dasharray: 4 4; }
+.arch-fig .m-default   { fill: var(--arch-line); }
+.arch-fig .m-emphasis  { fill: var(--arch-accent); }
+.arch-fig .m-security  { fill: var(--arch-signal); }
+.arch-fig .m-dashed    { fill: var(--arch-line); }
+
+/* role stamps (small icons in each box corner) */
+.arch-fig .semantic-sigil { fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; opacity: 0.8; pointer-events: none; }
+.arch-fig .semantic-sigil > * { vector-effect: non-scaling-stroke; }
+.arch-fig .semantic-sigil .sigil-fill { fill: currentColor; stroke: none; }
+/* role stamps follow each surface's stroke */
+.arch-fig .s-frontend   { color: #5B84AA; }
+.arch-fig .s-backend    { color: var(--arch-accent); }
+.arch-fig .s-database   { color: #8C8577; }
+.arch-fig .s-security   { color: var(--arch-signal); }
+.arch-fig .s-messagebus { color: #1F4468; }
+.arch-fig .s-external   { color: #9A958D; }
+
+/* hover / focus: same language as the site's cards (accent border, soft lift) */
+.arch-fig g[data-node-id] rect[class^="c-"]:not(.c-mask) { transition: stroke .2s var(--a-ease), filter .25s var(--a-ease); }
+.arch-fig g[data-node-id]:hover rect[class^="c-"]:not(.c-mask) {
+  stroke: var(--arch-accent); filter: drop-shadow(0 6px 10px rgba(17, 20, 26, 0.10));
+}
+
+.arch-hint { display: none; margin: 0 0 0.3rem; font-family: var(--a-mono); font-size: 0.7rem; color: var(--a-muted); }
+@media (max-width: 768px) {
+  .arch-fig { width: calc(100vw - 2rem); padding: 0.4rem 0.4rem 0.3rem; }
+  .arch-hint { display: block; }
+  .arch-scroll svg { min-width: 880px; }
+}
+@media print { .arch-fig { box-shadow: none; } }

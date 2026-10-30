@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Multi-Robot Warehouse Kitting: system architecture",
+    "locale": "en",
+    "output": "ie574-warehouse-kitting.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": {
+          "label": "Interface"
+        },
+        "backend": {
+          "label": "Core component"
+        },
+        "database": {
+          "label": "Data / map"
+        },
+        "security": {
+          "label": "Safety-critical"
+        },
+        "messagebus": {
+          "label": "Supervisor"
+        },
+        "external": {
+          "label": "Hardware / external"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "tracker",
+      "type": "database",
+      "label": "Order Tracker",
+      "sublabel": "counts at tray unload only",
+      "pos": [
+        500,
+        50
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "coord",
+      "type": "messagebus",
+      "label": "Central Coordinator",
+      "sublabel": "req / busy / done handshakes",
+      "pos": [
+        40,
+        210
+      ],
+      "size": [
+        1100,
+        64
+      ]
+    },
+    {
+      "id": "producer",
+      "type": "external",
+      "label": "Parts Producer",
+      "sublabel": "demand-driven spawn",
+      "pos": [
+        75,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "pnp",
+      "type": "backend",
+      "label": "Pick-and-Place UR10",
+      "sublabel": "color vision, bin sorting",
+      "pos": [
+        275,
+        370
+      ],
+      "size": [
+        190,
+        64
+      ]
+    },
+    {
+      "id": "mr1",
+      "type": "backend",
+      "label": "Mobile Robot 1",
+      "sublabel": "PioneerP3DX + UR5",
+      "pos": [
+        515,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "mr2",
+      "type": "backend",
+      "label": "Mobile Robot 2",
+      "sublabel": "KUKA youBot",
+      "pos": [
+        735,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "cobot",
+      "type": "backend",
+      "label": "Cobot UR10",
+      "sublabel": "tray unloading",
+      "pos": [
+        955,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "coord-tracker",
+      "from": "coord",
+      "to": "tracker",
+      "label": "order status",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "coord-producer",
+      "from": "coord",
+      "to": "producer",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "coord-pnp",
+      "from": "coord",
+      "to": "pnp",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "coord-mr1",
+      "from": "coord",
+      "to": "mr1",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "coord-mr2",
+      "from": "coord",
+      "to": "mr2",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "coord-cobot",
+      "from": "coord",
+      "to": "cobot",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "producer-pnp",
+      "from": "producer",
+      "to": "pnp",
+      "variant": "dashed"
+    },
+    {
+      "id": "pnp-mr1",
+      "from": "pnp",
+      "to": "mr1",
+      "variant": "dashed"
+    },
+    {
+      "id": "mr1-mr2",
+      "from": "mr1",
+      "to": "mr2",
+      "variant": "dashed"
+    },
+    {
+      "id": "mr2-cobot",
+      "from": "mr2",
+      "to": "cobot",
+      "variant": "dashed"
+    }
+  ]
+}

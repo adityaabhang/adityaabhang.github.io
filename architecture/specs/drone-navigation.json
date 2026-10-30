@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Autonomous Drone Navigation: system architecture",
+    "locale": "en",
+    "output": "drone-navigation.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": {
+          "label": "Interface"
+        },
+        "backend": {
+          "label": "Core component"
+        },
+        "database": {
+          "label": "Data / map"
+        },
+        "security": {
+          "label": "Safety-critical"
+        },
+        "messagebus": {
+          "label": "Supervisor"
+        },
+        "external": {
+          "label": "Hardware / external"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "lidar",
+      "type": "external",
+      "label": "LiDAR + IMU",
+      "sublabel": "onboard sensing",
+      "pos": [
+        35,
+        50
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "fastlio",
+      "type": "backend",
+      "label": "FAST-LIO2",
+      "sublabel": "LiDAR-inertial odometry",
+      "pos": [
+        280,
+        50
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "rog",
+      "type": "database",
+      "label": "ROG-Map",
+      "sublabel": "inflated occupancy grid",
+      "pos": [
+        530,
+        50
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "super",
+      "type": "security",
+      "label": "SUPER Planner",
+      "sublabel": "corridors, MINCO, 15 Hz",
+      "pos": [
+        780,
+        50
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "fc",
+      "type": "external",
+      "label": "Flight Controller",
+      "sublabel": "custom quadrotor",
+      "pos": [
+        1025,
+        50
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "cam",
+      "type": "external",
+      "label": "Camera",
+      "sublabel": "onboard",
+      "pos": [
+        35,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "track",
+      "type": "backend",
+      "label": "YOLO + BoT-SORT",
+      "sublabel": "TensorRT, ReID tracking",
+      "pos": [
+        280,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "predict",
+      "type": "backend",
+      "label": "EigenTrajectory",
+      "sublabel": "next 1.5 s, 20 points",
+      "pos": [
+        530,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "bridge",
+      "type": "backend",
+      "label": "dtdp_super_bridge",
+      "sublabel": "FOLLOW / HOLD / BACK OFF",
+      "pos": [
+        775,
+        210
+      ],
+      "size": [
+        170,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "lidar-fastlio",
+      "from": "lidar",
+      "to": "fastlio",
+      "label": "scans"
+    },
+    {
+      "id": "fastlio-rog",
+      "from": "fastlio",
+      "to": "rog",
+      "label": "cloud"
+    },
+    {
+      "id": "rog-super",
+      "from": "rog",
+      "to": "super",
+      "label": "grid"
+    },
+    {
+      "id": "super-fc",
+      "from": "super",
+      "to": "fc",
+      "label": "trajectory",
+      "variant": "emphasis"
+    },
+    {
+      "id": "cam-track",
+      "from": "cam",
+      "to": "track",
+      "label": "frames"
+    },
+    {
+      "id": "track-predict",
+      "from": "track",
+      "to": "predict",
+      "label": "tracks"
+    },
+    {
+      "id": "predict-bridge",
+      "from": "predict",
+      "to": "bridge",
+      "label": "path"
+    },
+    {
+      "id": "bridge-super",
+      "from": "bridge",
+      "to": "super",
+      "label": "goal pose",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom"
+    }
+  ]
+}

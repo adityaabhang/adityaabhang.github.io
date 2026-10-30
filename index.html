@@ -375,6 +375,7 @@
       <a href="mailto:aabhang@purdue.edu"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Email</a>
       <a href="https://github.com/adityaabhang" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"/></svg> GitHub</a>
       <a href="https://linkedin.com/in/adityaabhang" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=VA9ozfgAAAAJ&amp;hl=en" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg> Google Scholar</a>
       <a href="tel:+14084225068"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg> +1-408-422-5068</a>
     </div>
     <div class="telemetry" aria-hidden="true">
@@ -398,10 +399,9 @@
         <li>The Jetson's unified memory broke nearly every desktop assumption about allocators and inter-process CUDA — out-of-memory crashes with tens of gigabytes still free — so I re-architected the SLAM backend to run as a shared-memory thread instead of a separate process, fixing the crash and cutting a multi-minute startup stall</li>
         <li>Under-exposed frames could derail tracking outright, so I built a confidence-scaled exposure-preprocessing stage that gains only the frames it's confident are under-exposed (capped at 8&times;) while leaving well-exposed frames bit-for-bit unchanged</li>
         <li>To quantify exactly where that SLAM stack broke down, I built a raw-domain SNR degradation dataset and an ATE/RPE evaluation harness measuring how far into the dark it holds a trajectory</li>
-        <li>Dense forest canopies caused frequent full occlusions that broke conventional trackers, so I built a human detection, tracking, and trajectory-prediction pipeline (YOLO + BoT-SORT + EigenTrajectory) that reconstructs trajectories through those occlusions</li>
-        <li>The tracker alone couldn't guarantee flight safety, so I engineered a ROS 2 bridge between the human predictor and the SUPER LiDAR planner that keeps obstacle avoidance strictly above target-following</li>
-        <li>To validate the integrated system before flight testing, I ran closed-loop LiDAR simulations across follow, occlusion-hold, and safety back-off scenarios, achieving zero collisions over ~800 planner replans per run</li>
-        <li>Tracking a target from a scouting drone was only useful if the parent UAS could act on it, so I designed a multi-agent communication protocol for real-time target relay between the two</li>
+        <li>Dense forest canopies caused frequent full occlusions that broke conventional trackers, so I built a human detection, tracking, and trajectory-prediction pipeline that reconstructs trajectories through those occlusions</li>
+        <li>The tracker alone couldn't guarantee flight safety, so I engineered a ROS 2 bridge between the human predictor and the LiDAR planner that keeps obstacle avoidance strictly above target-following</li>
+        <li>To validate the integrated system before flight testing, I ran closed-loop LiDAR simulations across follow, occlusion-hold, and safety back-off scenarios, achieving zero collisions over hundreds of planner replans per run</li>
       </ul>
     </div>
     <div class="timeline-item" data-reveal>
@@ -448,6 +448,7 @@
         </div>
       </div>
     </div>
+      <!--
       <div class="project-card">
         <div class="project-img">
           <div class="proj-gallery" data-interval="3000">
@@ -468,11 +469,12 @@
           <div class="project-meta">IDEAS Lab, Purdue • Feb 2026 – Present</div>
           <p>A custom quadrotor I CAD-designed, wired, and soldered from the ground up, running a human tracking and trajectory-prediction pipeline bridged to the SUPER LiDAR planner so it follows a person through dense forest — holding a standoff, extrapolating through occlusions, and backing off when too close — without ever overriding obstacle avoidance.</p>
           <div class="project-footer">
-            <div class="tags"><span class="tag" data-skill="SolidWorks">CAD</span><span class="tag" data-skill="Computer Vision">CV</span><span class="tag" data-skill="ROS / ROS2">ROS2</span><span class="tag" data-skill="Multi-Agent Systems">Multi-Agent</span></div>
+            <div class="tags"><span class="tag" data-skill="SolidWorks">CAD</span><span class="tag" data-skill="Computer Vision">CV</span><span class="tag" data-skill="ROS / ROS2">ROS2</span></div>
             <a href="projects/drone-navigation.html" class="read-more">Read More <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
           </div>
         </div>
       </div>
+      -->
 
       <div class="project-card">
         <div class="project-img">
@@ -509,7 +511,7 @@
         </div>
         <div class="project-body">
           <h3>TDS In-House Plasma Cutting Monitoring System</h3>
-          <div class="project-meta">ME 597 IIoT, Purdue • Ongoing – Apr 2026</div>
+          <div class="project-meta">ME 597 IIoT, Purdue • Completed Apr 2026</div>
           <p>Real-time acoustic and current data monitoring on CNC plasma cutting machine to classify sheet thickness and validate material specifications via Grafana dashboards.</p>
           <div class="project-footer">
             <div class="tags"><span class="tag" data-skill="Python">Python</span><span class="tag" data-skill="Raspberry Pi">RPi</span><span class="tag" data-skill="Grafana">Grafana</span></div>
@@ -847,11 +849,10 @@
       ],
       "Real-time Systems": [
         { name: "Low-Light Dense Monocular SLAM on Jetson", desc: "Real-time SLAM inference on Jetson AGX Orin in extreme low light", link: "projects/low-light-slam.html" },
-        { name: "Autonomous Drone Navigation", desc: "Real-time obstacle avoidance and target coordinate relay at flight speed", link: "projects/drone-navigation.html" },
+        { name: "Autonomous Drone Navigation", desc: "Real-time obstacle avoidance and human tracking at flight speed", link: "projects/drone-navigation.html" },
         { name: "TDS Plasma Cutting Monitoring", desc: "Continuous acoustic and current data acquisition during CNC plasma operations", link: "projects/tds-plasma-monitoring.html" }
       ],
       "Multi-Agent Systems": [
-        { name: "Autonomous Drone Navigation", desc: "Communication protocol relaying target coordinates from scout drone to parent UAS", link: "projects/drone-navigation.html" },
         { name: "Cooperative Multi-Robot Transport", desc: "Two-agent cooperative payload transport with fixed inter-agent distance constraints", link: "projects/multi-robot-transport.html" },
         { name: "Multi-Robot System Integration", desc: "Coordinating two cobots and an AMR in a fully automated 6-task workflow", link: "minor-projects/ie574-labs/group-project-1.html" }
       ],
@@ -886,7 +887,7 @@
         { name: "Upcoming Project", desc: "Vision-language-action policies for an upcoming humanoid imitation-learning project", link: null }
       ],
       "Python": [
-        { name: "Autonomous Drone Navigation", desc: "Core CV pipeline for tracking and multi-agent communication", link: "projects/drone-navigation.html" },
+        { name: "Autonomous Drone Navigation", desc: "Core CV pipeline for tracking and the planner bridge", link: "projects/drone-navigation.html" },
         { name: "TDS Plasma Cutting Monitoring", desc: "Sensor data collection, processing, and thickness classification", link: "projects/tds-plasma-monitoring.html" },
         { name: "Cooperative Multi-Robot Transport", desc: "RL algorithm implementation and grid-world simulation", link: "projects/multi-robot-transport.html" },
         { name: "Vision-Guided Terrain-Aware Path Planning", desc: "Segmentation inference and navigation stack integration", link: "projects/terrain-path-planning.html" }

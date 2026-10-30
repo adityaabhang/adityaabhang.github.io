@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Low-Light Dense SLAM on Jetson: system architecture",
+    "locale": "en",
+    "output": "low-light-slam.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": {
+          "label": "Interface"
+        },
+        "backend": {
+          "label": "Core component"
+        },
+        "database": {
+          "label": "Data / map"
+        },
+        "security": {
+          "label": "Safety-critical"
+        },
+        "messagebus": {
+          "label": "Supervisor"
+        },
+        "external": {
+          "label": "Hardware / external"
+        }
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "camera",
+      "type": "external",
+      "label": "Spot Camera",
+      "sublabel": "fixed basic exposure",
+      "pos": [
+        35,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "expo",
+      "type": "backend",
+      "label": "Exposure Gain",
+      "sublabel": "p90 luma, capped at 8x",
+      "pos": [
+        280,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "frontend",
+      "type": "backend",
+      "label": "SLAM Frontend",
+      "sublabel": "MASt3R + Dark3R matcher",
+      "pos": [
+        530,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "backend",
+      "type": "backend",
+      "label": "SLAM Backend",
+      "sublabel": "thread, shared model",
+      "pos": [
+        785,
+        210
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "map",
+      "type": "database",
+      "label": "Trajectory + Map",
+      "sublabel": "Open3D rendering",
+      "pos": [
+        1030,
+        210
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "ckpt",
+      "type": "database",
+      "label": "Dark3R Weights",
+      "sublabel": "LoRA merged into ViT-L",
+      "pos": [
+        530,
+        370
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "chol",
+      "type": "backend",
+      "label": "CPU Cholesky",
+      "sublabel": "fallback pose solve",
+      "pos": [
+        785,
+        370
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "sweep",
+      "type": "external",
+      "label": "Noise Sweep",
+      "sublabel": "raw-domain, +3 to -10 dB",
+      "pos": [
+        275,
+        50
+      ],
+      "size": [
+        170,
+        64
+      ]
+    },
+    {
+      "id": "ref",
+      "type": "external",
+      "label": "Reference Poses",
+      "sublabel": "clean run / COLMAP",
+      "pos": [
+        780,
+        50
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "eval",
+      "type": "backend",
+      "label": "Metric Harness",
+      "sublabel": "ATE, RPE, drift, reloc",
+      "pos": [
+        1030,
+        50
+      ],
+      "size": [
+        160,
+        64
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "camera-expo",
+      "from": "camera",
+      "to": "expo",
+      "label": "raw"
+    },
+    {
+      "id": "expo-frontend",
+      "from": "expo",
+      "to": "frontend",
+      "label": "corrected"
+    },
+    {
+      "id": "frontend-backend",
+      "from": "frontend",
+      "to": "backend",
+      "label": "keyframes"
+    },
+    {
+      "id": "backend-map",
+      "from": "backend",
+      "to": "map",
+      "label": "poses"
+    },
+    {
+      "id": "ckpt-frontend",
+      "from": "ckpt",
+      "to": "frontend",
+      "label": "load",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "backend-chol",
+      "from": "backend",
+      "to": "chol",
+      "label": "if it fails",
+      "variant": "dashed",
+      "labelDy": 26
+    },
+    {
+      "id": "sweep-expo",
+      "from": "sweep",
+      "to": "expo",
+      "label": "degraded frames",
+      "variant": "dashed",
+      "labelDy": 26
+    },
+    {
+      "id": "ref-eval",
+      "from": "ref",
+      "to": "eval",
+      "label": "reference"
+    },
+    {
+      "id": "map-eval",
+      "from": "map",
+      "to": "eval",
+      "label": "trajectory"
+    }
+  ]
+}
